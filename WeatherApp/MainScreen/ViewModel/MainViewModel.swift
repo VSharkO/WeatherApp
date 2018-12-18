@@ -27,6 +27,7 @@ class MainViewModel : MainViewModelProtocol{
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { response in
                 print(response.timezone)
+                print(String(response.currently.temperature))
             })
     }
     

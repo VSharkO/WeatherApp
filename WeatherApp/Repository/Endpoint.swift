@@ -27,7 +27,7 @@ extension Endpoint {
     }
 }
 
-extension Endpoint {
+extension Endpoint{
     
     static func getWeatherEndpoint(coordinates: String ,units: String) -> Endpoint {
         return Endpoint(
