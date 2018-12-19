@@ -56,7 +56,7 @@ class MainScreenTests: QuickSpec {
             }
             context("Called data from repo"){
                 var testScheduler = TestScheduler(initialClock: 0)
-                var subscriber = testScheduler.createObserver(String.self)
+                var subscriber = testScheduler.createObserver((icon: String, gradientInfo: String?).self)
                 var mockRepository = MockRepositoryProtocol()
                 beforeEach {
                     mockRepository = MockRepositoryProtocol()
@@ -64,7 +64,7 @@ class MainScreenTests: QuickSpec {
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
                     }
                     testScheduler = TestScheduler(initialClock: 0)
-                    subscriber = testScheduler.createObserver(String.self)
+                    subscriber = testScheduler.createObserver((icon: String, gradientInfo: String?).self)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
                     mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
@@ -86,7 +86,9 @@ class MainScreenTests: QuickSpec {
                 }
                 it("is seting view background images trigered with correct parameter"){
                         mainViewModel.initialDataRequest()
-                    expect(subscriber.events.first!.value.element).to(equal((supplyListResponse!.currently.icon)))
+                    let conditions = WeatherConditionsHelper.returnConditionThatStringContains(for: (supplyListResponse?.currently.icon)!)
+                    expect(subscriber.events.first!.value.element!.icon).to(equal(supplyListResponse?.currently.icon))
+                    expect(subscriber.events.first!.value.element!.gradientInfo).to(equal(conditions))
                 }
             }
             

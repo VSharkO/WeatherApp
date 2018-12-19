@@ -18,7 +18,8 @@ struct Response: Codable {
 
 struct Currently: Codable {
     let time: Int
-    let summary, icon: String
+    let summary: String
+    let icon: String
     let temperature, humidity: Double
     let pressure, windSpeed: Double
 }

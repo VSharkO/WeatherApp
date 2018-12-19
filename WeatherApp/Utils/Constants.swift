@@ -17,5 +17,5 @@ struct Constants {
     public static let defaultCoordinates = "45.55111, 18.69389"
     public static let siUnitsApi = "si"
     public static let usUnitsApi = "us"
-    
+
 }

@@ -11,4 +11,5 @@ import Foundation
 struct MainDataModel{
     var currently: Currently
     var daily: DailyData
+    var conditions: String?
 }
