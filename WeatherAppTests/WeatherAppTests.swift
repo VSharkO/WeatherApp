@@ -70,16 +70,17 @@ class MainScreenTests: QuickSpec {
                     mainViewModel.initialDataRequest()
                     verify(mockRepository).getWeather(endpoint: any())
                 }
-                it("response is correct"){
+                it("response is receved with correct parameters"){
                     mainViewModel.initialDataRequest()
                     expect(mainViewModel.data.currently.time).to(equal(supplyListResponse?.currently.time))
                     expect(mainViewModel.data.currently.temperature).to(equal(supplyListResponse?.currently.temperature))
                     expect(mainViewModel.data.currently.humidity).to(equal(supplyListResponse?.currently.humidity))
                 }
-                it("daily variable has same time as currently"){
+                it("daily variable time is in same day as currently variable time"){
                     mainViewModel.initialDataRequest()
                     expect(DateUtils.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
                 }
+                
             }
         }
     }
