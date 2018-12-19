@@ -50,7 +50,7 @@ class MainScreenTests: QuickSpec {
                 it("is not nil"){
                     expect(mainViewModel).toNot(be(nil))
                 }
-                it("data count is 0"){
+                it("data is nil"){
                     expect(mainViewModel.data).to(beNil())
                 }
             }
@@ -84,7 +84,7 @@ class MainScreenTests: QuickSpec {
                     mainViewModel.initialDataRequest()
                     expect(DateUtils.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
                 }
-                it("is refreshing data trigered"){
+                it("is seting view background images trigered with correct parameter"){
                         mainViewModel.initialDataRequest()
                     expect(subscriber.events.first!.value.element).to(equal((supplyListResponse!.currently.icon)))
                 }
