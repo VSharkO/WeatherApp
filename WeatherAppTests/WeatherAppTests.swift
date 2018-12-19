@@ -66,12 +66,17 @@ class MainScreenTests: QuickSpec {
                     mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     testScheduler.start()
                 }
-                it("data is equal to number of articles from repository"){
+                it("requst is sent"){
                     mainViewModel.initialDataRequest()
                     verify(mockRepository).getWeather(endpoint: any())
                 }
+                it("response is correct"){
+                    mainViewModel.initialDataRequest()
+                    expect(mainViewModel.data.currently.time).to(equal(supplyListResponse?.currently.time))
+                    expect(mainViewModel.data.currently.temperature).to(equal(supplyListResponse?.currently.temperature))
+                    expect(mainViewModel.data.currently.humidity).to(equal(supplyListResponse?.currently.humidity))
+                }
             }
         }
-
     }
 }
