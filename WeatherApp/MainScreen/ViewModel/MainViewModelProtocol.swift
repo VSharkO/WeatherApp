@@ -12,4 +12,6 @@ import RxSwift
 protocol MainViewModelProtocol{
     func initGetingDataFromRepository() -> Disposable
     func initialDataRequest()
+    
+    var viewShowLoader: PublishSubject<Bool>{get}
 }

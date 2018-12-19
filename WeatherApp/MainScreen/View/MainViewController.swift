@@ -10,8 +10,9 @@ import UIKit
 import RxSwift
 import Kingfisher
 
-class MainViewController: UIViewController{
+class MainViewController: UIViewController, LoaderManager{
     
+    var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
     var mainCoordinatorDelegate: MainCoordinatorDelegate?
@@ -34,17 +35,13 @@ class MainViewController: UIViewController{
     }
     
     private func initSubscripts(){
-//        viewModel.viewReloadData.observeOn(MainScheduler.instance).subscribe(onNext:{ _ in
-//            self.tableView.reloadData()
-//        }).disposed(by: disposeBag)
-//
-//        viewModel.viewShowLoader.observeOn(MainScheduler.instance).subscribe(onNext:{ isActive in
-//            if isActive{
-//                self.displayLoader()
-//            }else{
-//                self.hideLoader()
-//            }
-//        }).disposed(by: disposeBag)
+        viewModel.viewShowLoader.observeOn(MainScheduler.instance).subscribe(onNext:{ isActive in
+            if isActive{
+                self.displayLoader()
+            }else{
+                self.hideLoader()
+            }
+        }).disposed(by: disposeBag)
         
     }
     
@@ -59,6 +56,16 @@ class MainViewController: UIViewController{
 //            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 //            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 //            ])
+    }
+    
+    func displayLoader() {
+        loader = displayLoader(onView: self.view)
+    }
+    
+    func hideLoader() {
+        if let loader = loader{
+            removeLoader(loader: loader)
+        }
     }
  
 }

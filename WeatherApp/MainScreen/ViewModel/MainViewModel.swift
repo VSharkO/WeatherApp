@@ -14,6 +14,8 @@ class MainViewModel : MainViewModelProtocol{
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
+    var viewShowLoader = PublishSubject<Bool>()
+    
     var data: MainDataModel!
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
@@ -23,6 +25,7 @@ class MainViewModel : MainViewModelProtocol{
     
     func initGetingDataFromRepository() -> Disposable {
         return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<Response> in
+            self.viewShowLoader.onNext(true)
             return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: Constants.defaultCoordinates, units: Constants.siUnitsApi))
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
@@ -32,6 +35,7 @@ class MainViewModel : MainViewModelProtocol{
                     DateUtils.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
                 }){
                     self.data = MainDataModel(currently: currently, daily: daily)
+                    self.viewShowLoader.onNext(false)
                     print(self.data.currently.time)
                     print(self.data.daily.time)
                 }

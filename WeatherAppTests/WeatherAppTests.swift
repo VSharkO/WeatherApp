@@ -80,7 +80,32 @@ class MainScreenTests: QuickSpec {
                     mainViewModel.initialDataRequest()
                     expect(DateUtils.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
                 }
-                
+            }
+            
+            describe("Loader logic"){
+                context("when sending request"){
+                    var testScheduler = TestScheduler(initialClock: 0)
+                    var subscriber = testScheduler.createObserver(Bool.self)
+                    beforeEach {
+                        let mockRepository = MockRepositoryProtocol()
+                        stub(mockRepository) { mock in
+                            when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
+                        }
+                        testScheduler = TestScheduler(initialClock: 0)
+                        subscriber = testScheduler.createObserver(Bool.self)
+                        mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
+                        mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                        mainViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
+                        testScheduler.start()
+                        mainViewModel.initialDataRequest()
+                    }
+                    it("loader is shown on start of request"){
+                        expect(subscriber.events.first!.value.element).to(equal(true))
+                    }
+                    it("loader is hiden after receiving data"){
+                        expect(subscriber.events.last!.value.element).to(be(false))
+                    }
+                }
             }
         }
     }
