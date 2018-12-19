@@ -7,10 +7,7 @@
 //
 
 import Foundation
-import Cuckoo
 import Quick
-import RxTest
-import RxSwift
 import Nimble
 @testable import WeatherApp
 
@@ -33,6 +30,9 @@ class TimeDiferenceHelperTests: QuickSpec {
                 }
                 it("is true when diference is 23h and 59min and 59sec"){
                     expect(TimeDiferenceHelper.isTimeDiferenceInADay(fromSeconds:1000000000, toSeconds:1000086399)).to(equal(true))
+                }
+                it("is true when diference is 23h and 59min and 59sec (diferent order of parameters)"){
+                    expect(TimeDiferenceHelper.isTimeDiferenceInADay(fromSeconds:1000086399, toSeconds:1000000000)).to(equal(true))
                 }
             }
         }
