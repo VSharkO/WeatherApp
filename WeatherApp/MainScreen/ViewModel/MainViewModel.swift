@@ -40,7 +40,7 @@ class MainViewModel : MainViewModelProtocol{
         let currently = response.currently
         let gradient = WeatherConditionsHelper.returnConditionThatStringContains(for: currently.icon)
         if let daily = response.daily.data.last(where: { dailyData -> Bool in
-            DateUtils.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
+            TimeDiferenceHelper.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
         }){
             self.data = MainDataModel(currently: currently, daily: daily, conditions: gradient)
         }else{

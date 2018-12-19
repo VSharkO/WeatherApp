@@ -82,7 +82,7 @@ class MainScreenTests: QuickSpec {
                 }
                 it("daily variable time is in same day as currently variable time"){
                     mainViewModel.initialDataRequest()
-                    expect(DateUtils.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
+                    expect(TimeDiferenceHelper.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
                 }
                 it("is seting view background images trigered with correct parameter"){
                         mainViewModel.initialDataRequest()
