@@ -85,9 +85,10 @@ class MainScreenTests: QuickSpec {
                     expect(DateUtils.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
                 }
                 it("is refreshing data trigered"){
+                        mainViewModel.initialDataRequest()
                     expect(subscriber.events.first!.value.element).to(equal((supplyListResponse!.currently.icon)))
+                }
             }
-        }
             
             describe("Loader logic"){
                 context("when sending request"){

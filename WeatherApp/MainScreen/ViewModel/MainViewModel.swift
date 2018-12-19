@@ -15,6 +15,7 @@ class MainViewModel : MainViewModelProtocol{
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
     var viewShowLoader = PublishSubject<Bool>()
+    var viewSetBackgroundImages = PublishSubject<String>()
     
     var data: MainDataModel!
     
@@ -31,7 +32,7 @@ class MainViewModel : MainViewModelProtocol{
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
                 self.setDataWithResponse(response: response)
-                
+                self.updateView()
             })
     }
     
@@ -41,14 +42,14 @@ class MainViewModel : MainViewModelProtocol{
             DateUtils.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
         }){
             self.data = MainDataModel(currently: currently, daily: daily)
-            self.viewShowLoader.onNext(false)
-            //osviježiti view
-            print(self.data.currently.time)
-            print(self.data.daily.time)
         }
     }
     
-    
+    func updateView(){
+        self.viewSetBackgroundImages.onNext(data.currently.icon)
+        self.viewShowLoader.onNext(false)
+        //osviježiti view
+    }
     
     func initialDataRequest(){
         dataRequestTrigered()
