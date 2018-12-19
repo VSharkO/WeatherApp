@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import Kingfisher
-import MaterialComponents.MaterialTabs
 
 class MainViewController: UIViewController{
     
@@ -50,11 +49,10 @@ class MainViewController: UIViewController{
     }
     
     private func setupViews(){
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .blue
     }
     
     private func setupConstraints(){
-        
 //        NSLayoutConstraint.activate([
 //            tableView.topAnchor.constraint(equalTo: tabBar.bottomAnchor),
 //            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

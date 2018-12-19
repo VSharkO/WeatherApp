@@ -8,21 +8,21 @@ target 'WeatherApp' do
   def testing_pods
     pod 'Quick'
     pod 'Nimble'
-	pod "Cuckoo"
+    pod "Cuckoo"
     pod 'RxTest',     '~> 4.0'
     pod 'RxBlocking', '~> 4.0'
   end
 
   # Pods for WeatherApp
     pod 'Alamofire', '~> 4.7'
-    pod 'Kingfisher', '4.9.0'
+    pod 'Kingfisher', '~> 5.0'
     pod 'RxSwift',    '~> 4.0'
     pod 'RxCocoa',    '~> 4.0'
-    pod 'MaterialComponents'
 
   target 'WeatherAppTests' do
     inherit! :search_paths
     # Pods for testing
+      testing_pods
   end
 
 end

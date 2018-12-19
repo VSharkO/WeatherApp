@@ -14,6 +14,7 @@ class MainViewModel : MainViewModelProtocol{
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
+    var data: Response!
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
@@ -25,9 +26,8 @@ class MainViewModel : MainViewModelProtocol{
             return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: Constants.defaultCoordinates, units: Constants.siUnitsApi))
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { response in
-                print(response.timezone)
-                print(String(response.currently.temperature))
+            .subscribe(onNext: {[unowned self] response in
+                self.data = response
             })
     }
     
