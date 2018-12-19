@@ -54,16 +54,20 @@ class MainScreenTests: QuickSpec {
                     expect(mainViewModel.data).to(beNil())
                 }
             }
-            context("Called data from repo first time"){
+            context("Called data from repo"){
+                var testScheduler = TestScheduler(initialClock: 0)
+                var subscriber = testScheduler.createObserver(String.self)
                 var mockRepository = MockRepositoryProtocol()
                 beforeEach {
                     mockRepository = MockRepositoryProtocol()
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
                     }
-                    let testScheduler = TestScheduler(initialClock: 0)
+                    testScheduler = TestScheduler(initialClock: 0)
+                    subscriber = testScheduler.createObserver(String.self)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
                     mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("requst is sent"){
@@ -80,7 +84,10 @@ class MainScreenTests: QuickSpec {
                     mainViewModel.initialDataRequest()
                     expect(DateUtils.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
                 }
+                it("is refreshing data trigered"){
+                    expect(subscriber.events.first!.value.element).to(equal((supplyListResponse!.currently.icon)))
             }
+        }
             
             describe("Loader logic"){
                 context("when sending request"){

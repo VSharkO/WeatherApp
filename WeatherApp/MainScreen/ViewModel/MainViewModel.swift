@@ -30,17 +30,25 @@ class MainViewModel : MainViewModelProtocol{
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
-                let currently = response.currently
-                if let daily = response.daily.data.last(where: { dailyData -> Bool in
-                    DateUtils.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
-                }){
-                    self.data = MainDataModel(currently: currently, daily: daily)
-                    self.viewShowLoader.onNext(false)
-                    print(self.data.currently.time)
-                    print(self.data.daily.time)
-                }
+                self.setDataWithResponse(response: response)
+                
             })
     }
+    
+    func setDataWithResponse(response: Response){
+        let currently = response.currently
+        if let daily = response.daily.data.last(where: { dailyData -> Bool in
+            DateUtils.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
+        }){
+            self.data = MainDataModel(currently: currently, daily: daily)
+            self.viewShowLoader.onNext(false)
+            //osviježiti view
+            print(self.data.currently.time)
+            print(self.data.daily.time)
+        }
+    }
+    
+    
     
     func initialDataRequest(){
         dataRequestTrigered()
