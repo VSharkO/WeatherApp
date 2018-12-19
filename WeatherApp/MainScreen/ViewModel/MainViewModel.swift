@@ -14,7 +14,7 @@ class MainViewModel : MainViewModelProtocol{
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
-    var data: Response!
+    var data: MainDataModel!
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
@@ -27,7 +27,14 @@ class MainViewModel : MainViewModelProtocol{
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
-                self.data = response
+                let currently = response.currently
+                if let daily = response.daily.data.last(where: { dailyData -> Bool in
+                    DateUtils.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
+                }){
+                    self.data = MainDataModel(currently: currently, daily: daily)
+                    print(self.data.currently.time)
+                    print(self.data.daily.time)
+                }
             })
     }
     

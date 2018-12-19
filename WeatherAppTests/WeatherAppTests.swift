@@ -76,6 +76,10 @@ class MainScreenTests: QuickSpec {
                     expect(mainViewModel.data.currently.temperature).to(equal(supplyListResponse?.currently.temperature))
                     expect(mainViewModel.data.currently.humidity).to(equal(supplyListResponse?.currently.humidity))
                 }
+                it("daily variable has same time as currently"){
+                    mainViewModel.initialDataRequest()
+                    expect(DateUtils.isTimeDiferenceInADay(fromSeconds: mainViewModel.data.daily.time, toSeconds: mainViewModel.data.currently.time)).to(beTrue())
+                }
             }
         }
     }
