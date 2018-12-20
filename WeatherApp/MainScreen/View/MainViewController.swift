@@ -33,6 +33,17 @@ class MainViewController: UIViewController, LoaderManager{
         return view
     }()
     
+    let temperatureTextView : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Book", size: 72)
+        textView.text = "27"
+        textView.textColor = .white
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
@@ -75,8 +86,9 @@ class MainViewController: UIViewController, LoaderManager{
     
     private func setupViews(){
         self.view.addSubview(gradientView)
-        self.gradientView.addSubview(headerImageView)
         self.view.addSubview(bodyImageView)
+        self.gradientView.addSubview(headerImageView)
+        self.gradientView.addSubview(temperatureTextView)
         setupConstraints()
     }
     
@@ -101,6 +113,13 @@ class MainViewController: UIViewController, LoaderManager{
             bodyImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             bodyImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
             ])
+        
+        NSLayoutConstraint.activate([
+            temperatureTextView.topAnchor.constraint(equalTo: headerImageView.topAnchor, constant: 90),
+            temperatureTextView.leadingAnchor.constraint(equalTo: headerImageView.leadingAnchor),
+            temperatureTextView.trailingAnchor.constraint(equalTo: headerImageView.trailingAnchor),
+            temperatureTextView.heightAnchor.constraint(equalToConstant: 70)
+            ])
     }
     
     private func setupGradient(parameters: GradientParameters){
@@ -108,8 +127,10 @@ class MainViewController: UIViewController, LoaderManager{
         gradient.startPoint = parameters.points.startPoint
         gradient.endPoint = parameters.points.endPoint
         gradient.frame = gradientView.bounds
+        
         self.gradientView.layer.addSublayer(gradient)
         self.gradientView.addSubview(headerImageView)
+        self.gradientView.addSubview(temperatureTextView)
     }
     
     func displayLoader() {

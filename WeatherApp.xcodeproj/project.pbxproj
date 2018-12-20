@@ -17,6 +17,8 @@
 		D53D92DB21CA7A2000C8EB0E /* TimeDiferenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D92DA21CA7A2000C8EB0E /* TimeDiferenceHelper.swift */; };
 		D53D92DD21CA7E2C00C8EB0E /* LoaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D92DC21CA7E2C00C8EB0E /* LoaderManager.swift */; };
 		D53D92E221CA970A00C8EB0E /* WeatherConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D92E121CA970A00C8EB0E /* WeatherConditions.swift */; };
+		D54E73FC21CB8B2400B23946 /* GothamRounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D54E73FB21CB8B2400B23946 /* GothamRounded-Light.otf */; };
+		D54E73FE21CB8B3600B23946 /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = D54E73FD21CB8B3600B23946 /* GothamRounded-Book.otf */; };
 		D552066821C8E7DD00FCB1CC /* WeatherInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D552066721C8E7DD00FCB1CC /* WeatherInteractor.swift */; };
 		D552066B21C8E7FE00FCB1CC /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D552066A21C8E7FE00FCB1CC /* NetworkHelper.swift */; };
 		D552067521C8E8FD00FCB1CC /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D552067321C8E8FD00FCB1CC /* WeatherResponse.swift */; };
@@ -70,6 +72,8 @@
 		D53D92DA21CA7A2000C8EB0E /* TimeDiferenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDiferenceHelper.swift; sourceTree = "<group>"; };
 		D53D92DC21CA7E2C00C8EB0E /* LoaderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderManager.swift; sourceTree = "<group>"; };
 		D53D92E121CA970A00C8EB0E /* WeatherConditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherConditions.swift; sourceTree = "<group>"; };
+		D54E73FB21CB8B2400B23946 /* GothamRounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Light.otf"; sourceTree = "<group>"; };
+		D54E73FD21CB8B3600B23946 /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Book.otf"; sourceTree = "<group>"; };
 		D552066721C8E7DD00FCB1CC /* WeatherInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInteractor.swift; sourceTree = "<group>"; };
 		D552066A21C8E7FE00FCB1CC /* NetworkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		D552067321C8E8FD00FCB1CC /* WeatherResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
@@ -155,6 +159,15 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
+		D54E73FA21CB8AF800B23946 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D54E73FD21CB8B3600B23946 /* GothamRounded-Book.otf */,
+				D54E73FB21CB8B2400B23946 /* GothamRounded-Light.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		D552066621C8E7DD00FCB1CC /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,8 +226,9 @@
 				D552066621C8E7DD00FCB1CC /* Interactors */,
 				D57F534D21C8D5AC00A62F24 /* MainScreen */,
 				D57F534221C8D53000A62F24 /* Coordinators */,
-				D57F531421C8D48400A62F24 /* AppDelegate.swift */,
+				D54E73FA21CB8AF800B23946 /* Fonts */,
 				D57F531B21C8D48500A62F24 /* Assets.xcassets */,
+				D57F531421C8D48400A62F24 /* AppDelegate.swift */,
 				D57F532021C8D48500A62F24 /* Info.plist */,
 			);
 			path = WeatherApp;
@@ -402,6 +416,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54E73FE21CB8B3600B23946 /* GothamRounded-Book.otf in Resources */,
+				D54E73FC21CB8B2400B23946 /* GothamRounded-Light.otf in Resources */,
 				D57F531C21C8D48500A62F24 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

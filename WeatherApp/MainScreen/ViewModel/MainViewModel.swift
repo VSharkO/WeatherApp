@@ -17,7 +17,7 @@ class MainViewModel : MainViewModelProtocol{
     var viewShowLoader = PublishSubject<Bool>()
     var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
     
-    var data: MainDataModel!
+    internal var data: MainDataModel!
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
