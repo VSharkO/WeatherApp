@@ -17,7 +17,7 @@ struct Constants {
     public static let defaultCoordinates = "45.55111, 18.69389"
     public static let siUnitsApi = "si"
     public static let usUnitsApi = "us"
-    public static let headerImage = "header_image_"
-    public static let bodyImage = "body_image_"
+    public static let headerImage = "header_image-"
+    public static let bodyImage = "body_image-"
 
 }
