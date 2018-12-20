@@ -10,12 +10,12 @@ import Foundation
 import RxSwift
 
 class MainViewModel : MainViewModelProtocol{
-    
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
     var viewShowLoader = PublishSubject<Bool>()
     var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
+    var viewLoadWithData = PublishSubject<Currently>()
     
     internal var data: MainDataModel!
     
@@ -50,8 +50,8 @@ class MainViewModel : MainViewModelProtocol{
     
     func updateView(){
         self.viewSetBackgroundImages.onNext((icon: data.currently.icon,gradientInfo: data.conditions))
+        self.viewLoadWithData.onNext(data.currently)
         self.viewShowLoader.onNext(false)
-        //osviježiti view
     }
     
     func initialDataRequest(){

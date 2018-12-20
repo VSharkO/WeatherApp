@@ -17,7 +17,6 @@ class GradientHelper{
         case .rain:
             return GradientParameters(colors: [UIColor(hex:"4A75A2"), UIColor(hex: "15587B")], points: GradientPoints(startPoint: CGPoint(x: 0.0, y: 1.0), endPoint: CGPoint(x: 1.0, y: 0.0)))
         case .snow:
-            
             return GradientParameters(colors: [UIColor(hex:"80D5F3"), UIColor(hex: "0B3A4E")], points: GradientPoints(startPoint: CGPoint(x: 0.5, y: 1.0), endPoint: CGPoint(x: 0.5, y: 0.0)))
         case .night:
             return GradientParameters(colors: [UIColor(hex:"234880"), UIColor(hex: "044663")], points: GradientPoints(startPoint: CGPoint(x: 0.5, y: 1.0), endPoint: CGPoint(x: 0.5, y: 0.0)))

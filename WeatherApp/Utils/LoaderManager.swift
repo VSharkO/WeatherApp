@@ -16,7 +16,7 @@ protocol LoaderManager{
 extension LoaderManager {
     func displayLoader(onView : UIView) -> UIView {
         let loaderView = UIView.init(frame: onView.bounds)
-        loaderView.backgroundColor = UIColor.init(red: 0.7, green: 0.7, blue: 0.7, alpha: 0.9)
+        loaderView.backgroundColor = UIColor(hex: "234880")
         let ai = UIActivityIndicatorView.init(style: .whiteLarge)
         ai.startAnimating()
         ai.center = loaderView.center

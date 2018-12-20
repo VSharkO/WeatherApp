@@ -14,5 +14,7 @@ protocol MainViewModelProtocol{
     func initialDataRequest()
     
     var viewShowLoader: PublishSubject<Bool>{get}
+    var viewLoadWithData: PublishSubject<Currently>{get}
     var viewSetBackgroundImages: PublishSubject<(icon: String, gradientInfo: Condition?)>{get}
+    
 }

@@ -37,7 +37,7 @@ class MainViewController: UIViewController, LoaderManager{
     let dot = UIView()
     dot.translatesAutoresizingMaskIntoConstraints = false
     dot.backgroundColor = .white
-    let dotPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 5, width: 10, height: 10), cornerRadius: 10)
+    let dotPath = UIBezierPath(roundedRect: CGRect(x: -10, y: 0, width: 10, height: 10), cornerRadius: 10)
     let layer = CAShapeLayer()
     layer.path = dotPath.cgPath
     layer.fillColor = UIColor.clear.cgColor
@@ -50,13 +50,23 @@ class MainViewController: UIViewController, LoaderManager{
     let temperatureTextView : UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = UIFont(name:"GothamRounded-Book", size: 72)
-        textView.text = "27"
+        textView.font = UIFont(name:"GothamRounded-Light", size: 72)
         textView.textColor = .white
         textView.textAlignment = .center
         textView.backgroundColor = .clear
         return textView
     }()
+    
+    let summaryTextView : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 24)
+        textView.textColor = .white
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
     
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
@@ -96,6 +106,11 @@ class MainViewController: UIViewController, LoaderManager{
             }
         }).disposed(by: disposeBag)
         
+        viewModel.viewLoadWithData.observeOn(MainScheduler.instance).subscribe(onNext: {[unowned self] data in
+            self.temperatureTextView.text = String(Int(data.temperature))
+            self.summaryTextView.text = data.summary
+        }).disposed(by: disposeBag)
+        
     }
     
     private func setupViews(){
@@ -104,6 +119,7 @@ class MainViewController: UIViewController, LoaderManager{
         self.view.addSubview(headerImageView)
         self.view.addSubview(temperatureTextView)
         self.view.addSubview(parcentageCircle)
+        self.view.addSubview(summaryTextView)
         setupConstraints()
     }
     
@@ -112,7 +128,7 @@ class MainViewController: UIViewController, LoaderManager{
             gradientView.topAnchor.constraint(equalTo: self.view.topAnchor),
             gradientView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             gradientView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            gradientView.heightAnchor.constraint(equalToConstant: 226)
+            gradientView.bottomAnchor.constraint(equalTo: self.bodyImageView.topAnchor, constant: 140)
             ])
         
         NSLayoutConstraint.activate([
@@ -138,8 +154,15 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            parcentageCircle.topAnchor.constraint(equalTo: headerImageView.topAnchor, constant: 85),
+            parcentageCircle.topAnchor.constraint(equalTo: headerImageView.topAnchor, constant: 90),
             parcentageCircle.leadingAnchor.constraint(equalTo: temperatureTextView.trailingAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            summaryTextView.topAnchor.constraint(equalTo: temperatureTextView.bottomAnchor),
+            summaryTextView.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor),
+            summaryTextView.heightAnchor.constraint(equalToConstant: 80),
+            summaryTextView.widthAnchor.constraint(equalToConstant: 250)
             ])
         
     }
