@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Hue
 
-enum Conditions: String, CaseIterable{
+enum Condition: String, CaseIterable{
     case night = "night"
     case day = "day"
     case fog = "fog"
@@ -17,13 +18,13 @@ enum Conditions: String, CaseIterable{
 }
 
 class WeatherConditionsHelper{
-    public static func returnConditionThatStringContains(for string: String) -> String?{
-        var gradient: String? = nil
-        Conditions.allCases.forEach{
+    public static func returnConditionThatStringContains(for string: String) -> Condition{
+        var condition: Condition = .day
+        Condition.allCases.forEach{
             if string.contains($0.rawValue){
-                gradient = $0.rawValue
+                condition = $0
             }
         }
-        return gradient
+        return condition
     }
 }

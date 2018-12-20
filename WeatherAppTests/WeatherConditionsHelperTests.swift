@@ -17,11 +17,11 @@ class WeatherConditionsHelperTests: QuickSpec {
         describe("WeatherConditionsHelper object"){
             context("called function that returns condition whitch given string contains"){
                 it("is returning fog"){
-                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "nešto-nešto-fog")).to(equal(Conditions.fog.rawValue))
+                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "nešto-nešto-fog")).to(equal(Condition.fog.rawValue))
                 }
                 
                 it("is returning snow"){
-                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "sdaflgjkboliq23b498hiujbsnowdjfkngjhrbgj")).to(equal(Conditions.snow.rawValue))
+                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "sdaflgjkboliq23b498hiujbsnowdjfkngjhrbgj")).to(equal(Condition.snow.rawValue))
                 }
                 
                 it("is returning nil"){
@@ -29,7 +29,7 @@ class WeatherConditionsHelperTests: QuickSpec {
                 }
                 
                 it("is returning night"){
-                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "asdfa-asdf95956nightasdasdg")).to(equal(Conditions.night.rawValue))
+                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "asdfa-asdf95956nightasdasdg")).to(equal(Condition.night.rawValue))
                 }
             }
         }

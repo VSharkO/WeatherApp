@@ -36,6 +36,8 @@
 		D5E9B85E21C9ACB200723198 /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85B21C9ACB100723198 /* RepositoryProtocol.swift */; };
 		D5E9B85F21C9ACB200723198 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85C21C9ACB100723198 /* Repository.swift */; };
 		D5E9B86021C9ACB200723198 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85D21C9ACB100723198 /* Endpoint.swift */; };
+		D5F6140721CB767C004F1A6F /* GradientHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140621CB767C004F1A6F /* GradientHelper.swift */; };
+		D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		D5E9B85B21C9ACB100723198 /* RepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
 		D5E9B85C21C9ACB100723198 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		D5E9B85D21C9ACB100723198 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		D5F6140621CB767C004F1A6F /* GradientHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHelper.swift; sourceTree = "<group>"; };
+		D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientParametersType.swift; sourceTree = "<group>"; };
 		F629E24779E9BF8A66F8FB1E /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8D402CAAF8106D2776FAFB /* Pods_WeatherAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -149,13 +153,6 @@
 				D53D92D621CA5CD700C8EB0E /* main_screen_response.json */,
 			);
 			path = Responses;
-			sourceTree = "<group>";
-		};
-		D53D92DE21CA7F1A00C8EB0E /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		D552066621C8E7DD00FCB1CC /* Interactors */ = {
@@ -251,7 +248,7 @@
 		D57F534D21C8D5AC00A62F24 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				D53D92DE21CA7F1A00C8EB0E /* Utils */,
+				D5F6140521CB7668004F1A6F /* GradientHelper */,
 				D57F534E21C8D5AC00A62F24 /* ViewModel */,
 				D57F535821C8D5AC00A62F24 /* View */,
 				D57F535A21C8D5AC00A62F24 /* MainScreenCoordinator.swift */,
@@ -285,6 +282,15 @@
 				D5E9B85D21C9ACB100723198 /* Endpoint.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		D5F6140521CB7668004F1A6F /* GradientHelper */ = {
+			isa = PBXGroup;
+			children = (
+				D5F6140621CB767C004F1A6F /* GradientHelper.swift */,
+				D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */,
+			);
+			path = GradientHelper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -524,6 +530,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -534,6 +541,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -552,6 +560,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53D92DD21CA7E2C00C8EB0E /* LoaderManager.swift in Sources */,
+				D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */,
 				D53D92E221CA970A00C8EB0E /* WeatherConditions.swift in Sources */,
 				D57F535B21C8D5AC00A62F24 /* MainViewModel.swift in Sources */,
 				D57F535C21C8D5AC00A62F24 /* MainViewModelProtocol.swift in Sources */,
@@ -562,6 +571,7 @@
 				D5E9B85E21C9ACB200723198 /* RepositoryProtocol.swift in Sources */,
 				D57F536321C8D5AC00A62F24 /* MainScreenCoordinator.swift in Sources */,
 				D552067721C8F17300FCB1CC /* Constants.swift in Sources */,
+				D5F6140721CB767C004F1A6F /* GradientHelper.swift in Sources */,
 				D552066821C8E7DD00FCB1CC /* WeatherInteractor.swift in Sources */,
 				D57F531521C8D48400A62F24 /* AppDelegate.swift in Sources */,
 				D57F536221C8D5AC00A62F24 /* MainViewController.swift in Sources */,

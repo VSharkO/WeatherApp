@@ -15,7 +15,7 @@ class MainViewModel : MainViewModelProtocol{
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
     var viewShowLoader = PublishSubject<Bool>()
-    var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: String?)>()
+    var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
     
     var data: MainDataModel!
     
@@ -38,11 +38,11 @@ class MainViewModel : MainViewModelProtocol{
     
     func setData(response: Response){
         let currently = response.currently
-        let gradient = WeatherConditionsHelper.returnConditionThatStringContains(for: currently.icon)
+        let gradientInfo = WeatherConditionsHelper.returnConditionThatStringContains(for: currently.icon)
         if let daily = response.daily.data.last(where: { dailyData -> Bool in
             TimeDiferenceHelper.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
         }){
-            self.data = MainDataModel(currently: currently, daily: daily, conditions: gradient)
+            self.data = MainDataModel(currently: currently, daily: daily, conditions: gradientInfo)
         }else{
             print("Error setting data, response doesnt contain daily")
         }
