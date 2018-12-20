@@ -33,6 +33,20 @@ class MainViewController: UIViewController, LoaderManager{
         return view
     }()
     
+    let parcentageCircle:UIView = {
+    let dot = UIView()
+    dot.translatesAutoresizingMaskIntoConstraints = false
+    dot.backgroundColor = .white
+    let dotPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 5, width: 10, height: 10), cornerRadius: 10)
+    let layer = CAShapeLayer()
+    layer.path = dotPath.cgPath
+    layer.fillColor = UIColor.clear.cgColor
+    layer.lineWidth = 3
+    layer.strokeColor = UIColor.white.cgColor
+    dot.layer.addSublayer(layer)
+    return dot
+    }()
+    
     let temperatureTextView : UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,8 +101,9 @@ class MainViewController: UIViewController, LoaderManager{
     private func setupViews(){
         self.view.addSubview(gradientView)
         self.view.addSubview(bodyImageView)
-        self.gradientView.addSubview(headerImageView)
-        self.gradientView.addSubview(temperatureTextView)
+        self.view.addSubview(headerImageView)
+        self.view.addSubview(temperatureTextView)
+        self.view.addSubview(parcentageCircle)
         setupConstraints()
     }
     
@@ -115,11 +130,18 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            temperatureTextView.topAnchor.constraint(equalTo: headerImageView.topAnchor, constant: 90),
-            temperatureTextView.leadingAnchor.constraint(equalTo: headerImageView.leadingAnchor),
-            temperatureTextView.trailingAnchor.constraint(equalTo: headerImageView.trailingAnchor),
-            temperatureTextView.heightAnchor.constraint(equalToConstant: 70)
+            temperatureTextView.topAnchor.constraint(equalTo: gradientView.topAnchor, constant: 90),
+            temperatureTextView.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor),
+            temperatureTextView.heightAnchor.constraint(equalToConstant: 70),
+            temperatureTextView.widthAnchor.constraint(equalToConstant: 100)
+            
             ])
+        
+        NSLayoutConstraint.activate([
+            parcentageCircle.topAnchor.constraint(equalTo: headerImageView.topAnchor, constant: 85),
+            parcentageCircle.leadingAnchor.constraint(equalTo: temperatureTextView.trailingAnchor)
+            ])
+        
     }
     
     private func setupGradient(parameters: GradientParameters){
@@ -127,10 +149,7 @@ class MainViewController: UIViewController, LoaderManager{
         gradient.startPoint = parameters.points.startPoint
         gradient.endPoint = parameters.points.endPoint
         gradient.frame = gradientView.bounds
-        
         self.gradientView.layer.addSublayer(gradient)
-        self.gradientView.addSubview(headerImageView)
-        self.gradientView.addSubview(temperatureTextView)
     }
     
     func displayLoader() {
