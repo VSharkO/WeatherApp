@@ -90,7 +90,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont(name:"GothamRounded-Light", size: 24)
         textView.textColor = .white
-        textView.text = "95.4"
         textView.textAlignment = .center
         textView.backgroundColor = .clear
         return textView
@@ -126,7 +125,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont(name:"GothamRounded-Light", size: 24)
         textView.textColor = .white
-        textView.text = "95.4"
         textView.textAlignment = .center
         textView.backgroundColor = .clear
         return textView
@@ -232,6 +230,8 @@ class MainViewController: UIViewController, LoaderManager{
         viewModel.viewLoadWithData.observeOn(MainScheduler.instance).subscribe(onNext: {[unowned self] data in
             self.temperatureTextView.text = String(Int(data.temperature))
             self.summaryTextView.text = data.summary
+            self.maxTemperature.text = self.viewModel.getMaxTemperature()
+            self.minTemperature.text = self.viewModel.getMinTemperature()
         }).disposed(by: disposeBag)
         
     }
@@ -370,15 +370,15 @@ class MainViewController: UIViewController, LoaderManager{
         
         NSLayoutConstraint.activate([
             maxDescriptionTextView.bottomAnchor.constraint(equalTo: separator.bottomAnchor),
-            maxDescriptionTextView.leadingAnchor.constraint(equalTo: maxContainer.leadingAnchor, constant: 10),
+            maxDescriptionTextView.leadingAnchor.constraint(equalTo: separator.trailingAnchor, constant: 20),
             maxDescriptionTextView.trailingAnchor.constraint(equalTo: maxContainer.trailingAnchor),
             maxDescriptionTextView.heightAnchor.constraint(equalToConstant: 30)
             ])
         
         NSLayoutConstraint.activate([
             minDescriptionTextView.bottomAnchor.constraint(equalTo: separator.bottomAnchor),
-            minDescriptionTextView.leadingAnchor.constraint(equalTo: minContainer.leadingAnchor, constant: 10),
-            minDescriptionTextView.trailingAnchor.constraint(equalTo: minContainer.trailingAnchor),
+            minDescriptionTextView.trailingAnchor.constraint(equalTo: separator.leadingAnchor),
+            minDescriptionTextView.leadingAnchor.constraint(equalTo: minContainer.leadingAnchor),
             minDescriptionTextView.heightAnchor.constraint(equalToConstant: 30)
             ])
         

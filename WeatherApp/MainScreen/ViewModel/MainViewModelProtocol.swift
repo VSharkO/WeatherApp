@@ -12,7 +12,8 @@ import RxSwift
 protocol MainViewModelProtocol{
     func initGetingDataFromRepository() -> Disposable
     func initialDataRequest()
-    
+    func getMinTemperature() -> String
+    func getMaxTemperature() -> String
     var viewShowLoader: PublishSubject<Bool>{get}
     var viewLoadWithData: PublishSubject<Currently>{get}
     var viewSetBackgroundImages: PublishSubject<(icon: String, gradientInfo: Condition?)>{get}
