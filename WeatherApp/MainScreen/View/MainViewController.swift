@@ -34,17 +34,17 @@ class MainViewController: UIViewController, LoaderManager{
     }()
     
     let parcentageCircle:UIView = {
-    let dot = UIView()
-    dot.translatesAutoresizingMaskIntoConstraints = false
-    dot.backgroundColor = .white
-    let dotPath = UIBezierPath(roundedRect: CGRect(x: -10, y: 0, width: 10, height: 10), cornerRadius: 10)
-    let layer = CAShapeLayer()
-    layer.path = dotPath.cgPath
-    layer.fillColor = UIColor.clear.cgColor
-    layer.lineWidth = 3
-    layer.strokeColor = UIColor.white.cgColor
-    dot.layer.addSublayer(layer)
-    return dot
+        let dot = UIView()
+        dot.translatesAutoresizingMaskIntoConstraints = false
+        dot.backgroundColor = .white
+        let dotPath = UIBezierPath(roundedRect: CGRect(x: -10, y: 0, width: 10, height: 10), cornerRadius: 10)
+        let layer = CAShapeLayer()
+        layer.path = dotPath.cgPath
+        layer.fillColor = UIColor.clear.cgColor
+        layer.lineWidth = 1.2
+        layer.strokeColor = UIColor.white.cgColor
+        dot.layer.addSublayer(layer)
+        return dot
     }()
     
     let temperatureTextView : UITextView = {
@@ -67,6 +67,129 @@ class MainViewController: UIViewController, LoaderManager{
         return textView
     }()
     
+    let cityTextView : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Book", size: 36)
+        textView.textColor = .white
+        textView.text = "Osijek"
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let separator : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let minTemperature : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 24)
+        textView.textColor = .white
+        textView.text = "95.4"
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let minTempPrecentage:UIView = {
+        let dot = UIView()
+        dot.translatesAutoresizingMaskIntoConstraints = false
+        dot.backgroundColor = .white
+        let dotPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 5, height: 5), cornerRadius: 5)
+        let layer = CAShapeLayer()
+        layer.path = dotPath.cgPath
+        layer.fillColor = UIColor.clear.cgColor
+        layer.lineWidth = 1
+        layer.strokeColor = UIColor.white.cgColor
+        dot.layer.addSublayer(layer)
+        return dot
+    }()
+    
+    let minDescriptionTextView : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 20)
+        textView.text = "Low"
+        textView.textColor = .white
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let maxTemperature : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 24)
+        textView.textColor = .white
+        textView.text = "95.4"
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let maxTempPrecentage:UIView = {
+        let dot = UIView()
+        dot.translatesAutoresizingMaskIntoConstraints = false
+        dot.backgroundColor = .white
+        let dotPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 5, height: 5), cornerRadius: 5)
+        let layer = CAShapeLayer()
+        layer.path = dotPath.cgPath
+        layer.fillColor = UIColor.clear.cgColor
+        layer.lineWidth = 1
+        layer.strokeColor = UIColor.white.cgColor
+        dot.layer.addSublayer(layer)
+        return dot
+    }()
+    
+    let maxDescriptionTextView : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 20)
+        textView.textColor = .white
+        textView.text = "High"
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let maxContainer: UIView = {
+        let conteiner = UIView()
+        conteiner.translatesAutoresizingMaskIntoConstraints = false
+        return conteiner
+    }()
+    
+    let minContainer: UIView = {
+        let conteiner = UIView()
+        conteiner.translatesAutoresizingMaskIntoConstraints = false
+        return conteiner
+    }()
+    
+    let minTemperatureUnit : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 24)
+        textView.textColor = .white
+        textView.text = "C"
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let maxTemperatureUnit : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 24)
+        textView.textColor = .white
+        textView.text = "C"
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
     
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
@@ -120,6 +243,18 @@ class MainViewController: UIViewController, LoaderManager{
         self.view.addSubview(temperatureTextView)
         self.view.addSubview(parcentageCircle)
         self.view.addSubview(summaryTextView)
+        self.view.addSubview(cityTextView)
+        self.view.addSubview(separator)
+        self.minContainer.addSubview(minTemperature)
+        self.minContainer.addSubview(minTempPrecentage)
+        self.minContainer.addSubview(minTemperatureUnit)
+        self.maxContainer.addSubview(maxTemperatureUnit)
+        self.maxContainer.addSubview(maxTempPrecentage)
+        self.maxContainer.addSubview(maxTemperature)
+        self.view.addSubview(maxContainer)
+        self.view.addSubview(minContainer)
+        self.view.addSubview(maxDescriptionTextView)
+        self.view.addSubview(minDescriptionTextView)
         setupConstraints()
     }
     
@@ -150,7 +285,6 @@ class MainViewController: UIViewController, LoaderManager{
             temperatureTextView.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor),
             temperatureTextView.heightAnchor.constraint(equalToConstant: 70),
             temperatureTextView.widthAnchor.constraint(equalToConstant: 100)
-            
             ])
         
         NSLayoutConstraint.activate([
@@ -161,8 +295,91 @@ class MainViewController: UIViewController, LoaderManager{
         NSLayoutConstraint.activate([
             summaryTextView.topAnchor.constraint(equalTo: temperatureTextView.bottomAnchor),
             summaryTextView.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor),
-            summaryTextView.heightAnchor.constraint(equalToConstant: 80),
+            summaryTextView.heightAnchor.constraint(equalToConstant: 50),
             summaryTextView.widthAnchor.constraint(equalToConstant: 250)
+            ])
+        
+        NSLayoutConstraint.activate([
+            cityTextView.topAnchor.constraint(equalTo: summaryTextView.bottomAnchor, constant: 50),
+            cityTextView.centerXAnchor.constraint(equalTo: bodyImageView.centerXAnchor),
+            cityTextView.heightAnchor.constraint(equalToConstant: 70),
+            cityTextView.widthAnchor.constraint(equalToConstant: 500 )
+            ])
+        
+        NSLayoutConstraint.activate([
+            separator.topAnchor.constraint(equalTo: cityTextView.bottomAnchor, constant: 10),
+            separator.centerXAnchor.constraint(equalTo: bodyImageView.centerXAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 60),
+            separator.widthAnchor.constraint(equalToConstant: 2)
+            ])
+        
+        NSLayoutConstraint.activate([
+            minTemperatureUnit.topAnchor.constraint(equalTo: minContainer.topAnchor),
+            minTemperatureUnit.trailingAnchor.constraint(equalTo: minContainer.trailingAnchor),
+            minTemperatureUnit.bottomAnchor.constraint(equalTo: minContainer.bottomAnchor),
+            minTemperatureUnit.widthAnchor.constraint(equalToConstant: 20),
+            ])
+
+        NSLayoutConstraint.activate([
+            minTempPrecentage.topAnchor.constraint(equalTo: minContainer.topAnchor, constant: 5),
+            minTempPrecentage.trailingAnchor.constraint(equalTo: minTemperatureUnit.leadingAnchor),
+            minTempPrecentage.heightAnchor.constraint(equalTo: minContainer.heightAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            minTemperature.topAnchor.constraint(equalTo: minContainer.topAnchor),
+            minTemperature.trailingAnchor.constraint(equalTo: minTempPrecentage.leadingAnchor, constant: 8),
+            minTemperature.bottomAnchor.constraint(equalTo: minContainer.bottomAnchor),
+            minTemperature.widthAnchor.constraint(equalToConstant: 85)
+            ])
+        
+        NSLayoutConstraint.activate([
+            minContainer.topAnchor.constraint(equalTo: separator.topAnchor),
+            minContainer.trailingAnchor.constraint(equalTo: separator.leadingAnchor, constant: -20),
+            minContainer.widthAnchor.constraint(equalToConstant: 100),
+            minContainer.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            maxTemperature.topAnchor.constraint(equalTo: maxContainer.topAnchor),
+            maxTemperature.leadingAnchor.constraint(equalTo: maxContainer.leadingAnchor),
+            maxTemperature.bottomAnchor.constraint(equalTo: maxContainer.bottomAnchor),
+            maxTemperature.widthAnchor.constraint(equalToConstant: 85)
+            ])
+        
+        NSLayoutConstraint.activate([
+            maxTempPrecentage.topAnchor.constraint(equalTo: maxContainer.topAnchor, constant: 5),
+            maxTempPrecentage.leadingAnchor.constraint(equalTo: maxTemperature.trailingAnchor, constant: -8),
+            maxTempPrecentage.bottomAnchor.constraint(equalTo: maxContainer.bottomAnchor),
+            ])
+        
+        NSLayoutConstraint.activate([
+            maxTemperatureUnit.topAnchor.constraint(equalTo: maxContainer.topAnchor),
+            maxTemperatureUnit.leadingAnchor.constraint(equalTo: maxTempPrecentage.trailingAnchor),
+            maxTemperatureUnit.bottomAnchor.constraint(equalTo: maxContainer.bottomAnchor),
+            maxTemperatureUnit.widthAnchor.constraint(equalToConstant: 20)
+            ])
+        
+        NSLayoutConstraint.activate([
+            maxContainer.topAnchor.constraint(equalTo: separator.topAnchor),
+            maxContainer.leadingAnchor.constraint(equalTo: separator.trailingAnchor, constant: 20),
+            maxContainer.heightAnchor.constraint(equalToConstant: 30),
+            maxContainer.widthAnchor.constraint(equalToConstant: 100)
+            ])
+
+        
+        NSLayoutConstraint.activate([
+            maxDescriptionTextView.bottomAnchor.constraint(equalTo: separator.bottomAnchor),
+            maxDescriptionTextView.leadingAnchor.constraint(equalTo: maxContainer.leadingAnchor, constant: 10),
+            maxDescriptionTextView.trailingAnchor.constraint(equalTo: maxContainer.trailingAnchor),
+            maxDescriptionTextView.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            minDescriptionTextView.bottomAnchor.constraint(equalTo: separator.bottomAnchor),
+            minDescriptionTextView.leadingAnchor.constraint(equalTo: minContainer.leadingAnchor, constant: 10),
+            minDescriptionTextView.trailingAnchor.constraint(equalTo: minContainer.trailingAnchor),
+            minDescriptionTextView.heightAnchor.constraint(equalToConstant: 30)
             ])
         
     }
