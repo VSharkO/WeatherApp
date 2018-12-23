@@ -17,7 +17,7 @@ class MainViewModel : MainViewModelProtocol{
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
     var viewShowLoader = PublishSubject<Bool>()
     var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
-    var viewLoadWithData = PublishSubject<Currently>()
+    var viewLoadWithData = PublishSubject<MainDataModel>()
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
@@ -50,7 +50,7 @@ class MainViewModel : MainViewModelProtocol{
     
     func updateView(){
         self.viewSetBackgroundImages.onNext((icon: data.currently.icon,gradientInfo: data.conditions))
-        self.viewLoadWithData.onNext(data.currently)
+        self.viewLoadWithData.onNext(data)
         self.viewShowLoader.onNext(false)
     }
     
@@ -60,13 +60,6 @@ class MainViewModel : MainViewModelProtocol{
     
     private func dataRequestTrigered(){
         dataRequestTriger.onNext(true)
-    }
-    
-    func getMinTemperature() -> String{
-        return String(format: "%.1f",data.daily.temperatureMin)
-    }
-    func getMaxTemperature() -> String{
-        return String(format: "%.1f",data.daily.temperatureMax)
     }
     
 }
