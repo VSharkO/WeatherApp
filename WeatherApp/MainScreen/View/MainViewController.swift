@@ -223,6 +223,102 @@ class MainViewController: UIViewController, LoaderManager{
         return stackView
     }()
     
+    let humidityIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "humidity_icon")
+        return imageView
+    }()
+    
+    let windIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "wind_icon")
+        return imageView
+    }()
+    
+    let pressureIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "pressure_icon")
+        return imageView
+    }()
+    
+    let humidityText : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isUserInteractionEnabled = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 20)
+        textView.textColor = .white
+        textView.text = "13%"
+        textView.isScrollEnabled = false
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let windText : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isUserInteractionEnabled = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 20)
+        textView.textColor = .white
+        textView.text = "1225 mph"
+        textView.isScrollEnabled = false
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let pressureText : UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isUserInteractionEnabled = false
+        textView.font = UIFont(name:"GothamRounded-Light", size: 20)
+        textView.textColor = .white
+        textView.text = "1225 hpa"
+        textView.isScrollEnabled = false
+        textView.textAlignment = .center
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let verticalHumidityStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.alignment = .center
+        return stackView
+    }()
+    
+    let verticalPressureStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.alignment = .center
+        return stackView
+    }()
+    
+    let verticalWindStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.alignment = .center
+        return stackView
+    }()
+    
+    let horizontalStackConditions: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+//        stackView.spacing = 40
+        stackView.alignment = .center
+        return stackView
+    }()
+    
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
@@ -291,6 +387,16 @@ class MainViewController: UIViewController, LoaderManager{
         self.minVerticalStack.addArrangedSubview(minDescriptionTextView)
         self.maxVerticalStack.addArrangedSubview(maxContainer)
         self.maxVerticalStack.addArrangedSubview(maxDescriptionTextView)
+        self.verticalWindStack.addArrangedSubview(windIcon)
+        self.verticalWindStack.addArrangedSubview(windText)
+        self.verticalPressureStack.addArrangedSubview(pressureIcon)
+        self.verticalPressureStack.addArrangedSubview(pressureText)
+        self.verticalHumidityStack.addArrangedSubview(humidityIcon)
+        self.verticalHumidityStack.addArrangedSubview(humidityText)
+        self.horizontalStackConditions.addArrangedSubview(verticalHumidityStack)
+        self.horizontalStackConditions.addArrangedSubview(verticalWindStack)
+        self.horizontalStackConditions.addArrangedSubview(verticalPressureStack)
+        self.view.addSubview(horizontalStackConditions)
         setupConstraints()
     }
     
@@ -409,6 +515,41 @@ class MainViewController: UIViewController, LoaderManager{
             maxVerticalStack.bottomAnchor.constraint(equalTo: separator.bottomAnchor),
             maxVerticalStack.leadingAnchor.constraint(equalTo: separator.trailingAnchor, constant: 40)
             ])
+        
+        NSLayoutConstraint.activate([
+            maxVerticalStack.bottomAnchor.constraint(equalTo: separator.bottomAnchor),
+            maxVerticalStack.leadingAnchor.constraint(equalTo: separator.trailingAnchor, constant: 40)
+            ])
+        
+        NSLayoutConstraint.activate([
+            humidityText.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            pressureText.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            windText.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            verticalWindStack.widthAnchor.constraint(equalToConstant: 120)
+            ])
+        
+        NSLayoutConstraint.activate([
+            verticalHumidityStack.widthAnchor.constraint(equalToConstant: 120)
+            ])
+        
+        NSLayoutConstraint.activate([
+            verticalPressureStack.widthAnchor.constraint(equalToConstant: 120)
+            ])
+        
+        NSLayoutConstraint.activate([
+            horizontalStackConditions.topAnchor.constraint(equalTo: maxVerticalStack.bottomAnchor, constant: 50),
+            horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            ])
+        
     }
     
     private func setupGradient(parameters: GradientParameters){
