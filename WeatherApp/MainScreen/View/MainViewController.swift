@@ -257,7 +257,7 @@ class MainViewController: UIViewController, LoaderManager{
         return textView
     }()
     
-    let windText : UITextView = {
+    let windSpeedText : UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isUserInteractionEnabled = false
@@ -362,6 +362,9 @@ class MainViewController: UIViewController, LoaderManager{
             self.summaryTextView.text = data.currently.summary
             self.maxTemperature.text = String(format: "%.1f",data.daily.temperatureMax)
             self.minTemperature.text = String(format: "%.1f",data.daily.temperatureMin)
+            self.humidityText.text = String(format: "%.1f",data.currently.humidity) + "%"
+            self.pressureText.text = String(Int(data.currently.pressure)) + " hpa"
+            self.windSpeedText.text = String(format: "%.1f",data.currently.windSpeed) + " mph"
         }).disposed(by: disposeBag)
         
     }
@@ -388,7 +391,7 @@ class MainViewController: UIViewController, LoaderManager{
         self.maxVerticalStack.addArrangedSubview(maxContainer)
         self.maxVerticalStack.addArrangedSubview(maxDescriptionTextView)
         self.verticalWindStack.addArrangedSubview(windIcon)
-        self.verticalWindStack.addArrangedSubview(windText)
+        self.verticalWindStack.addArrangedSubview(windSpeedText)
         self.verticalPressureStack.addArrangedSubview(pressureIcon)
         self.verticalPressureStack.addArrangedSubview(pressureText)
         self.verticalHumidityStack.addArrangedSubview(humidityIcon)
@@ -442,11 +445,11 @@ class MainViewController: UIViewController, LoaderManager{
         NSLayoutConstraint.activate([
             cityTextView.topAnchor.constraint(equalTo: summaryTextView.bottomAnchor, constant: 60),
             cityTextView.centerXAnchor.constraint(equalTo: bodyImageView.centerXAnchor),
-            cityTextView.heightAnchor.constraint(equalToConstant: 70)
+            cityTextView.heightAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
-            separator.topAnchor.constraint(equalTo: cityTextView.bottomAnchor, constant: 10),
+            separator.topAnchor.constraint(equalTo: cityTextView.bottomAnchor, constant: 30),
             separator.centerXAnchor.constraint(equalTo: bodyImageView.centerXAnchor),
             separator.heightAnchor.constraint(equalToConstant: 60),
             separator.widthAnchor.constraint(equalToConstant: 2)
@@ -530,7 +533,7 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            windText.heightAnchor.constraint(equalToConstant: 30)
+            windSpeedText.heightAnchor.constraint(equalToConstant: 30)
             ])
         
         NSLayoutConstraint.activate([
@@ -546,7 +549,7 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            horizontalStackConditions.topAnchor.constraint(equalTo: maxVerticalStack.bottomAnchor, constant: 50),
+            horizontalStackConditions.topAnchor.constraint(equalTo: maxVerticalStack.bottomAnchor, constant: 60),
             horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
             ])
         
