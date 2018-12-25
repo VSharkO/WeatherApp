@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WeatherApp/Repository/RepositoryProtocol.swift at 2018-12-19 22:55:31 +0000
+// MARK: - Mocks generated from file: WeatherApp/Repository/RepositoryProtocol.swift at 2018-12-25 23:45:57 +0000
 
 //
 //  RepositoryProtocol.swift

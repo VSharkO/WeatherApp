@@ -17,19 +17,19 @@ class WeatherConditionsHelperTests: QuickSpec {
         describe("WeatherConditionsHelper object"){
             context("called function that returns condition whitch given string contains"){
                 it("is returning fog"){
-                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "nešto-nešto-fog")).to(equal(Condition.fog.rawValue))
+                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "nešto-nešto-fog")).to(equal(Condition.fog))
                 }
                 
                 it("is returning snow"){
-                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "sdaflgjkboliq23b498hiujbsnowdjfkngjhrbgj")).to(equal(Condition.snow.rawValue))
+                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "sdaflgjkboliq23b498hiujbsnowdjfkngjhrbgj")).to(equal(Condition.snow))
                 }
                 
                 it("is returning nil"){
-                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "sdaflgjkboliq23b498hiujbswdjfkngjhrbgj")).to(beNil())
+                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "sdaflgjkboliq23b498hiujbswdjfkngjhrbgj")).to(equal(Condition.day))
                 }
                 
                 it("is returning night"){
-                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "asdfa-asdf95956nightasdasdg")).to(equal(Condition.night.rawValue))
+                    expect(WeatherConditionsHelper.returnConditionThatStringContains(for: "asdfa-asdf95956nightasdasdg")).to(equal(Condition.night))
                 }
             }
         }

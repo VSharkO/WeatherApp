@@ -56,7 +56,7 @@ class MainScreenTests: QuickSpec {
             }
             context("Called data from repo"){
                 var testScheduler = TestScheduler(initialClock: 0)
-                var subscriber = testScheduler.createObserver((icon: String, gradientInfo: String?).self)
+                var subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
                 var mockRepository = MockRepositoryProtocol()
                 beforeEach {
                     mockRepository = MockRepositoryProtocol()
@@ -64,7 +64,7 @@ class MainScreenTests: QuickSpec {
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
                     }
                     testScheduler = TestScheduler(initialClock: 0)
-                    subscriber = testScheduler.createObserver((icon: String, gradientInfo: String?).self)
+                    subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
                     mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
