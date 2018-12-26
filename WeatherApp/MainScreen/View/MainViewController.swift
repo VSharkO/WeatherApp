@@ -309,6 +309,7 @@ class MainViewController: UIViewController, LoaderManager{
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
+        stackView.spacing = 30
         stackView.alignment = .center
         return stackView
     }()
@@ -436,13 +437,13 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            summaryTextView.topAnchor.constraint(lessThanOrEqualTo: temperatureTextView.bottomAnchor),
+            summaryTextView.topAnchor.constraint(lessThanOrEqualTo: temperatureTextView.bottomAnchor, constant: 5),
             summaryTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            summaryTextView.heightAnchor.constraint(equalToConstant: 50)
+            summaryTextView.heightAnchor.constraint(equalToConstant: 40)
             ])
         
         NSLayoutConstraint.activate([
-            cityTextView.topAnchor.constraint(lessThanOrEqualTo: summaryTextView.bottomAnchor, constant: 60),
+            cityTextView.topAnchor.constraint(lessThanOrEqualTo: summaryTextView.bottomAnchor, constant: 65),
             cityTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             cityTextView.heightAnchor.constraint(equalToConstant: 50)
             ])
@@ -536,20 +537,23 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            verticalWindStack.widthAnchor.constraint(equalToConstant: 120)
+            verticalWindStack.widthAnchor.constraint(lessThanOrEqualToConstant: 120)
             ])
         
         NSLayoutConstraint.activate([
-            verticalHumidityStack.widthAnchor.constraint(equalToConstant: 120)
+            verticalHumidityStack.widthAnchor.constraint(equalTo: verticalWindStack.widthAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            verticalPressureStack.widthAnchor.constraint(equalToConstant: 120)
+            verticalPressureStack.widthAnchor.constraint(equalTo: verticalWindStack.widthAnchor)
             ])
         
         NSLayoutConstraint.activate([
             horizontalStackConditions.topAnchor.constraint(lessThanOrEqualTo: maxVerticalStack.bottomAnchor, constant: 60),
-            horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            horizontalStackConditions.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
+            horizontalStackConditions.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor),
+            horizontalStackConditions.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor)
             ])
         
     }
