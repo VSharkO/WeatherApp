@@ -314,6 +314,14 @@ class MainViewController: UIViewController, LoaderManager{
         return stackView
     }()
     
+    let searchConteiner: UIView = {
+       let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
@@ -401,6 +409,7 @@ class MainViewController: UIViewController, LoaderManager{
         self.horizontalStackConditions.addArrangedSubview(verticalWindStack)
         self.horizontalStackConditions.addArrangedSubview(verticalPressureStack)
         self.view.addSubview(horizontalStackConditions)
+        self.view.addSubview(searchConteiner)
         setupConstraints()
     }
     
@@ -426,9 +435,11 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            temperatureTextView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 80),
+            temperatureTextView.topAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 80),
             temperatureTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            temperatureTextView.heightAnchor.constraint(equalToConstant: 70)
+            temperatureTextView.heightAnchor.constraint(equalToConstant: 70),
+            temperatureTextView.bottomAnchor.constraint(greaterThanOrEqualTo: summaryTextView.topAnchor, constant: 5)
+            
             ])
         
         NSLayoutConstraint.activate([
@@ -437,19 +448,20 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            summaryTextView.topAnchor.constraint(lessThanOrEqualTo: temperatureTextView.bottomAnchor, constant: 5),
+            summaryTextView.topAnchor.constraint(greaterThanOrEqualTo: temperatureTextView.bottomAnchor, constant: -5),
             summaryTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            summaryTextView.heightAnchor.constraint(equalToConstant: 40)
+            summaryTextView.heightAnchor.constraint(equalToConstant: 40),
+            summaryTextView.bottomAnchor.constraint(greaterThanOrEqualTo: cityTextView.topAnchor, constant: -100)
             ])
         
         NSLayoutConstraint.activate([
-            cityTextView.topAnchor.constraint(lessThanOrEqualTo: summaryTextView.bottomAnchor, constant: 65),
+            cityTextView.topAnchor.constraint(greaterThanOrEqualTo: summaryTextView.bottomAnchor, constant: 100),
             cityTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             cityTextView.heightAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
-            separator.topAnchor.constraint(lessThanOrEqualTo: cityTextView.bottomAnchor, constant: 30),
+            separator.topAnchor.constraint(greaterThanOrEqualTo: cityTextView.bottomAnchor, constant: 10),
             separator.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             separator.heightAnchor.constraint(equalToConstant: 60),
             separator.widthAnchor.constraint(equalToConstant: 2)
@@ -549,11 +561,19 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            horizontalStackConditions.topAnchor.constraint(lessThanOrEqualTo: maxVerticalStack.bottomAnchor, constant: 60),
+            horizontalStackConditions.topAnchor.constraint(greaterThanOrEqualTo: maxVerticalStack.bottomAnchor, constant: 20),
             horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             horizontalStackConditions.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
             horizontalStackConditions.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor),
             horizontalStackConditions.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            searchConteiner.topAnchor.constraint(greaterThanOrEqualTo: horizontalStackConditions.bottomAnchor, constant: 20),
+            searchConteiner.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 40),
+            searchConteiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -40),
+            searchConteiner.heightAnchor.constraint(equalToConstant: 40),
+            searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
             ])
         
     }
