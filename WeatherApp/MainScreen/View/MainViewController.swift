@@ -314,7 +314,6 @@ class MainViewController: UIViewController, LoaderManager{
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-//        stackView.spacing = 40
         stackView.alignment = .center
         return stackView
     }()
