@@ -18,6 +18,7 @@ class MainViewController: UIViewController, LoaderManager{
     let headerImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -411,45 +412,44 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            headerImageView.topAnchor.constraint(equalTo: gradientView.topAnchor),
+            headerImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             headerImageView.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor),
-            headerImageView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor),
-            headerImageView.bottomAnchor.constraint(equalTo: gradientView.bottomAnchor)
+            headerImageView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            bodyImageView.heightAnchor.constraint(equalToConstant: 570),
+            bodyImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 150),
             bodyImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             bodyImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             bodyImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            temperatureTextView.topAnchor.constraint(equalTo: gradientView.topAnchor, constant: 90),
-            temperatureTextView.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor),
+            temperatureTextView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 80),
+            temperatureTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             temperatureTextView.heightAnchor.constraint(equalToConstant: 70)
             ])
         
         NSLayoutConstraint.activate([
-            parcentageCircle.topAnchor.constraint(equalTo: headerImageView.topAnchor, constant: 90),
+            parcentageCircle.topAnchor.constraint(equalTo: temperatureTextView.topAnchor),
             parcentageCircle.leadingAnchor.constraint(equalTo: temperatureTextView.trailingAnchor, constant: 5)
             ])
         
         NSLayoutConstraint.activate([
-            summaryTextView.topAnchor.constraint(equalTo: temperatureTextView.bottomAnchor),
-            summaryTextView.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor),
+            summaryTextView.topAnchor.constraint(lessThanOrEqualTo: temperatureTextView.bottomAnchor),
+            summaryTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             summaryTextView.heightAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
-            cityTextView.topAnchor.constraint(equalTo: summaryTextView.bottomAnchor, constant: 60),
-            cityTextView.centerXAnchor.constraint(equalTo: bodyImageView.centerXAnchor),
+            cityTextView.topAnchor.constraint(lessThanOrEqualTo: summaryTextView.bottomAnchor, constant: 60),
+            cityTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             cityTextView.heightAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
-            separator.topAnchor.constraint(equalTo: cityTextView.bottomAnchor, constant: 30),
-            separator.centerXAnchor.constraint(equalTo: bodyImageView.centerXAnchor),
+            separator.topAnchor.constraint(lessThanOrEqualTo: cityTextView.bottomAnchor, constant: 30),
+            separator.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             separator.heightAnchor.constraint(equalToConstant: 60),
             separator.widthAnchor.constraint(equalToConstant: 2)
             ])
@@ -548,7 +548,7 @@ class MainViewController: UIViewController, LoaderManager{
             ])
         
         NSLayoutConstraint.activate([
-            horizontalStackConditions.topAnchor.constraint(equalTo: maxVerticalStack.bottomAnchor, constant: 60),
+            horizontalStackConditions.topAnchor.constraint(lessThanOrEqualTo: maxVerticalStack.bottomAnchor, constant: 60),
             horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
             ])
         
