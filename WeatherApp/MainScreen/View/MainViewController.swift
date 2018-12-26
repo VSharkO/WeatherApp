@@ -330,6 +330,9 @@ class MainViewController: UIViewController, LoaderManager{
     override func viewDidLoad() {
         setupViews()
         initSubscripts()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         viewModel.initialDataRequest()
     }
     
