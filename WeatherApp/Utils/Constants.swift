@@ -19,5 +19,13 @@ struct Constants {
     public static let usUnitsApi = "us"
     public static let headerImage = "header_image-"
     public static let bodyImage = "body_image-"
-
+    public static let highTemperatureText = "High"
+    public static let lowTemperatureText = "Low"
+    public static let defaultCityName = "Osijek"
+    public static let tempUnitSi = "C"
+    public static let windSpeedUnitSi = " mph"
+    public static let tempUnitUs = "F"
+    public static let windSpeedUnitUs = " mps"
+    public static let pressureUnit = " hpa"
+    public static let humidityUnit = "%"
 }

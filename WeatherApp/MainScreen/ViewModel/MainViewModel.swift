@@ -12,6 +12,10 @@ import RxSwift
 class MainViewModel : MainViewModelProtocol{
     
     internal var data: MainDataModel!
+    internal var units: String
+    internal var tempUnit: String!
+    internal var windSpeedUnit: String!
+    internal var cityName: String
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
@@ -22,6 +26,8 @@ class MainViewModel : MainViewModelProtocol{
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
         self.scheduler = scheduler
+        units = Constants.siUnitsApi
+        cityName = Constants.defaultCityName
     }
     
     func initGetingDataFromRepository() -> Disposable {
@@ -32,6 +38,7 @@ class MainViewModel : MainViewModelProtocol{
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
                 self.setData(response: response)
+                self.setUnits()
                 self.updateView()
             })
     }
@@ -60,6 +67,16 @@ class MainViewModel : MainViewModelProtocol{
     
     private func dataRequestTrigered(){
         dataRequestTriger.onNext(true)
+    }
+    
+    private func setUnits(){
+        if units == Constants.siUnitsApi{
+            self.tempUnit = Constants.tempUnitSi
+            self.windSpeedUnit = Constants.windSpeedUnitSi
+        }else{
+            self.tempUnit = Constants.tempUnitUs
+            self.windSpeedUnit = Constants.windSpeedUnitUs
+        }
     }
     
 }

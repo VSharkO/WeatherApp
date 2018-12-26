@@ -76,7 +76,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont(name:"GothamRounded-Book", size: 36)
         textView.textColor = .white
-        textView.text = "Osijek"
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
         textView.textAlignment = .center
@@ -122,7 +121,7 @@ class MainViewController: UIViewController, LoaderManager{
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isUserInteractionEnabled = false
         textView.font = UIFont(name:"GothamRounded-Light", size: 20)
-        textView.text = "Low"
+        textView.text = Constants.lowTemperatureText
         textView.isScrollEnabled = false
         textView.textColor = .white
         textView.textAlignment = .center
@@ -163,7 +162,7 @@ class MainViewController: UIViewController, LoaderManager{
         textView.textColor = .white
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.text = "High"
+        textView.text = Constants.highTemperatureText
         textView.textAlignment = .center
         textView.backgroundColor = .clear
         return textView
@@ -188,7 +187,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.textColor = .white
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.text = "C"
         textView.textAlignment = .center
         textView.backgroundColor = .clear
         return textView
@@ -201,7 +199,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.textColor = .white
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.text = "C"
         textView.textAlignment = .center
         textView.backgroundColor = .clear
         return textView
@@ -250,7 +247,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.isUserInteractionEnabled = false
         textView.font = UIFont(name:"GothamRounded-Light", size: 20)
         textView.textColor = .white
-        textView.text = "13%"
         textView.isScrollEnabled = false
         textView.textAlignment = .center
         textView.backgroundColor = .clear
@@ -263,7 +259,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.isUserInteractionEnabled = false
         textView.font = UIFont(name:"GothamRounded-Light", size: 20)
         textView.textColor = .white
-        textView.text = "1225 mph"
         textView.isScrollEnabled = false
         textView.textAlignment = .center
         textView.backgroundColor = .clear
@@ -276,7 +271,6 @@ class MainViewController: UIViewController, LoaderManager{
         textView.isUserInteractionEnabled = false
         textView.font = UIFont(name:"GothamRounded-Light", size: 20)
         textView.textColor = .white
-        textView.text = "1225 hpa"
         textView.isScrollEnabled = false
         textView.textAlignment = .center
         textView.backgroundColor = .clear
@@ -359,11 +353,14 @@ class MainViewController: UIViewController, LoaderManager{
         viewModel.viewLoadWithData.observeOn(MainScheduler.instance).subscribe(onNext: {[unowned self] data in
             self.temperatureTextView.text = String(Int(data.currently.temperature))
             self.summaryTextView.text = data.currently.summary
+            self.maxTemperatureUnit.text = self.viewModel.tempUnit
+            self.minTemperatureUnit.text = self.viewModel.tempUnit
+            self.cityTextView.text = self.viewModel.cityName
             self.maxTemperature.text = String(format: "%.1f",data.daily.temperatureMax)
             self.minTemperature.text = String(format: "%.1f",data.daily.temperatureMin)
-            self.humidityText.text = String(format: "%.1f",data.currently.humidity) + "%"
-            self.pressureText.text = String(Int(data.currently.pressure)) + " hpa"
-            self.windSpeedText.text = String(format: "%.1f",data.currently.windSpeed) + " mph"
+            self.humidityText.text = String(format: "%.1f",data.currently.humidity) + Constants.humidityUnit
+            self.pressureText.text = String(Int(data.currently.pressure)) + Constants.pressureUnit
+            self.windSpeedText.text = String(format: "%.1f",data.currently.windSpeed) + self.viewModel.windSpeedUnit
         }).disposed(by: disposeBag)
         
     }
