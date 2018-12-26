@@ -16,6 +16,7 @@ class MainViewModel : MainViewModelProtocol{
     internal var tempUnit: String!
     internal var windSpeedUnit: String!
     internal var cityName: String
+    internal var coordinates: String
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
@@ -28,12 +29,13 @@ class MainViewModel : MainViewModelProtocol{
         self.scheduler = scheduler
         units = Constants.siUnitsApi
         cityName = Constants.defaultCityName
+        coordinates = Constants.defaultCoordinates
     }
     
     func initGetingDataFromRepository() -> Disposable {
         return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<Response> in
             self.viewShowLoader.onNext(true)
-            return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: Constants.defaultCoordinates, units: Constants.siUnitsApi))
+            return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.coordinates, units: Constants.siUnitsApi))
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
