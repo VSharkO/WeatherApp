@@ -322,6 +322,7 @@ class MainViewController: UIViewController, LoaderManager{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -329,6 +330,7 @@ class MainViewController: UIViewController, LoaderManager{
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "settings_icon")
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -337,6 +339,7 @@ class MainViewController: UIViewController, LoaderManager{
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
         label.text = "Search"
+        label.isUserInteractionEnabled = false
         return label
     }()
     
@@ -344,6 +347,7 @@ class MainViewController: UIViewController, LoaderManager{
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "search_icon")
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
@@ -369,6 +373,7 @@ class MainViewController: UIViewController, LoaderManager{
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.initialDataRequest()
+        self.registerTouchListeners()
     }
     
     private func initSubscripts(){
@@ -635,5 +640,21 @@ class MainViewController: UIViewController, LoaderManager{
             removeLoader(loader: loader)
         }
     }
+    
+    private func registerTouchListeners(){
+        let gestureForSearch = UITapGestureRecognizer(target: self, action:  #selector (self.openSearchScreen(_:)))
+        let gestureForSettings = UITapGestureRecognizer(target: self, action:  #selector (self.openSettingsScreen(_:)))
+        self.searchConteiner.addGestureRecognizer(gestureForSearch)
+        self.settingsImage.addGestureRecognizer(gestureForSettings)
+        
+    }
  
+    @objc func openSearchScreen(_ sender:UITapGestureRecognizer){
+        print("opening searchScreenModaly")
+    }
+    
+    @objc func openSettingsScreen(_ sender:UITapGestureRecognizer){
+        print("opening settingsScreenModaly")
+    }
+    
 }
