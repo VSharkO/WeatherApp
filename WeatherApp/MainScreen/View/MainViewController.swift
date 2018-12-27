@@ -598,7 +598,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             searchConteiner.topAnchor.constraint(greaterThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 15),
 //            searchConteiner.topAnchor.constraint(lessThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 20),
             searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: settingsImage.trailingAnchor, constant: 10),
-            searchConteiner.trailingAnchor.constraint(equalTo: self.pressureText.trailingAnchor),
+            searchConteiner.trailingAnchor.constraint(equalTo: self.pressureText.trailingAnchor, constant: -10),
             searchConteiner.heightAnchor.constraint(equalToConstant: 30),
             searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
             ])

@@ -88,16 +88,16 @@ class SearchViewController: UIViewController {
     var leadingConstraint: NSLayoutConstraint!
     var trailingConstraint: NSLayoutConstraint!
     var trailingAnchorSettings: NSLayoutConstraint!
-    
+    var leadingAnchorSettings: NSLayoutConstraint!
     private func setupConstraints(){
         NSLayoutConstraint.activate([
             searchConteiner.heightAnchor.constraint(equalToConstant: 30)
             ])
-        leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 40)
+        leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40)
         leadingConstraint.isActive = true
         bottomConstraint = searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
         bottomConstraint.isActive = true
-        trailingConstraint = searchConteiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -40)
+        trailingConstraint = searchConteiner.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor,constant: -10)
         trailingConstraint.isActive = true
         
         NSLayoutConstraint.activate([
@@ -116,7 +116,9 @@ class SearchViewController: UIViewController {
         NSLayoutConstraint.activate([
             settingsImage.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor)
             ])
-        trailingAnchorSettings = settingsImage.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10)
+        leadingAnchorSettings = settingsImage.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30)
+        leadingAnchorSettings.isActive = true
+        trailingAnchorSettings = settingsImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40)
         trailingAnchorSettings.isActive = true
         settingsImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
@@ -137,10 +139,11 @@ class SearchViewController: UIViewController {
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
         UIView.animate(withDuration: 0, animations: {
-            self.bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height - 10 : 0
+            self.bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height - 10 : -15
             self.leadingConstraint.constant = isKeyboardShowing ? 20 : 40
             self.trailingConstraint.constant = isKeyboardShowing ? -20 : -40
-            self.trailingAnchorSettings.constant = isKeyboardShowing ? -50 : -10
+            self.trailingAnchorSettings.constant = isKeyboardShowing ? 0 : 40
+            self.leadingAnchorSettings.constant = isKeyboardShowing ? -30 : 30
             self.view.layoutIfNeeded()
         })
         
