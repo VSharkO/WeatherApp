@@ -22,15 +22,13 @@ class AnimationHelper:  NSObject, UIViewControllerAnimatedTransitioning{
         }
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.alpha = 0.95
         blurEffectView.frame = containerView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        toView.alpha = 0.7
-        
         UIView.animate(withDuration: duration,
                        animations: {
-                        toView.alpha = 1.0
                         containerView.insertSubview(blurEffectView, at: 0)
         })
     }

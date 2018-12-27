@@ -453,7 +453,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             gradientView.topAnchor.constraint(equalTo: self.view.topAnchor),
             gradientView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             gradientView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            gradientView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1/2.8)
+            gradientView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1/2.5)
             ])
         
         NSLayoutConstraint.activate([
@@ -622,7 +622,6 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             searchIcon.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
             searchIcon.trailingAnchor.constraint(equalTo: searchConteiner.trailingAnchor, constant: -10)
             ])
-        
     }
     
     private func setupGradient(parameters: GradientParameters){

@@ -15,15 +15,15 @@ class SearchViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 15
-        view.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = false
         return view
     }()
     
-    let searchBarText: UITextView = {
-        let label = UITextView()
+    let searchBarText: UITextField = {
+        let label = UITextField()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
-        label.accessibilityHint = "Search"
+        label.placeholder = "Search"
         label.layer.cornerRadius = 15
         label.isUserInteractionEnabled = true
         return label
@@ -33,7 +33,7 @@ class SearchViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "search_icon")
-        imageView.isUserInteractionEnabled = false
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -42,6 +42,14 @@ class SearchViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "square_checkmark_check")
         imageView.isUserInteractionEnabled = false
+        return imageView
+    }()
+    
+    let settingsImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "settings_icon")
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -70,23 +78,27 @@ class SearchViewController: UIViewController {
     private func setupViews(){
         self.searchConteiner.addSubview(searchBarText)
         self.searchConteiner.addSubview(searchIcon)
+        self.view.addSubview(settingsImage)
         self.view.addSubview(searchConteiner)
         self.view.addSubview(doneIcon)
-        
         setupConstraints()
     }
     
     var bottomConstraint: NSLayoutConstraint!
+    var leadingConstraint: NSLayoutConstraint!
+    var trailingConstraint: NSLayoutConstraint!
+    var trailingAnchorSettings: NSLayoutConstraint!
     
     private func setupConstraints(){
-        
         NSLayoutConstraint.activate([
-            searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 20),
-            searchConteiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -20),
             searchConteiner.heightAnchor.constraint(equalToConstant: 30)
             ])
+        leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 40)
+        leadingConstraint.isActive = true
         bottomConstraint = searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
         bottomConstraint.isActive = true
+        trailingConstraint = searchConteiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -40)
+        trailingConstraint.isActive = true
         
         NSLayoutConstraint.activate([
             searchBarText.leadingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: 20),
@@ -100,6 +112,13 @@ class SearchViewController: UIViewController {
             searchIcon.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
             searchIcon.trailingAnchor.constraint(equalTo: searchConteiner.trailingAnchor, constant: -10)
             ])
+        
+        NSLayoutConstraint.activate([
+            settingsImage.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor)
+            ])
+        trailingAnchorSettings = settingsImage.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10)
+        trailingAnchorSettings.isActive = true
+        settingsImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         NSLayoutConstraint.activate([
             doneIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30),
@@ -117,8 +136,11 @@ class SearchViewController: UIViewController {
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
-        UIView.animate(withDuration: 1, animations: {
+        UIView.animate(withDuration: 0, animations: {
             self.bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height - 10 : 0
+            self.leadingConstraint.constant = isKeyboardShowing ? 20 : 40
+            self.trailingConstraint.constant = isKeyboardShowing ? -20 : -40
+            self.trailingAnchorSettings.constant = isKeyboardShowing ? -50 : -10
             self.view.layoutIfNeeded()
         })
         
