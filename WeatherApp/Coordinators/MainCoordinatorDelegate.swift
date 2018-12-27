@@ -10,4 +10,5 @@ import Foundation
 
 protocol MainCoordinatorDelegate: CoordinatorDelegate {
    //za otvaranje screena iz maina
+    func openSearchScreenModally()
 }

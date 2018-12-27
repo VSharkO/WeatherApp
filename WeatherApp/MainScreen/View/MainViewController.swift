@@ -11,7 +11,9 @@ import RxSwift
 import Kingfisher
 import Hue
 
-class MainViewController: UIViewController, LoaderManager{
+class MainViewController: UIViewController, LoaderManager,UIViewControllerTransitioningDelegate{
+    
+    let animationHelper = AnimationHelper()
     
     var gradient: CAGradientLayer!
     
@@ -641,20 +643,31 @@ class MainViewController: UIViewController, LoaderManager{
         }
     }
     
+    
     private func registerTouchListeners(){
         let gestureForSearch = UITapGestureRecognizer(target: self, action:  #selector (self.openSearchScreen(_:)))
         let gestureForSettings = UITapGestureRecognizer(target: self, action:  #selector (self.openSettingsScreen(_:)))
         self.searchConteiner.addGestureRecognizer(gestureForSearch)
         self.settingsImage.addGestureRecognizer(gestureForSettings)
-        
     }
  
     @objc func openSearchScreen(_ sender:UITapGestureRecognizer){
         print("opening searchScreenModaly")
+            let modalViewController = SearchViewController()
+            modalViewController.transitioningDelegate = self
+            modalViewController.modalPresentationStyle = .overCurrentContext
+        present(modalViewController, animated: true, completion: nil)
     }
     
     @objc func openSettingsScreen(_ sender:UITapGestureRecognizer){
         print("opening settingsScreenModaly")
     }
     
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return animationHelper
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return nil
+    }
 }

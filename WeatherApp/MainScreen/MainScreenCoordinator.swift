@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordinatorDelegate{
-    
+   
     var childCoordinators: [Coordinator] = []
     var presenter: UINavigationController
     private var controller: MainViewController
@@ -34,4 +34,7 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
         removeChildCoordinator(childCoordinator: coordinator)
     }
     
+    func openSearchScreenModally() {
+        
+    }
 }
