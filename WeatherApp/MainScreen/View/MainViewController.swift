@@ -323,7 +323,7 @@ class MainViewController: UIViewController, LoaderManager,UIViewControllerTransi
        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.layer.cornerRadius = 20
+        view.layer.cornerRadius = 15
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -596,10 +596,10 @@ class MainViewController: UIViewController, LoaderManager,UIViewControllerTransi
         
         NSLayoutConstraint.activate([
             searchConteiner.topAnchor.constraint(greaterThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 15),
-            searchConteiner.topAnchor.constraint(lessThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 60),
+//            searchConteiner.topAnchor.constraint(lessThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 20),
             searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: settingsImage.trailingAnchor, constant: 10),
             searchConteiner.trailingAnchor.constraint(equalTo: self.pressureText.trailingAnchor),
-            searchConteiner.heightAnchor.constraint(equalToConstant: 40),
+            searchConteiner.heightAnchor.constraint(equalToConstant: 30),
             searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
             ])
         
@@ -611,7 +611,7 @@ class MainViewController: UIViewController, LoaderManager,UIViewControllerTransi
             settingsImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         NSLayoutConstraint.activate([
-            searchBarText.leadingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: 15),
+            searchBarText.leadingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: 10),
             searchBarText.trailingAnchor.constraint(equalTo: searchIcon.leadingAnchor, constant: -5),
             searchBarText.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
             searchBarText.heightAnchor.constraint(equalToConstant: 30)
@@ -620,7 +620,7 @@ class MainViewController: UIViewController, LoaderManager,UIViewControllerTransi
         NSLayoutConstraint.activate([
             searchIcon.leadingAnchor.constraint(equalTo: searchBarText.trailingAnchor, constant: 5),
             searchIcon.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
-            searchIcon.trailingAnchor.constraint(equalTo: searchConteiner.trailingAnchor, constant: -15)
+            searchIcon.trailingAnchor.constraint(equalTo: searchConteiner.trailingAnchor, constant: -10)
             ])
         
     }
@@ -643,7 +643,6 @@ class MainViewController: UIViewController, LoaderManager,UIViewControllerTransi
         }
     }
     
-    
     private func registerTouchListeners(){
         let gestureForSearch = UITapGestureRecognizer(target: self, action:  #selector (self.openSearchScreen(_:)))
         let gestureForSettings = UITapGestureRecognizer(target: self, action:  #selector (self.openSettingsScreen(_:)))
@@ -653,9 +652,9 @@ class MainViewController: UIViewController, LoaderManager,UIViewControllerTransi
  
     @objc func openSearchScreen(_ sender:UITapGestureRecognizer){
         print("opening searchScreenModaly")
-            let modalViewController = SearchViewController()
-            modalViewController.transitioningDelegate = self
-            modalViewController.modalPresentationStyle = .overCurrentContext
+        let modalViewController = SearchViewController()
+        modalViewController.transitioningDelegate = self
+        modalViewController.modalPresentationStyle = .overCurrentContext
         present(modalViewController, animated: true, completion: nil)
     }
     

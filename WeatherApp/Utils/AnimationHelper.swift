@@ -21,18 +21,19 @@ class AnimationHelper:  NSObject, UIViewControllerAnimatedTransitioning{
             return
         }
         let containerView = transitionContext.containerView
-        
         containerView.addSubview(toView)
-        toView.alpha = 0.0
+                let blurEffect = UIBlurEffect(style: .dark)
+                let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                blurEffectView.frame = containerView.bounds
+                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    
+        toView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 60)
         UIView.animate(withDuration: duration,
                        animations: {
-                        toView.alpha = 1.0
-        },
-                       completion: { _ in
-                        transitionContext.completeTransition(true)
-        }
-        )
+                        toView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 30)
+                        containerView.insertSubview(blurEffectView, at: 0)
+                       
+        })
     }
-    
     
 }
