@@ -10,7 +10,7 @@ import UIKit
 
 class AnimationHelper:  NSObject, UIViewControllerAnimatedTransitioning{
     
-    let duration = 0.5
+    let duration = 0.2
     var originFrame = CGRect.zero
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0
