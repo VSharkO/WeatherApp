@@ -11,7 +11,7 @@ import RxSwift
 import Kingfisher
 import Hue
 
-class MainViewController: UIViewController, LoaderManager,UIViewControllerTransitioningDelegate{
+class MainViewController: UIViewController, LoaderManager, UIViewControllerTransitioningDelegate{
     
     let animationHelper = AnimationHelper()
     
@@ -652,10 +652,7 @@ class MainViewController: UIViewController, LoaderManager,UIViewControllerTransi
  
     @objc func openSearchScreen(_ sender:UITapGestureRecognizer){
         print("opening searchScreenModaly")
-        let modalViewController = SearchViewController()
-        modalViewController.transitioningDelegate = self
-        modalViewController.modalPresentationStyle = .overCurrentContext
-        present(modalViewController, animated: true, completion: nil)
+        mainCoordinatorDelegate?.openSearchScreenModally()
     }
     
     @objc func openSettingsScreen(_ sender:UITapGestureRecognizer){

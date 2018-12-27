@@ -23,7 +23,7 @@ class SearchViewController: UIViewController {
         let label = UITextView()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
-        label.text = "Search"
+        label.accessibilityHint = "Search"
         label.layer.cornerRadius = 15
         label.isUserInteractionEnabled = true
         return label
@@ -37,6 +37,25 @@ class SearchViewController: UIViewController {
         return imageView
     }()
     
+    let doneIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "square_checkmark_check")
+        imageView.isUserInteractionEnabled = false
+        return imageView
+    }()
+    
+    private var viewModel: SearchViewModelProtocol!
+    
+    init(viewModel: SearchViewModelProtocol) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
@@ -44,38 +63,33 @@ class SearchViewController: UIViewController {
         setupViews()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidLayoutSubviews() {
         searchBarText.becomeFirstResponder()
     }
     
     private func setupViews(){
-//        self.addBlureBackground()
-        self.view.addSubview(searchConteiner)
         self.searchConteiner.addSubview(searchBarText)
         self.searchConteiner.addSubview(searchIcon)
+        self.view.addSubview(searchConteiner)
+        self.view.addSubview(doneIcon)
         
         setupConstraints()
     }
     
-//    private func addBlureBackground(){
-//        let blurEffect = UIBlurEffect(style: .dark)
-//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = view.bounds
-//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        view.addSubview(blurEffectView)
-//    }
+    var bottomConstraint: NSLayoutConstraint!
     
     private func setupConstraints(){
         
         NSLayoutConstraint.activate([
-            searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 30),
-            searchConteiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -30),
-            searchConteiner.heightAnchor.constraint(equalToConstant: 30),
-            searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
+            searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 20),
+            searchConteiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -20),
+            searchConteiner.heightAnchor.constraint(equalToConstant: 30)
             ])
+        bottomConstraint = searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
+        bottomConstraint.isActive = true
         
         NSLayoutConstraint.activate([
-            searchBarText.leadingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: 10),
+            searchBarText.leadingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: 20),
             searchBarText.trailingAnchor.constraint(equalTo: searchIcon.leadingAnchor, constant: -5),
             searchBarText.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
             searchBarText.heightAnchor.constraint(equalToConstant: 30)
@@ -86,15 +100,28 @@ class SearchViewController: UIViewController {
             searchIcon.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
             searchIcon.trailingAnchor.constraint(equalTo: searchConteiner.trailingAnchor, constant: -10)
             ])
+        
+        NSLayoutConstraint.activate([
+            doneIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30),
+            doneIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30)
+            ])
     }
     
     private func setupNotificationObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector (keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector (keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
  
     @objc func keyboardWillChange(notification: Notification){
-        view.frame.origin.y = -300
-        // po veličini tipkovnice napraviti ovo.
+        let info = notification.userInfo!
+        let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+        UIView.animate(withDuration: 1, animations: {
+            self.bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height - 10 : 0
+            self.view.layoutIfNeeded()
+        })
+        
     }
-
+    
 }

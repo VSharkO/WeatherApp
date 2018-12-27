@@ -40,6 +40,9 @@
 		D5E9B85E21C9ACB200723198 /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85B21C9ACB100723198 /* RepositoryProtocol.swift */; };
 		D5E9B85F21C9ACB200723198 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85C21C9ACB100723198 /* Repository.swift */; };
 		D5E9B86021C9ACB200723198 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85D21C9ACB100723198 /* Endpoint.swift */; };
+		D5E9EB6321D5023000C46371 /* SearchScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9EB6221D5023000C46371 /* SearchScreenCoordinator.swift */; };
+		D5E9EB6521D5049700C46371 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9EB6421D5049700C46371 /* SearchViewModel.swift */; };
+		D5E9EB6721D504B300C46371 /* SearchViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9EB6621D504B300C46371 /* SearchViewModelProtocol.swift */; };
 		D5F6140721CB767C004F1A6F /* GradientHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140621CB767C004F1A6F /* GradientHelper.swift */; };
 		D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */; };
 /* End PBXBuildFile section */
@@ -102,6 +105,9 @@
 		D5E9B85B21C9ACB100723198 /* RepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
 		D5E9B85C21C9ACB100723198 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		D5E9B85D21C9ACB100723198 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		D5E9EB6221D5023000C46371 /* SearchScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenCoordinator.swift; sourceTree = "<group>"; };
+		D5E9EB6421D5049700C46371 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		D5E9EB6621D504B300C46371 /* SearchViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelProtocol.swift; sourceTree = "<group>"; };
 		D5F6140621CB767C004F1A6F /* GradientHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHelper.swift; sourceTree = "<group>"; };
 		D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientParametersType.swift; sourceTree = "<group>"; };
 		F629E24779E9BF8A66F8FB1E /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +304,9 @@
 			isa = PBXGroup;
 			children = (
 				D5E8E1C521D4586700846D8C /* SearchViewController.swift */,
+				D5E9EB6221D5023000C46371 /* SearchScreenCoordinator.swift */,
+				D5E9EB6421D5049700C46371 /* SearchViewModel.swift */,
+				D5E9EB6621D504B300C46371 /* SearchViewModelProtocol.swift */,
 			);
 			path = SearchScreen;
 			sourceTree = "<group>";
@@ -605,6 +614,7 @@
 				D5F6140721CB767C004F1A6F /* GradientHelper.swift in Sources */,
 				D552066821C8E7DD00FCB1CC /* WeatherInteractor.swift in Sources */,
 				D5E8E1C621D4586700846D8C /* SearchViewController.swift in Sources */,
+				D5E9EB6721D504B300C46371 /* SearchViewModelProtocol.swift in Sources */,
 				D57F531521C8D48400A62F24 /* AppDelegate.swift in Sources */,
 				D57F536221C8D5AC00A62F24 /* MainViewController.swift in Sources */,
 				D5E9B85F21C9ACB200723198 /* Repository.swift in Sources */,
@@ -613,6 +623,8 @@
 				D53D92D921CA694E00C8EB0E /* MainDataModel.swift in Sources */,
 				D57F534B21C8D53000A62F24 /* CoordinatorDelegate.swift in Sources */,
 				D5E9B86021C9ACB200723198 /* Endpoint.swift in Sources */,
+				D5E9EB6521D5049700C46371 /* SearchViewModel.swift in Sources */,
+				D5E9EB6321D5023000C46371 /* SearchScreenCoordinator.swift in Sources */,
 				D57F534C21C8D53000A62F24 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

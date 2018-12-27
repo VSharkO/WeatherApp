@@ -35,6 +35,9 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
     }
     
     func openSearchScreenModally() {
-        
+        let searchCoordinator = SearchScreenCoordinator(presenter: self.presenter, transitionDelegate: controller)
+        self.childCoordinators.append(searchCoordinator)
+        searchCoordinator.parentCoordinatorDelegate = self
+        searchCoordinator.start()
     }
 }
