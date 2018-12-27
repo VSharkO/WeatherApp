@@ -332,6 +332,21 @@ class MainViewController: UIViewController, LoaderManager{
         return imageView
     }()
     
+    let searchBarText: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .gray
+        label.text = "Search"
+        return label
+    }()
+    
+    let searchIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "search_icon")
+        return imageView
+    }()
+    
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
@@ -419,6 +434,8 @@ class MainViewController: UIViewController, LoaderManager{
         self.horizontalStackConditions.addArrangedSubview(verticalWindStack)
         self.horizontalStackConditions.addArrangedSubview(verticalPressureStack)
         self.view.addSubview(horizontalStackConditions)
+        self.searchConteiner.addSubview(searchBarText)
+        self.searchConteiner.addSubview(searchIcon)
         self.view.addSubview(searchConteiner)
         self.view.addSubview(settingsImage)
         setupConstraints()
@@ -570,12 +587,10 @@ class MainViewController: UIViewController, LoaderManager{
             windSpeedText.heightAnchor.constraint(equalToConstant: 30)
             ])
         
-        
-        
         NSLayoutConstraint.activate([
             searchConteiner.topAnchor.constraint(greaterThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 15),
             searchConteiner.topAnchor.constraint(lessThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 60),
-            searchConteiner.leadingAnchor.constraint(equalTo: settingsImage.trailingAnchor, constant: 5),
+            searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: settingsImage.trailingAnchor, constant: 10),
             searchConteiner.trailingAnchor.constraint(equalTo: self.pressureText.trailingAnchor),
             searchConteiner.heightAnchor.constraint(equalToConstant: 40),
             searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
@@ -584,7 +599,21 @@ class MainViewController: UIViewController, LoaderManager{
         NSLayoutConstraint.activate([
             settingsImage.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
             settingsImage.leadingAnchor.constraint(equalTo: humidityText.leadingAnchor),
-            settingsImage.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10)
+            settingsImage.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10),
+            ])
+            settingsImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        NSLayoutConstraint.activate([
+            searchBarText.leadingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: 15),
+            searchBarText.trailingAnchor.constraint(equalTo: searchIcon.leadingAnchor, constant: -5),
+            searchBarText.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
+            searchBarText.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        
+        NSLayoutConstraint.activate([
+            searchIcon.leadingAnchor.constraint(equalTo: searchBarText.trailingAnchor, constant: 5),
+            searchIcon.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
+            searchIcon.trailingAnchor.constraint(equalTo: searchConteiner.trailingAnchor, constant: -15)
             ])
         
     }
