@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class SearchViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
@@ -71,6 +73,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     private var viewModel: SearchViewModelProtocol!
     var coordinatorDelegate: CoordinatorDelegate!
+    let disposeBag = DisposeBag()
     
     init(viewModel: SearchViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
@@ -86,6 +89,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
         setupViews()
         setupNotificationObserver()
         registerTouchListeners()
+        setupObservingSearchText()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +97,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        viewModel.initGetingDataFromRepository().disposed(by: disposeBag)
         searchBarText.becomeFirstResponder()
     }
     
@@ -172,6 +177,11 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
             tableVeiw.trailingAnchor.constraint(equalTo: self.doneButton.leadingAnchor),
             tableVeiw.heightAnchor.constraint(greaterThanOrEqualToConstant: self.view.frame.height * 0.5)
             ])
+    }
+    private func setupObservingSearchText(){
+        searchBarText.rx.text.orEmpty.debounce(0.25, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
+            self.viewModel.dynamicSearchString.onNext(dynamicString)
+        }).disposed(by: disposeBag)
     }
     
     private func setupNotificationObserver(){

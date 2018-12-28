@@ -17,6 +17,30 @@ class SearchCell: UITableViewCell {
         return imageView
     }()
     
+    let firstLetterTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.text = "T"
+        textView.font = UIFont.systemFont(ofSize: 15)
+        textView.textAlignment = .center
+        textView.textColor = .white
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
+    let cityNameText: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.text = "TB Anakonda"
+        textView.font = UIFont.systemFont(ofSize: 15)
+        textView.textAlignment = .left
+        textView.textColor = .white
+        textView.backgroundColor = .clear
+        return textView
+    }()
+    
     let separator: UIView = {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
@@ -36,6 +60,8 @@ class SearchCell: UITableViewCell {
     private func setupViews(){
         self.contentView.addSubview(firstLetterImageView)
         self.contentView.addSubview(separator)
+        self.firstLetterImageView.addSubview(firstLetterTextView)
+        self.contentView.addSubview(cityNameText)
         setupConstraints()
         
     }
@@ -53,6 +79,20 @@ class SearchCell: UITableViewCell {
             separator.trailingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor),
             separator.heightAnchor.constraint(equalToConstant: 1),
             separator.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            firstLetterTextView.bottomAnchor.constraint(equalTo: firstLetterImageView.bottomAnchor),
+            firstLetterTextView.leadingAnchor.constraint(equalTo: firstLetterImageView.leadingAnchor),
+            firstLetterTextView.trailingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor),
+            firstLetterTextView.topAnchor.constraint(equalTo: firstLetterImageView.topAnchor, constant: 7)
+            ])
+        
+        NSLayoutConstraint.activate([
+            cityNameText.bottomAnchor.constraint(equalTo: firstLetterImageView.bottomAnchor),
+            cityNameText.leadingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor, constant: 10),
+            cityNameText.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            cityNameText.topAnchor.constraint(equalTo: firstLetterImageView.topAnchor, constant: 7)
             ])
     }
     

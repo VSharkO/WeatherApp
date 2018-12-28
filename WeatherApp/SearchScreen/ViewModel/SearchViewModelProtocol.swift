@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol SearchViewModelProtocol {
-    
+    var dynamicSearchString: PublishSubject<String>{set get}
+    func initGetingDataFromRepository() -> Disposable
 }
