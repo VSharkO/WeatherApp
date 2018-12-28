@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AnimationHelper:  NSObject, UIViewControllerAnimatedTransitioning{
+class AnimationHelperAppearing:  NSObject, UIViewControllerAnimatedTransitioning{
     
     let duration = 0.2
     var originFrame = CGRect.zero
@@ -22,15 +22,10 @@ class AnimationHelper:  NSObject, UIViewControllerAnimatedTransitioning{
         }
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
-        let blurEffect = UIBlurEffect(style: .regular)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.alpha = 0.95
-        blurEffectView.frame = containerView.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        UIView.animate(withDuration: duration,
-                       animations: {
-                        containerView.insertSubview(blurEffectView, at: 0)
-        })
+        UIView.animate(withDuration: duration, animations: {
+        }) { isFinished in
+            transitionContext.completeTransition(isFinished)
+        }
     }
     
 }

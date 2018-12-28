@@ -8,15 +8,22 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController{
     
     let searchConteiner: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 15
-        view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = true
         return view
+    }()
+    
+    let blureBackground: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        return blurEffectView
     }()
     
     let searchBarText: UITextField = {
@@ -33,27 +40,28 @@ class SearchViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "search_icon")
-        imageView.isUserInteractionEnabled = true
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
-    let doneIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "square_checkmark_check")
-        imageView.isUserInteractionEnabled = false
-        return imageView
+    let doneButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setBackgroundImage(UIImage(named: "checkmark_check"), for: UIControl.State.normal)
+        button.isUserInteractionEnabled = true
+        return button
     }()
     
     let settingsImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "settings_icon")
-        imageView.isUserInteractionEnabled = true
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
     private var viewModel: SearchViewModelProtocol!
+    var coordinatorDelegate: CoordinatorDelegate!
     
     init(viewModel: SearchViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
@@ -65,22 +73,27 @@ class SearchViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         self.view.backgroundColor = .clear
-        setupNotificationObserver()
         setupViews()
+        setupNotificationObserver()
+        registerTouchListeners()
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewWillAppear(_ animated: Bool) {
+        registerTouchListeners()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         searchBarText.becomeFirstResponder()
     }
     
     private func setupViews(){
+        self.view.addSubview(blureBackground)
         self.searchConteiner.addSubview(searchBarText)
         self.searchConteiner.addSubview(searchIcon)
         self.view.addSubview(settingsImage)
         self.view.addSubview(searchConteiner)
-        self.view.addSubview(doneIcon)
+        self.view.addSubview(doneButton)
         setupConstraints()
     }
     
@@ -89,15 +102,23 @@ class SearchViewController: UIViewController {
     var trailingConstraint: NSLayoutConstraint!
     var trailingAnchorSettings: NSLayoutConstraint!
     var leadingAnchorSettings: NSLayoutConstraint!
+    
     private func setupConstraints(){
+        
         NSLayoutConstraint.activate([
-            searchConteiner.heightAnchor.constraint(equalToConstant: 30)
+            blureBackground.topAnchor.constraint(equalTo: self.view.topAnchor),
+            blureBackground.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            blureBackground.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            blureBackground.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
             ])
-        leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40)
-        leadingConstraint.isActive = true
+        
+        searchConteiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        leadingConstraint = searchConteiner.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20)
+        leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 60)
         bottomConstraint = searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
+        trailingConstraint = searchConteiner.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.trailingAnchor,constant: -20)
         bottomConstraint.isActive = true
-        trailingConstraint = searchConteiner.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor,constant: -10)
+        leadingConstraint.isActive = true
         trailingConstraint.isActive = true
         
         NSLayoutConstraint.activate([
@@ -113,18 +134,14 @@ class SearchViewController: UIViewController {
             searchIcon.trailingAnchor.constraint(equalTo: searchConteiner.trailingAnchor, constant: -10)
             ])
         
-        NSLayoutConstraint.activate([
-            settingsImage.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor)
-            ])
-        leadingAnchorSettings = settingsImage.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30)
-        leadingAnchorSettings.isActive = true
-        trailingAnchorSettings = settingsImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40)
-        trailingAnchorSettings.isActive = true
+        settingsImage.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor).isActive = true
         settingsImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        trailingAnchorSettings = settingsImage.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10)
+        trailingAnchorSettings.isActive = true
         
         NSLayoutConstraint.activate([
-            doneIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30),
-            doneIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30)
+            doneButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30),
+            doneButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30)
             ])
     }
     
@@ -133,20 +150,29 @@ class SearchViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector (keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    private func registerTouchListeners(){
+        self.doneButton.addTarget(self, action: #selector (self.closeScreen(_:)), for: UIControl.Event.touchUpInside)
+    }
  
+    @objc func closeScreen(_ sender: UIButton){
+        print("closeing SearchScreen")
+        searchBarText.resignFirstResponder()
+        self.coordinatorDelegate.viewHasFinished()
+    }
+        
     @objc func keyboardWillChange(notification: Notification){
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        
         let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
         UIView.animate(withDuration: 0, animations: {
             self.bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height - 10 : -15
-            self.leadingConstraint.constant = isKeyboardShowing ? 20 : 40
-            self.trailingConstraint.constant = isKeyboardShowing ? -20 : -40
-            self.trailingAnchorSettings.constant = isKeyboardShowing ? 0 : 40
-            self.leadingAnchorSettings.constant = isKeyboardShowing ? -30 : 30
+            self.leadingConstraint.constant = isKeyboardShowing ? 10 : 60
+            self.trailingConstraint.constant = isKeyboardShowing ? -10 : -20
+            self.trailingAnchorSettings.constant = isKeyboardShowing ? -20 : -10
+            self.blureBackground.alpha = isKeyboardShowing ? 0.95 : 0
             self.view.layoutIfNeeded()
         })
-        
     }
-    
 }

@@ -13,8 +13,6 @@ import Hue
 
 class MainViewController: UIViewController, LoaderManager, UIViewControllerTransitioningDelegate{
     
-    let animationHelper = AnimationHelper()
-    
     var gradient: CAGradientLayer!
     
     let headerImageView: UIImageView = {
@@ -328,12 +326,11 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         return view
     }()
     
-    let settingsImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "settings_icon")
-        imageView.isUserInteractionEnabled = true
-        return imageView
+    let settingsButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setBackgroundImage(UIImage(named: "settings_icon"), for: UIControl.State.normal)
+        return button
     }()
     
     let searchBarText: UILabel = {
@@ -356,7 +353,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
-    var mainCoordinatorDelegate: MainCoordinatorDelegate?
+    weak var mainCoordinatorDelegate: MainCoordinatorDelegate?
     
     init(viewModel: MainViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
@@ -444,7 +441,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         self.searchConteiner.addSubview(searchBarText)
         self.searchConteiner.addSubview(searchIcon)
         self.view.addSubview(searchConteiner)
-        self.view.addSubview(settingsImage)
+        self.view.addSubview(settingsButton)
         setupConstraints()
     }
     
@@ -596,19 +593,18 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         
         NSLayoutConstraint.activate([
             searchConteiner.topAnchor.constraint(greaterThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 15),
-//            searchConteiner.topAnchor.constraint(lessThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 20),
-            searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: settingsImage.trailingAnchor, constant: 10),
+            searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: settingsButton.trailingAnchor, constant: 10),
             searchConteiner.trailingAnchor.constraint(equalTo: self.pressureText.trailingAnchor, constant: -10),
             searchConteiner.heightAnchor.constraint(equalToConstant: 30),
             searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
             ])
         
         NSLayoutConstraint.activate([
-            settingsImage.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
-            settingsImage.leadingAnchor.constraint(equalTo: humidityText.leadingAnchor),
-            settingsImage.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10),
+            settingsButton.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
+            settingsButton.leadingAnchor.constraint(equalTo: humidityText.leadingAnchor),
+            settingsButton.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10),
             ])
-            settingsImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            settingsButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         NSLayoutConstraint.activate([
             searchBarText.leadingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: 10),
@@ -644,9 +640,8 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     
     private func registerTouchListeners(){
         let gestureForSearch = UITapGestureRecognizer(target: self, action:  #selector (self.openSearchScreen(_:)))
-        let gestureForSettings = UITapGestureRecognizer(target: self, action:  #selector (self.openSettingsScreen(_:)))
         self.searchConteiner.addGestureRecognizer(gestureForSearch)
-        self.settingsImage.addGestureRecognizer(gestureForSettings)
+        self.settingsButton.addTarget(self, action: #selector (self.openSettingsScreen(_:)), for: UIControl.Event.touchUpInside)
     }
  
     @objc func openSearchScreen(_ sender:UITapGestureRecognizer){
@@ -654,15 +649,17 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         mainCoordinatorDelegate?.openSearchScreenModally()
     }
     
-    @objc func openSettingsScreen(_ sender:UITapGestureRecognizer){
+    @objc func openSettingsScreen(_ sender:UIButton){
         print("opening settingsScreenModaly")
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animationHelper = AnimationHelperAppearing()
         return animationHelper
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return nil
+        let animationHelper = AnimationHelperDisappearing()
+        return animationHelper
     }
 }

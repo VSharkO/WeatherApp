@@ -19,19 +19,21 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate{
     
     init(presenter: UINavigationController, transitionDelegate: UIViewControllerTransitioningDelegate) {
         self.presenter = presenter
-        self.transitionDelegate = transitionDelegate
         childCoordinators = []
         let viewModel = SearchViewModel(repository: Repository())
         controller = SearchViewController(viewModel: viewModel)
+        self.transitionDelegate = transitionDelegate
     }
     
     func start() {
         controller.transitioningDelegate = transitionDelegate
         controller.modalPresentationStyle = .overCurrentContext
+        controller.coordinatorDelegate = self
         presenter.present(controller, animated: true, completion: nil)
     }
     
     func viewHasFinished() {
+        controller.dismiss(animated: true, completion: nil)
         parentCoordinatorDelegate?.childHasFinished(coordinator: self)
     }
     

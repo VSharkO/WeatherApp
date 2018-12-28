@@ -35,8 +35,9 @@
 		D57F535C21C8D5AC00A62F24 /* MainViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57F535021C8D5AC00A62F24 /* MainViewModelProtocol.swift */; };
 		D57F536221C8D5AC00A62F24 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57F535921C8D5AC00A62F24 /* MainViewController.swift */; };
 		D57F536321C8D5AC00A62F24 /* MainScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57F535A21C8D5AC00A62F24 /* MainScreenCoordinator.swift */; };
+		D5E2A78621D6A00D00A803FE /* AnimationHelperDisappearing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E2A78521D6A00D00A803FE /* AnimationHelperDisappearing.swift */; };
 		D5E8E1C621D4586700846D8C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8E1C521D4586700846D8C /* SearchViewController.swift */; };
-		D5E8E1C821D474B700846D8C /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8E1C721D474B700846D8C /* AnimationHelper.swift */; };
+		D5E8E1C821D474B700846D8C /* AnimationHelperAppearing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8E1C721D474B700846D8C /* AnimationHelperAppearing.swift */; };
 		D5E9B85E21C9ACB200723198 /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85B21C9ACB100723198 /* RepositoryProtocol.swift */; };
 		D5E9B85F21C9ACB200723198 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85C21C9ACB100723198 /* Repository.swift */; };
 		D5E9B86021C9ACB200723198 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9B85D21C9ACB100723198 /* Endpoint.swift */; };
@@ -100,8 +101,9 @@
 		D57F535021C8D5AC00A62F24 /* MainViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModelProtocol.swift; sourceTree = "<group>"; };
 		D57F535921C8D5AC00A62F24 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D57F535A21C8D5AC00A62F24 /* MainScreenCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenCoordinator.swift; sourceTree = "<group>"; };
+		D5E2A78521D6A00D00A803FE /* AnimationHelperDisappearing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelperDisappearing.swift; sourceTree = "<group>"; };
 		D5E8E1C521D4586700846D8C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		D5E8E1C721D474B700846D8C /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		D5E8E1C721D474B700846D8C /* AnimationHelperAppearing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelperAppearing.swift; sourceTree = "<group>"; };
 		D5E9B85B21C9ACB100723198 /* RepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
 		D5E9B85C21C9ACB100723198 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		D5E9B85D21C9ACB100723198 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -194,7 +196,8 @@
 				D53D92DA21CA7A2000C8EB0E /* TimeDiferenceHelper.swift */,
 				D53D92DC21CA7E2C00C8EB0E /* LoaderManager.swift */,
 				D53D92E121CA970A00C8EB0E /* WeatherConditions.swift */,
-				D5E8E1C721D474B700846D8C /* AnimationHelper.swift */,
+				D5E8E1C721D474B700846D8C /* AnimationHelperAppearing.swift */,
+				D5E2A78521D6A00D00A803FE /* AnimationHelperDisappearing.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -599,8 +602,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53D92DD21CA7E2C00C8EB0E /* LoaderManager.swift in Sources */,
+				D5E2A78621D6A00D00A803FE /* AnimationHelperDisappearing.swift in Sources */,
 				D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */,
-				D5E8E1C821D474B700846D8C /* AnimationHelper.swift in Sources */,
+				D5E8E1C821D474B700846D8C /* AnimationHelperAppearing.swift in Sources */,
 				D53D92E221CA970A00C8EB0E /* WeatherConditions.swift in Sources */,
 				D57F535B21C8D5AC00A62F24 /* MainViewModel.swift in Sources */,
 				D57F535C21C8D5AC00A62F24 /* MainViewModelProtocol.swift in Sources */,
