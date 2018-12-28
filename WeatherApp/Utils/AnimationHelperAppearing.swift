@@ -23,6 +23,7 @@ class AnimationHelperAppearing:  NSObject, UIViewControllerAnimatedTransitioning
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
         UIView.animate(withDuration: duration, animations: {
+            
         }) { isFinished in
             transitionContext.completeTransition(isFinished)
         }

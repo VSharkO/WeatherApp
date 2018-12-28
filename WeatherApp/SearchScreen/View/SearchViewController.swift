@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController{
+class SearchViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     let searchConteiner: UIView = {
         let view = UIView()
@@ -60,6 +60,15 @@ class SearchViewController: UIViewController{
         return imageView
     }()
     
+    let tableVeiw: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.alpha = 0
+        return tableView
+    }()
+    
     private var viewModel: SearchViewModelProtocol!
     var coordinatorDelegate: CoordinatorDelegate!
     
@@ -87,8 +96,17 @@ class SearchViewController: UIViewController{
         searchBarText.becomeFirstResponder()
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return SearchCell()
+    }
+    
     private func setupViews(){
         self.view.addSubview(blureBackground)
+        self.view.addSubview(tableVeiw)
         self.searchConteiner.addSubview(searchBarText)
         self.searchConteiner.addSubview(searchIcon)
         self.view.addSubview(settingsImage)
@@ -143,6 +161,15 @@ class SearchViewController: UIViewController{
             doneButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30),
             doneButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30)
             ])
+        
+        NSLayoutConstraint.activate([
+            tableVeiw.topAnchor.constraint(equalTo: self.doneButton.centerYAnchor),
+            tableVeiw.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            tableVeiw.trailingAnchor.constraint(equalTo: self.doneButton.leadingAnchor),
+            tableVeiw.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.4)
+            ])
+        let tableViewBottomAnchor = tableVeiw.bottomAnchor.constraint(lessThanOrEqualTo: self.searchConteiner.topAnchor, constant: -15)
+        tableViewBottomAnchor.priority = .defaultLow
     }
     
     private func setupNotificationObserver(){
@@ -172,6 +199,7 @@ class SearchViewController: UIViewController{
             self.trailingConstraint.constant = isKeyboardShowing ? -10 : -20
             self.trailingAnchorSettings.constant = isKeyboardShowing ? -20 : -10
             self.blureBackground.alpha = isKeyboardShowing ? 0.95 : 0
+            self.tableVeiw.alpha = isKeyboardShowing ? 1.0 : 0.0
             self.view.layoutIfNeeded()
         })
     }

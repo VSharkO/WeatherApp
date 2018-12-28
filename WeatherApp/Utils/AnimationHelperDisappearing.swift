@@ -10,7 +10,7 @@ import UIKit
 
 class AnimationHelperDisappearing:  NSObject, UIViewControllerAnimatedTransitioning{
     
-    let duration = 0.2
+    let duration = 0.25
     var originFrame = CGRect.zero
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
@@ -23,10 +23,8 @@ class AnimationHelperDisappearing:  NSObject, UIViewControllerAnimatedTransition
         let containerView = transitionContext.containerView
         containerView.addSubview(fromView)
         fromView.alpha = 1
-        let blurEffectView = UIVisualEffectView(effect: nil)
         UIView.animate(withDuration: duration, animations: {
-            fromView.alpha = 0.99
-            fromView.willRemoveSubview(blurEffectView)
+            fromView.alpha = 0.95
         }) { isFinished in
             transitionContext.completeTransition(isFinished)
         }
