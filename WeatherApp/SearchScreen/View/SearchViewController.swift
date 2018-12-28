@@ -101,10 +101,14 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return SearchCell()
+        let cell = SearchCell()
+        cell.backgroundColor = .clear
+        return cell
     }
     
     private func setupViews(){
+        tableVeiw.delegate = self
+        tableVeiw.dataSource = self
         self.view.addSubview(blureBackground)
         self.view.addSubview(tableVeiw)
         self.searchConteiner.addSubview(searchBarText)
@@ -166,10 +170,8 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
             tableVeiw.topAnchor.constraint(equalTo: self.doneButton.centerYAnchor),
             tableVeiw.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableVeiw.trailingAnchor.constraint(equalTo: self.doneButton.leadingAnchor),
-            tableVeiw.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.4)
+            tableVeiw.heightAnchor.constraint(greaterThanOrEqualToConstant: self.view.frame.height * 0.5)
             ])
-        let tableViewBottomAnchor = tableVeiw.bottomAnchor.constraint(lessThanOrEqualTo: self.searchConteiner.topAnchor, constant: -15)
-        tableViewBottomAnchor.priority = .defaultLow
     }
     
     private func setupNotificationObserver(){
