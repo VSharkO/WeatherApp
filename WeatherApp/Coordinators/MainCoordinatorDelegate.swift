@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MainCoordinatorDelegate: CoordinatorDelegate {
-   //za otvaranje screena iz maina
+protocol MainCoordinatorDelegate: CoordinatorDelegate,ParentCoordinatorDelegate {
     func openSearchScreenModally()
+    func getDataFromChildScreen(city: Geoname)
 }

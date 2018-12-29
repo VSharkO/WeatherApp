@@ -8,19 +8,20 @@
 
 import UIKit
 
-class SearchScreenCoordinator: Coordinator, CoordinatorDelegate{
+class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinatorDelegate{ 
     
     var childCoordinators: [Coordinator] = []
-    weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
+    weak var mainCoordinatorDelegate: MainCoordinatorDelegate?
     var controller: SearchViewController
     var presenter: UINavigationController
+    var viewModel: SearchViewModel!
     var transitionDelegate: UIViewControllerTransitioningDelegate
     
     
     init(presenter: UINavigationController, transitionDelegate: UIViewControllerTransitioningDelegate) {
         self.presenter = presenter
         childCoordinators = []
-        let viewModel = SearchViewModel(repository: Repository())
+        viewModel = SearchViewModel(repository: Repository())
         controller = SearchViewController(viewModel: viewModel)
         self.transitionDelegate = transitionDelegate
     }
@@ -29,12 +30,17 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate{
         controller.transitioningDelegate = transitionDelegate
         controller.modalPresentationStyle = .overCurrentContext
         controller.coordinatorDelegate = self
+        viewModel.searchCoordinatorDelegate = self
         presenter.present(controller, animated: true, completion: nil)
     }
     
     func viewHasFinished() {
         controller.dismiss(animated: true, completion: nil)
-        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
+        mainCoordinatorDelegate?.childHasFinished(coordinator: self)
     }
     
+    func closeScreenWithData(city: Geoname) {
+        mainCoordinatorDelegate?.getDataFromChildScreen(city: city)
+        viewHasFinished()
+    }
 }

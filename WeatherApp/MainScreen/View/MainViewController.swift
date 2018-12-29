@@ -481,7 +481,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         NSLayoutConstraint.activate([
             summaryTextView.topAnchor.constraint(equalTo: temperatureTextView.bottomAnchor),
             summaryTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            summaryTextView.heightAnchor.constraint(equalToConstant: 30),
+            summaryTextView.heightAnchor.constraint(equalToConstant: 35),
             summaryTextView.bottomAnchor.constraint(lessThanOrEqualTo: cityTextView.topAnchor)
             ])
         
@@ -490,7 +490,8 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             cityTextView.topAnchor.constraint(greaterThanOrEqualTo: gradientView.bottomAnchor, constant: 10),
             cityTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             cityTextView.heightAnchor.constraint(equalToConstant: 50),
-            cityTextView.bottomAnchor.constraint(lessThanOrEqualTo: separator.topAnchor)
+            cityTextView.bottomAnchor.constraint(lessThanOrEqualTo: separator.topAnchor),
+            cityTextView.widthAnchor.constraint(equalToConstant: self.view.bounds.width-30)
             ])
         
         NSLayoutConstraint.activate([

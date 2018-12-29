@@ -9,7 +9,9 @@
 import Foundation
 import RxSwift
 
-class SearchViewModel : SearchViewModelProtocol{
+class SearchViewModel: SearchViewModelProtocol{
+    
+    var searchCoordinatorDelegate: SearchCoordinatorDelegate!
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dynamicSearchString = PublishSubject<String>()
@@ -29,9 +31,10 @@ class SearchViewModel : SearchViewModelProtocol{
                 .subscribe(onNext: { cities in
                     self.data = cities.geonames
                     self.viewRefreshTableViewData.onNext(true)
-                    if !cities.geonames.isEmpty {
-                        print(cities.geonames[0].name)
-                    }
                 })
         }
+    
+    func citySelected(index: Int){
+        self.searchCoordinatorDelegate.closeScreenWithData(city: data[index])
+    }
 }

@@ -22,7 +22,6 @@ class SearchCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.text = "T"
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.textAlignment = .center
         textView.textColor = .white
@@ -35,7 +34,6 @@ class SearchCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.text = "TB Anakonda"
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.textAlignment = .left
         textView.textColor = .white

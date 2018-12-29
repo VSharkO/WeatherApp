@@ -10,15 +10,17 @@ import Foundation
 import UIKit
 
 class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordinatorDelegate{
-   
+
     var childCoordinators: [Coordinator] = []
     var presenter: UINavigationController
+    var viewModel: MainViewModel
     private var controller: MainViewController
     
     init(presenter: UINavigationController) {
         self.presenter = presenter
         self.presenter.navigationBar.isTranslucent = false
-        controller = MainViewController(viewModel: MainViewModel(repository: Repository()))
+        viewModel = MainViewModel(repository: Repository())
+        controller = MainViewController(viewModel: viewModel)
     }
     
     func start() {
@@ -37,7 +39,13 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
     func openSearchScreenModally() {
         let searchCoordinator = SearchScreenCoordinator(presenter: self.presenter, transitionDelegate: controller)
         self.childCoordinators.append(searchCoordinator)
-        searchCoordinator.parentCoordinatorDelegate = self
+        searchCoordinator.mainCoordinatorDelegate = self
         searchCoordinator.start()
+    }
+    
+    func getDataFromChildScreen(city: Geoname) {
+        viewModel.cityName = city.name
+        viewModel.coordinates = city.lat+","+city.lng
+        viewModel.dataRequestTriger.onNext(true)
     }
 }

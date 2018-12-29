@@ -90,14 +90,10 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         self.view.backgroundColor = .clear
         setupViews()
-        setupNotificationObserver()
-        registerTouchListeners()
+        setupNotificationObservers()
+        registerButtonTouchListeners()
         setupObservingSearchText()
         initSubscripts()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        registerTouchListeners()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,7 +119,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        viewModel.citySelected(index: indexPath.row)
     }
     
     private func setupViews(){
@@ -201,18 +197,18 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     private func setupObservingSearchText(){
-        searchBarText.rx.text.orEmpty.throttle(0.3, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
+        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
             self.viewModel.dynamicSearchString.onNext(dynamicString)
         }).disposed(by: disposeBag)
     }
     
-    private func setupNotificationObserver(){
+    private func setupNotificationObservers(){
         NotificationCenter.default.addObserver(self, selector: #selector (keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector (keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func registerTouchListeners(){
+    private func registerButtonTouchListeners(){
         self.doneButton.addTarget(self, action: #selector (self.closeScreen(_:)), for: UIControl.Event.touchUpInside)
         self.searchButton.addTarget(self, action: #selector (self.trigerSearchMaunaly(_:)), for: UIControl.Event.touchUpInside)
     }
@@ -245,9 +241,9 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
             self.searchConteiner.alpha = isKeyboardShowing ? 1.0 : 0.0
             self.view.layoutIfNeeded()
         })
-        
         if notification.name == UIResponder.keyboardWillHideNotification{
             self.coordinatorDelegate.viewHasFinished()
         }
     }
+    
 }
