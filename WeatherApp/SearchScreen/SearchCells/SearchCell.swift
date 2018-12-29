@@ -21,6 +21,7 @@ class SearchCell: UITableViewCell {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = false
         textView.text = "T"
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.textAlignment = .center
@@ -33,6 +34,7 @@ class SearchCell: UITableViewCell {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = false
         textView.text = "TB Anakonda"
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.textAlignment = .left

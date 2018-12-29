@@ -13,6 +13,7 @@ class SearchViewModel : SearchViewModelProtocol{
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dynamicSearchString = PublishSubject<String>()
+    var viewRefreshTableViewData = PublishSubject<Bool>()
     var data: [Geoname] = []
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
@@ -27,6 +28,7 @@ class SearchViewModel : SearchViewModelProtocol{
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { cities in
                     self.data = cities.geonames
+                    self.viewRefreshTableViewData.onNext(true)
                     if !cities.geonames.isEmpty {
                         print(cities.geonames[0].name)
                     }

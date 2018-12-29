@@ -90,6 +90,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
         setupNotificationObserver()
         registerTouchListeners()
         setupObservingSearchText()
+        initSubscripts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,11 +103,18 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModel.data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SearchCell()
+        let cityInfo = viewModel.data[indexPath.row]
+        var cityName = cityInfo.name
+        if let countryCode = cityInfo.countryCode{
+            cityName.append(contentsOf: " " + countryCode)
+        }
+        cell.cityNameText.text = cityName
+        cell.firstLetterTextView.text = String(viewModel.data[indexPath.row].name.prefix(1))
         cell.backgroundColor = .clear
         return cell
     }
@@ -178,6 +186,13 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
             tableVeiw.heightAnchor.constraint(greaterThanOrEqualToConstant: self.view.frame.height * 0.5)
             ])
     }
+    
+    private func initSubscripts(){
+        viewModel.viewRefreshTableViewData.subscribe(onNext: { [unowned self] _ in
+            self.tableVeiw.reloadData()
+        }).disposed(by: disposeBag)
+    }
+    
     private func setupObservingSearchText(){
         searchBarText.rx.text.orEmpty.debounce(0.25, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
             self.viewModel.dynamicSearchString.onNext(dynamicString)
@@ -214,5 +229,9 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
             self.tableVeiw.alpha = isKeyboardShowing ? 1.0 : 0.0
             self.view.layoutIfNeeded()
         })
+        
+        if notification.name == UIResponder.keyboardWillHideNotification{
+            self.coordinatorDelegate.viewHasFinished()
+        }
     }
 }
