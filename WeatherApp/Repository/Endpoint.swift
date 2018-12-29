@@ -47,7 +47,9 @@ extension Endpoint{
             path: "/searchJSON",
             queryItems: [
                 URLQueryItem(name: "username", value: "VSharkO"),
-                URLQueryItem(name: "name_startsWith", value: startingWith)
+                URLQueryItem(name: "name_startsWith", value: startingWith),
+                URLQueryItem(name: "maxRows", value: "20")
+                
             ]
         )
     }

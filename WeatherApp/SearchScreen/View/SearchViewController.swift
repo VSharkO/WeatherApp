@@ -122,6 +122,10 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
     private func setupViews(){
         tableVeiw.delegate = self
         tableVeiw.dataSource = self
@@ -197,7 +201,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     private func setupObservingSearchText(){
-        searchBarText.rx.text.orEmpty.debounce(0.25, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
+        searchBarText.rx.text.orEmpty.throttle(0.3, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
             self.viewModel.dynamicSearchString.onNext(dynamicString)
         }).disposed(by: disposeBag)
     }
