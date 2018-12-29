@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SearchCoordinatorDelegate: CoordinatorDelegate {
-    func closeScreenWithData(city: Geoname)
+    func closeScreenWithData(weather: Response, city: Geoname)
 }

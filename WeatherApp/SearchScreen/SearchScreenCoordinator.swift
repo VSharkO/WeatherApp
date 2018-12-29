@@ -8,8 +8,8 @@
 
 import UIKit
 
-class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinatorDelegate{ 
-    
+class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinatorDelegate{
+
     var childCoordinators: [Coordinator] = []
     weak var mainCoordinatorDelegate: MainCoordinatorDelegate?
     var controller: SearchViewController
@@ -39,8 +39,8 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinat
         mainCoordinatorDelegate?.childHasFinished(coordinator: self)
     }
     
-    func closeScreenWithData(city: Geoname) {
-        mainCoordinatorDelegate?.getDataFromChildScreen(city: city)
+    func closeScreenWithData(weather: Response, city: Geoname) {
+        mainCoordinatorDelegate?.getDataFromChildScreen(weather: weather, city: city)
         viewHasFinished()
     }
 }

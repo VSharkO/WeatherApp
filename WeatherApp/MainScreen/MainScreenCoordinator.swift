@@ -43,9 +43,9 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
         searchCoordinator.start()
     }
     
-    func getDataFromChildScreen(city: Geoname) {
+    func getDataFromChildScreen(weather: Response, city: Geoname) {
+        viewModel.setData(response: weather)
         viewModel.cityName = city.name
-        viewModel.coordinates = city.lat+","+city.lng
-        viewModel.dataRequestTriger.onNext(true)
+        viewModel.updateView()
     }
 }

@@ -10,5 +10,5 @@ import Foundation
 
 protocol MainCoordinatorDelegate: CoordinatorDelegate,ParentCoordinatorDelegate {
     func openSearchScreenModally()
-    func getDataFromChildScreen(city: Geoname)
+    func getDataFromChildScreen(weather: Response,city: Geoname)
 }

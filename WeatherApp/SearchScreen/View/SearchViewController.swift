@@ -119,7 +119,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.citySelected(index: indexPath.row)
+        viewModel.citySelected(index: indexPath.row).disposed(by: disposeBag)
     }
     
     private func setupViews(){
@@ -232,7 +232,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
         UIView.animate(withDuration: 0, animations: {
-            self.bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height - 10 : -15
+            self.bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height-10 : -15
             self.leadingConstraint.constant = isKeyboardShowing ? 10 : 60
             self.trailingConstraint.constant = isKeyboardShowing ? -10 : -20
             self.trailingAnchorSettings.constant = isKeyboardShowing ? -20 : -10

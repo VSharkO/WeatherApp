@@ -34,7 +34,12 @@ class SearchViewModel: SearchViewModelProtocol{
                 })
         }
     
-    func citySelected(index: Int){
-        self.searchCoordinatorDelegate.closeScreenWithData(city: data[index])
+    func citySelected(index: Int) -> Disposable{
+        let coordinates = data[index].lat + "," + data[index].lng
+        return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: Constants.siUnitsApi)).subscribeOn(scheduler)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: {[unowned self] response in
+                self.searchCoordinatorDelegate.closeScreenWithData(weather: response, city: self.data[index])
+            })
     }
 }
