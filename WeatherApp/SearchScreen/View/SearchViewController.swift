@@ -186,7 +186,8 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
             tableVeiw.topAnchor.constraint(equalTo: self.doneButton.centerYAnchor),
             tableVeiw.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableVeiw.trailingAnchor.constraint(equalTo: self.doneButton.leadingAnchor),
-            tableVeiw.heightAnchor.constraint(greaterThanOrEqualToConstant: self.view.frame.height * 0.5)
+            tableVeiw.heightAnchor.constraint(greaterThanOrEqualToConstant: self.view.frame.height * 0.5),
+            tableVeiw.bottomAnchor.constraint(lessThanOrEqualTo: self.searchConteiner.topAnchor, constant: -20)
             ])
     }
     
