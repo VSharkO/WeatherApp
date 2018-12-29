@@ -11,4 +11,5 @@ import RxSwift
 
 protocol RepositoryProtocol{
     func getWeather(endpoint: Endpoint) -> Observable<Response>
+    func getCities(endpoint: Endpoint) -> Observable<Cities>
 }

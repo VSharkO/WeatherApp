@@ -15,11 +15,6 @@ struct Cities: Codable {
 
 struct Geoname: Codable {
     let lng: String
-    let geonameId: Int
-    let toponymName, countryId, fcl: String
-    let population: Int
-    let countryCode, name, fclName: String
-    let countryName, fcodeName, adminName1, lat: String
-    let fcode: String
+    let name: String
+    let lat: String
 }
-

@@ -13,6 +13,7 @@ class SearchViewModel : SearchViewModelProtocol{
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dynamicSearchString = PublishSubject<String>()
+    var data: [Geoname] = []
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
@@ -20,22 +21,15 @@ class SearchViewModel : SearchViewModelProtocol{
     }
     
     func initGetingDataFromRepository() -> Disposable {
-//            return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<Response> in
-//                self.viewShowLoader.onNext(true)
-//                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.coordinates, units: Constants.siUnitsApi))
-//            }).subscribeOn(scheduler)
-//                .observeOn(MainScheduler.instance)
-//                .subscribe(onNext: {[unowned self] response in
-//                    self.setData(response: response)
-//                    self.setUnits()
-//                    self.updateView()
-//                })
-//        }
-        return dynamicSearchString
-            .subscribeOn(scheduler)
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { dynamicText in
-                    print(dynamicText)
-        })
-    }
+        return dynamicSearchString.flatMap({[unowned self] dynamicString -> Observable<Cities> in
+            return self.repository.getCities(endpoint: Endpoint.getCitiesEndpoint(startingWith: dynamicString))
+            }).subscribeOn(MainScheduler.instance)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { cities in
+                    self.data = cities.geonames
+                    if !cities.geonames.isEmpty {
+                        print(cities.geonames[0].name)
+                    }
+                })
+        }
 }
