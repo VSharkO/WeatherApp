@@ -9,14 +9,18 @@
 import UIKit
 
 protocol LoaderManager{
-    func displayLoader(onView : UIView) -> UIView
+    func displayLoader(onView : UIView, backgroundColor: UIColor?) -> UIView
     func removeLoader(loader :UIView)
 }
 
 extension LoaderManager {
-    func displayLoader(onView : UIView) -> UIView {
+    func displayLoader(onView : UIView, backgroundColor: UIColor?) -> UIView {
         let loaderView = UIView.init(frame: onView.bounds)
-        loaderView.backgroundColor = UIColor(hex: "234880")
+        if let hasBackground = backgroundColor{
+            loaderView.backgroundColor = hasBackground
+        }else{
+            loaderView.backgroundColor = UIColor(hex: "234880")
+        }
         let ai = UIActivityIndicatorView.init(style: .whiteLarge)
         ai.startAnimating()
         ai.center = loaderView.center

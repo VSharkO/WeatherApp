@@ -629,11 +629,11 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         self.gradientView.layer.addSublayer(gradient)
     }
     
-    func displayLoader() {
-        loader = displayLoader(onView: self.view)
+    private func displayLoader() {
+        loader = displayLoader(onView: self.view, backgroundColor: nil)
     }
     
-    func hideLoader() {
+    private func hideLoader() {
         if let loader = loader{
             removeLoader(loader: loader)
         }

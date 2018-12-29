@@ -10,7 +10,9 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class SearchViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,UITableViewDataSource{
+    
+    var loader : UIView?
     
     let searchConteiner: UIView = {
         let view = UIView()
@@ -191,6 +193,15 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     private func initSubscripts(){
+        
+        viewModel.viewShowLoader.observeOn(MainScheduler.instance).subscribe(onNext:{ isActive in
+            if isActive{
+                self.displayLoader()
+            }else{
+                self.hideLoader()
+            }
+        }).disposed(by: disposeBag)
+        
         viewModel.viewRefreshTableViewData.subscribe(onNext: { [unowned self] _ in
             self.tableVeiw.reloadData()
         }).disposed(by: disposeBag)
@@ -200,6 +211,16 @@ class SearchViewController: UIViewController,UITableViewDelegate,UITableViewData
         searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
             self.viewModel.dynamicSearchString.onNext(dynamicString)
         }).disposed(by: disposeBag)
+    }
+    
+    private func displayLoader() {
+        loader = displayLoader(onView: self.view, backgroundColor: .clear)
+    }
+    
+    private func hideLoader() {
+        if let loader = loader{
+            removeLoader(loader: loader)
+        }
     }
     
     private func setupNotificationObservers(){
