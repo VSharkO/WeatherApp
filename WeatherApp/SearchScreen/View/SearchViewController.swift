@@ -208,9 +208,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     private func setupObservingSearchText(){
-        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] dynamicString in
-            self.viewModel.dynamicSearchString.onNext(dynamicString)
-        }).disposed(by: disposeBag)
+        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).bind(to: viewModel.dynamicSearchString).disposed(by: disposeBag)
     }
     
     private func displayLoader() {
