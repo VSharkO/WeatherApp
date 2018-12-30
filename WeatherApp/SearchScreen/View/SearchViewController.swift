@@ -188,8 +188,10 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
             tableVeiw.topAnchor.constraint(equalTo: self.doneButton.centerYAnchor),
             tableVeiw.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableVeiw.trailingAnchor.constraint(equalTo: self.doneButton.leadingAnchor),
-            tableVeiw.heightAnchor.constraint(greaterThanOrEqualToConstant: self.view.frame.height * 0.5)
+            tableVeiw.bottomAnchor.constraint(equalTo: searchConteiner.topAnchor, constant: -20),
+            tableVeiw.heightAnchor.constraint(greaterThanOrEqualToConstant: self.view.frame.height/2)
             ])
+        tableVeiw.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
     private func initSubscripts(){
