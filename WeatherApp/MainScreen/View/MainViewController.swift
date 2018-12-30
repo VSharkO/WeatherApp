@@ -454,7 +454,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             ])
         
         NSLayoutConstraint.activate([
-            headerImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            headerImageView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10),
             headerImageView.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor),
             headerImageView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor)
             ])

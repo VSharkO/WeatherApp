@@ -9,7 +9,6 @@
 import Foundation
 
 struct Cities: Codable {
-    let totalResultsCount: Int
     let geonames: [Geoname]
 }
 

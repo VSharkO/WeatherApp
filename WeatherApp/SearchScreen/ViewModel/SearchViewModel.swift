@@ -26,7 +26,7 @@ class SearchViewModel: SearchViewModelProtocol{
     
     func initGetingDataFromRepository() -> Disposable {
         return dynamicSearchString.flatMap({[unowned self] dynamicString -> Observable<Cities> in
-            guard !dynamicString.isEmpty else{return Observable.just(Cities(totalResultsCount: 0, geonames: []))}
+            guard !dynamicString.isEmpty else{return Observable.just(Cities(geonames: []))}
             return self.repository.getCities(endpoint: Endpoint.getCitiesEndpoint(startingWith: dynamicString))
         }).subscribeOn(MainScheduler.instance)
             .observeOn(MainScheduler.instance)
