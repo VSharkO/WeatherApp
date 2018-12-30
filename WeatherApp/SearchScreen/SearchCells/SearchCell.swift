@@ -22,7 +22,7 @@ class SearchCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.font = UIFont.systemFont(ofSize: 15)
+        textView.font = UIFont(name:"GothamRounded-Book", size: 15)
         textView.textAlignment = .center
         textView.textColor = .white
         textView.backgroundColor = .clear
@@ -34,7 +34,7 @@ class SearchCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.font = UIFont.systemFont(ofSize: 15)
+        textView.font = UIFont(name:"GothamRounded-Book", size: 15)
         textView.textAlignment = .left
         textView.textColor = .white
         textView.backgroundColor = .clear
@@ -85,14 +85,14 @@ class SearchCell: UITableViewCell {
             firstLetterTextView.bottomAnchor.constraint(equalTo: firstLetterImageView.bottomAnchor),
             firstLetterTextView.leadingAnchor.constraint(equalTo: firstLetterImageView.leadingAnchor),
             firstLetterTextView.trailingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor),
-            firstLetterTextView.topAnchor.constraint(equalTo: firstLetterImageView.topAnchor, constant: 7)
+            firstLetterTextView.topAnchor.constraint(equalTo: firstLetterImageView.topAnchor, constant: 10)
             ])
         
         NSLayoutConstraint.activate([
             cityNameText.bottomAnchor.constraint(equalTo: firstLetterImageView.bottomAnchor),
             cityNameText.leadingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor, constant: 10),
             cityNameText.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            cityNameText.topAnchor.constraint(equalTo: firstLetterImageView.topAnchor, constant: 7)
+            cityNameText.centerYAnchor.constraint(equalTo: firstLetterTextView.centerYAnchor)
             ])
     }
     

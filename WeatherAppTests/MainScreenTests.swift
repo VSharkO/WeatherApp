@@ -74,7 +74,7 @@ class MainScreenTests: QuickSpec {
                     mainViewModel.initialDataRequest()
                     verify(mockRepository).getWeather(endpoint: any())
                 }
-                it("response is receved with correct parameters"){
+                it("response is received with correct parameters"){
                     mainViewModel.initialDataRequest()
                     expect(mainViewModel.data.currently.time).to(equal(supplyListResponse?.currently.time))
                     expect(mainViewModel.data.currently.temperature).to(equal(supplyListResponse?.currently.temperature))
