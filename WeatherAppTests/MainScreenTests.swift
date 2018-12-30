@@ -22,8 +22,8 @@ class MainScreenTests: QuickSpec {
         let supplyListResponse: Response? =
         {
             do{
-                let responce = try JSONDecoder().decode(Response.self, from: supplyListData)
-                return responce
+                let response = try JSONDecoder().decode(Response.self, from: supplyListData)
+                return response
             }catch{
                 return nil
             }

@@ -26,14 +26,15 @@ class SearchViewModel: SearchViewModelProtocol{
     
     func initGetingDataFromRepository() -> Disposable {
         return dynamicSearchString.flatMap({[unowned self] dynamicString -> Observable<Cities> in
+            guard !dynamicString.isEmpty else{return Observable.just(Cities(totalResultsCount: 0, geonames: []))}
             return self.repository.getCities(endpoint: Endpoint.getCitiesEndpoint(startingWith: dynamicString))
-            }).subscribeOn(MainScheduler.instance)
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { cities in
-                    self.data = cities.geonames
-                    self.viewRefreshTableViewData.onNext(true)
-                })
-        }
+        }).subscribeOn(MainScheduler.instance)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: {[unowned self] cities in
+                self.data = cities.geonames
+                self.viewRefreshTableViewData.onNext(true)
+            })
+    }
     
     func citySelected(index: Int) -> Disposable{
         let coordinates = data[index].lat + "," + data[index].lng
@@ -41,8 +42,8 @@ class SearchViewModel: SearchViewModelProtocol{
         return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: Constants.siUnitsApi)).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
-                self.searchCoordinatorDelegate.closeScreenWithData(weather: response, city: self.data[index])
                 self.viewShowLoader.onNext(false)
+                self.searchCoordinatorDelegate.closeScreenWithData(weather: response, city: self.data[index])
             })
     }
 }
