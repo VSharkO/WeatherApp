@@ -8,16 +8,6 @@
 
 import Foundation
 
-enum UnitsType: String{
-    case us = "us"
-    case si = "si"
-}
-
-struct WeatherUnits {
-    let temperatureUnit: String
-    let windSpeedUnit: String
-}
-
 class UnitsHelper{
     static func getUnits(units: UnitsType) -> WeatherUnits{
         if units == .si{

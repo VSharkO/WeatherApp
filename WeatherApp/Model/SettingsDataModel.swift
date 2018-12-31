@@ -9,7 +9,7 @@
 import Foundation
 
 struct SettingsDataModel {
-    var cities: [Cities]
-    var units: UnitsType = .si
+    let cities: [Cities]
+    let units: UnitsType
     var conditions: [String: Bool] = ["humidity": true, "windSpeed": true, "pressure": true]
 }

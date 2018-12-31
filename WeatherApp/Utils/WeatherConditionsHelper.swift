@@ -9,14 +9,6 @@
 import Foundation
 import Hue
 
-enum Condition: String, CaseIterable{
-    case night = "night"
-    case day = "day"
-    case fog = "fog"
-    case snow = "snow"
-    case rain = "rain"
-}
-
 class WeatherConditionsHelper{
     public static func returnConditionThatStringContains(for string: String) -> Condition{
         var condition: Condition = .day
