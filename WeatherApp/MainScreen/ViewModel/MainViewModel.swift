@@ -76,6 +76,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         self.units = settingsDataModel.units
         self.settings = settingsDataModel.weatherParameters
         self.city = settingsDataModel.cities[settingsDataModel.cityToShow]
+        self.dataRequestTriger.onNext(true)
     }
     
     private func dataRequestTrigered(){

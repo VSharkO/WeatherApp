@@ -14,6 +14,8 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let scheduler: SchedulerType!
     let dbHelper: DbHelper!
     let settingsDelegate: SettingsDataDelegate!
+    //TODO: testni subject
+    var closeScreen = PublishSubject<Bool>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background),dbHelper: DbHelper, settingsDataDelegate: SettingsDataDelegate) {
         self.scheduler = scheduler
@@ -25,13 +27,17 @@ class SettingsViewModel: SettingsViewModelProtocol{
     func getCities() -> Disposable{
         return dbHelper.getGeonamesFromDb().subscribe(onNext: { geonames in
                 self.data.cities = geonames
-                self.messWithData()
+            self.messWithData() //TODO: testno
         })
     }
-    
+   
+    // TODO: Ovo je samo testno
     func messWithData(){
         self.data.weatherParameters.pressure = false
+        self.data.cityToShow = 2
+        self.data.units = .us
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
+        self.closeScreen.onNext(true)
     }
     
     

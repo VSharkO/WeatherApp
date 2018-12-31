@@ -19,6 +19,7 @@ class SettingsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
         self.disposeBag = DisposeBag()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -28,10 +29,21 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
+        initSubscripts()
+        }
+    
+    override func viewDidAppear(_ animated: Bool) {
         viewModel.getCities().disposed(by: disposeBag)
         print(String(viewModel.data.units.rawValue))
         print(viewModel.data.cities[0].name)
         print(viewModel.data.weatherParameters)
+    }
+    
+    private func initSubscripts(){
+        //TODO: testno
+        viewModel.closeScreen.subscribe(onNext: { _ in
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: disposeBag)
     }
 
 }

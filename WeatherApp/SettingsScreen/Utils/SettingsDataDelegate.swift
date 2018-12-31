@@ -13,5 +13,4 @@ protocol SettingsDataDelegate {
     var units: UnitsType{get set}
     
     func setNewSettings(settingsDataModel: SettingsDataModel)
-    
 }
