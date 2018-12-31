@@ -15,7 +15,6 @@ class Repository : RepositoryProtocol,WeatherInteractor,CitiesInteractor{
         return getCitiesFromEndpoint(endpoint: endpoint)
     }
     
-    
     func getWeather(endpoint: Endpoint) -> Observable<Response> {
         return getWeatherFromEndpoint(endpoint: endpoint)
     }

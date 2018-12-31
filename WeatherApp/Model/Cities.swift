@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Cities: Codable {
     let geonames: [Geoname]
@@ -27,6 +28,17 @@ extension Geoname{
 
 class DbGeoname: Object{
     @objc dynamic var lng: String = ""
-    @objc dynamic var picture: Data? = nil // optionals supported
-    let dogs = List<Dog>()
+    @objc dynamic var ltd: String = ""
+    @objc dynamic var countryCode: String?
+    @objc dynamic var name: String = ""
+    
+    convenience init(name: String, lng: String, ltd: String,countryCode: String) {
+        self.init()
+        self.lng = lng
+        self.ltd = ltd
+        self.countryCode = countryCode
+        self.name = name
+    }
+    
 }
+

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import Kingfisher
 import Hue
+import RealmSwift
 
 class MainViewController: UIViewController, LoaderManager, UIViewControllerTransitioningDelegate{
     
@@ -368,6 +369,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     override func viewDidLoad() {
         setupViews()
         initSubscripts()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     override func viewWillAppear(_ animated: Bool) {

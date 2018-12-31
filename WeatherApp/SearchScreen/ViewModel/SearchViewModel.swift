@@ -18,10 +18,12 @@ class SearchViewModel: SearchViewModelProtocol{
     var viewShowLoader = PublishSubject<Bool>()
     var viewRefreshTableViewData = PublishSubject<Bool>()
     var data: [Geoname] = []
+    var dbHelper: DbHelperProtocol!
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
         self.scheduler = scheduler
+        dbHelper = DbHelper()
     }
     
     func initGetingDataFromRepository() -> Disposable {
@@ -43,6 +45,7 @@ class SearchViewModel: SearchViewModelProtocol{
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
                 self.viewShowLoader.onNext(false)
+                self.dbHelper.saveGeonameToDb(geoname: self.data[index])
                 self.searchCoordinatorDelegate.closeScreenWithData(weather: response, city: self.data[index])
             })
     }
