@@ -55,6 +55,9 @@
 		D5F27CC521D9829500DFFAAC /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CC421D9829500DFFAAC /* SettingsCoordinator.swift */; };
 		D5F27CC721D982CF00DFFAAC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CC621D982CF00DFFAAC /* SettingsViewController.swift */; };
 		D5F27CC921D983C100DFFAAC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CC821D983C100DFFAAC /* SettingsViewModel.swift */; };
+		D5F27CCD21D989B900DFFAAC /* SettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CCC21D989B900DFFAAC /* SettingsScreenTests.swift */; };
+		D5F27CCF21D98BE500DFFAAC /* SettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CCE21D98BE500DFFAAC /* SettingsDataModel.swift */; };
+		D5F27CD221D98E0900DFFAAC /* UnitsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CD121D98E0900DFFAAC /* UnitsHelper.swift */; };
 		D5F6140721CB767C004F1A6F /* GradientHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140621CB767C004F1A6F /* GradientHelper.swift */; };
 		D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */; };
 /* End PBXBuildFile section */
@@ -131,6 +134,9 @@
 		D5F27CC421D9829500DFFAAC /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		D5F27CC621D982CF00DFFAAC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D5F27CC821D983C100DFFAAC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		D5F27CCC21D989B900DFFAAC /* SettingsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenTests.swift; sourceTree = "<group>"; };
+		D5F27CCE21D98BE500DFFAAC /* SettingsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataModel.swift; sourceTree = "<group>"; };
+		D5F27CD121D98E0900DFFAAC /* UnitsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsHelper.swift; sourceTree = "<group>"; };
 		D5F6140621CB767C004F1A6F /* GradientHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHelper.swift; sourceTree = "<group>"; };
 		D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientParametersType.swift; sourceTree = "<group>"; };
 		F629E24779E9BF8A66F8FB1E /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +220,7 @@
 		D552066921C8E7F500FCB1CC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D5F27CD121D98E0900DFFAAC /* UnitsHelper.swift */,
 				D552066A21C8E7FE00FCB1CC /* NetworkHelper.swift */,
 				D552067621C8F17300FCB1CC /* Constants.swift */,
 				D53D92DA21CA7A2000C8EB0E /* TimeDiferenceHelper.swift */,
@@ -230,6 +237,7 @@
 			children = (
 				D552067321C8E8FD00FCB1CC /* WeatherResponse.swift */,
 				D5E2A78C21D6EC9300A803FE /* Cities.swift */,
+				D5F27CCE21D98BE500DFFAAC /* SettingsDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -284,6 +292,7 @@
 				D5007E6A21CAFF2800CB507D /* WeatherConditionsHelperTests.swift */,
 				D537A39121D8403D00AF89D3 /* SearchScreenTests.swift */,
 				D57F532B21C8D48500A62F24 /* Info.plist */,
+				D5F27CCC21D989B900DFFAAC /* SettingsScreenTests.swift */,
 			);
 			path = WeatherAppTests;
 			sourceTree = "<group>";
@@ -691,6 +700,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53D92DD21CA7E2C00C8EB0E /* LoaderManager.swift in Sources */,
+				D5F27CD221D98E0900DFFAAC /* UnitsHelper.swift in Sources */,
 				D5E2A78B21D6CA9600A803FE /* SearchCell.swift in Sources */,
 				D5E2A78621D6A00D00A803FE /* AnimationHelperDisappearing.swift in Sources */,
 				D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */,
@@ -714,6 +724,7 @@
 				D57F531521C8D48400A62F24 /* AppDelegate.swift in Sources */,
 				D5F27CC321D9828200DFFAAC /* SettingsViewModelProtocol.swift in Sources */,
 				D57F536221C8D5AC00A62F24 /* MainViewController.swift in Sources */,
+				D5F27CCF21D98BE500DFFAAC /* SettingsDataModel.swift in Sources */,
 				D5E9B85F21C9ACB200723198 /* Repository.swift in Sources */,
 				D5E2A78D21D6EC9300A803FE /* Cities.swift in Sources */,
 				D5F27CC521D9829500DFFAAC /* SettingsCoordinator.swift in Sources */,
@@ -736,6 +747,7 @@
 			files = (
 				D537A39221D8403D00AF89D3 /* SearchScreenTests.swift in Sources */,
 				D57F532A21C8D48500A62F24 /* MainScreenTests.swift in Sources */,
+				D5F27CCD21D989B900DFFAAC /* SettingsScreenTests.swift in Sources */,
 				D53D92D421CA5AB400C8EB0E /* GeneratedMocks.swift in Sources */,
 				D5007E6B21CAFF2800CB507D /* WeatherConditionsHelperTests.swift in Sources */,
 				D5007E6921CAF17C00CB507D /* TimeDiferenceHelperTests.swift in Sources */,

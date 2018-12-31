@@ -45,7 +45,7 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
     
     func getDataFromChildScreen(weather: Response, city: Geoname) {
         viewModel.setData(response: weather)
-        viewModel.cityName = city.name
+        viewModel.city = city
         viewModel.updateView()
     }
 }

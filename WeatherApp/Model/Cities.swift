@@ -18,3 +18,9 @@ struct Geoname: Codable {
     let name: String
     let lat: String
 }
+
+extension Geoname{
+    func getCoordinates() -> String{
+        return lng + "," + lat
+    }
+}

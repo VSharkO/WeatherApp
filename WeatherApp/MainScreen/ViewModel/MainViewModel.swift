@@ -12,10 +12,9 @@ import RxSwift
 class MainViewModel : MainViewModelProtocol{
     
     internal var data: MainDataModel!
-    internal var units: String
-    internal var tempUnit: String!
-    internal var windSpeedUnit: String!
-    internal var cityName: String
+    internal var units: UnitsType
+    internal var weatherUnits: WeatherUnits!
+    internal var city: Geoname!
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
@@ -26,14 +25,14 @@ class MainViewModel : MainViewModelProtocol{
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
         self.scheduler = scheduler
-        units = Constants.siUnitsApi
-        cityName = Constants.defaultCityName
+        units = .si
+        self.city = Geoname(lng: Constants.defaultCityLng, countryCode: Constants.defaultCountryCode, name: Constants.defaultCityName, lat: Constants.defaultCityLat)
     }
     
     func initGetingDataFromRepository() -> Disposable {
         return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<Response> in
             self.viewShowLoader.onNext(true)
-            return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: Constants.defaultCoordinates, units: Constants.siUnitsApi))
+            return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.city.getCoordinates(), units: self.units.rawValue))
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
@@ -70,13 +69,7 @@ class MainViewModel : MainViewModelProtocol{
     }
     
     private func setUnits(){
-        if units == Constants.siUnitsApi{
-            self.tempUnit = Constants.tempUnitSi
-            self.windSpeedUnit = Constants.windSpeedUnitSi
-        }else{
-            self.tempUnit = Constants.tempUnitUs
-            self.windSpeedUnit = Constants.windSpeedUnitUs
-        }
+        self.weatherUnits = UnitsHelper.getUnits(units: self.units)
     }
     
 }

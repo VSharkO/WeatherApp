@@ -395,14 +395,14 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         viewModel.viewLoadWithData.observeOn(MainScheduler.instance).subscribe(onNext: {[unowned self] data in
             self.temperatureTextView.text = String(Int(data.currently.temperature))
             self.summaryTextView.text = data.currently.summary
-            self.maxTemperatureUnit.text = self.viewModel.tempUnit
-            self.minTemperatureUnit.text = self.viewModel.tempUnit
-            self.cityTextView.text = self.viewModel.cityName
+            self.maxTemperatureUnit.text = self.viewModel.weatherUnits.temperatureUnit
+            self.minTemperatureUnit.text = self.viewModel.weatherUnits.temperatureUnit
+            self.cityTextView.text = self.viewModel.city.name
             self.maxTemperature.text = String(format: "%.1f",data.daily.temperatureMax)
             self.minTemperature.text = String(format: "%.1f",data.daily.temperatureMin)
             self.humidityText.text = String(format: "%.1f",data.currently.humidity) + Constants.humidityUnit
             self.pressureText.text = String(Int(data.currently.pressure)) + Constants.pressureUnit
-            self.windSpeedText.text = String(format: "%.1f",data.currently.windSpeed) + self.viewModel.windSpeedUnit
+            self.windSpeedText.text = String(format: "%.1f",data.currently.windSpeed) + self.viewModel.weatherUnits.windSpeedUnit
         }).disposed(by: disposeBag)
         
     }

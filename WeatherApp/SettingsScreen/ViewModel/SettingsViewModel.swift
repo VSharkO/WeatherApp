@@ -7,7 +7,15 @@
 //
 
 import Foundation
+import RxSwift
 
 class SettingsViewModel: SettingsViewModelProtocol{
+    
+    let scheduler: SchedulerType!
+    
+    init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+        self.scheduler = scheduler
+    }
+    
     
 }
