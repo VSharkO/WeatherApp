@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class Repository : RepositoryProtocol,WeatherInteractor, CitiesInteractor{
+class Repository : RepositoryProtocol,WeatherInteractor,CitiesInteractor{
     
     func getCities(endpoint: Endpoint) -> Observable<Cities> {
         return getCitiesFromEndpoint(endpoint: endpoint)

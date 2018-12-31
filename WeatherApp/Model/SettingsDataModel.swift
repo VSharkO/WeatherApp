@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct SettingsDataModel {
     let cities: [Cities]
     let units: UnitsType
-    var conditions: [String: Bool] = ["humidity": true, "windSpeed": true, "pressure": true]
+    var weatherParameters: WeatherParametersToShow
 }

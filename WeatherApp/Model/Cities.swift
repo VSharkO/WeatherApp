@@ -24,3 +24,9 @@ extension Geoname{
         return lng + "," + lat
     }
 }
+
+class DbGeoname: Object{
+    @objc dynamic var lng: String = ""
+    @objc dynamic var picture: Data? = nil // optionals supported
+    let dogs = List<Dog>()
+}

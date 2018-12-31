@@ -49,7 +49,6 @@ extension Endpoint{
                 URLQueryItem(name: "username", value: "VSharkO"),
                 URLQueryItem(name: "name_startsWith", value: startingWith),
                 URLQueryItem(name: "maxRows", value: "20")
-                
             ]
         )
     }
