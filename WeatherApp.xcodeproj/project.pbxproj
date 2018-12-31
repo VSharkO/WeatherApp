@@ -60,6 +60,7 @@
 		D5F27CD221D98E0900DFFAAC /* UnitsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CD121D98E0900DFFAAC /* UnitsHelper.swift */; };
 		D5F27CD621D99B0300DFFAAC /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CD521D99B0300DFFAAC /* Units.swift */; };
 		D5F27CD821D99B2F00DFFAAC /* Conditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CD721D99B2F00DFFAAC /* Conditions.swift */; };
+		D5F27CDA21D99E0200DFFAAC /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CD921D99E0200DFFAAC /* DoubleExtension.swift */; };
 		D5F6140721CB767C004F1A6F /* GradientHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140621CB767C004F1A6F /* GradientHelper.swift */; };
 		D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */; };
 /* End PBXBuildFile section */
@@ -141,6 +142,7 @@
 		D5F27CD121D98E0900DFFAAC /* UnitsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsHelper.swift; sourceTree = "<group>"; };
 		D5F27CD521D99B0300DFFAAC /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 		D5F27CD721D99B2F00DFFAAC /* Conditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conditions.swift; sourceTree = "<group>"; };
+		D5F27CD921D99E0200DFFAAC /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
 		D5F6140621CB767C004F1A6F /* GradientHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHelper.swift; sourceTree = "<group>"; };
 		D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientParametersType.swift; sourceTree = "<group>"; };
 		F629E24779E9BF8A66F8FB1E /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +234,7 @@
 				D53D92E121CA970A00C8EB0E /* WeatherConditionsHelper.swift */,
 				D5E8E1C721D474B700846D8C /* AnimationHelperAppearing.swift */,
 				D5E2A78521D6A00D00A803FE /* AnimationHelperDisappearing.swift */,
+				D5F27CD921D99E0200DFFAAC /* DoubleExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				D5E8E1C821D474B700846D8C /* AnimationHelperAppearing.swift in Sources */,
 				D53D92E221CA970A00C8EB0E /* WeatherConditionsHelper.swift in Sources */,
 				D57F535B21C8D5AC00A62F24 /* MainViewModel.swift in Sources */,
+				D5F27CDA21D99E0200DFFAAC /* DoubleExtension.swift in Sources */,
 				D57F535C21C8D5AC00A62F24 /* MainViewModelProtocol.swift in Sources */,
 				D53D92DB21CA7A2000C8EB0E /* TimeDiferenceHelper.swift in Sources */,
 				D57F534921C8D53000A62F24 /* AppCoordinator.swift in Sources */,
