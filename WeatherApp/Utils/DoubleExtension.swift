@@ -9,7 +9,7 @@
 import Foundation
 
 extension Double {
-    func formatToStringWithOneDecimal() -> String {
-        return String(format: "%.1f", self)
+    func formatToStringWith(numOfDecimals: Int) -> String {
+        return String(format: "%.\(numOfDecimals)f", self)
     }
 }

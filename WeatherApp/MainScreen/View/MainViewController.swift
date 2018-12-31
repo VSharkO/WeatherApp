@@ -398,11 +398,11 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             self.maxTemperatureUnit.text = self.viewModel.weatherUnits.temperatureUnit
             self.minTemperatureUnit.text = self.viewModel.weatherUnits.temperatureUnit
             self.cityTextView.text = self.viewModel.city.name
-            self.maxTemperature.text = data.daily.temperatureMax.formatToStringWithOneDecimal()
-            self.minTemperature.text = data.daily.temperatureMin.formatToStringWithOneDecimal()
-            self.humidityText.text = data.currently.humidity.formatToStringWithOneDecimal() + Constants.humidityUnit
+            self.maxTemperature.text = data.daily.temperatureMax.formatToStringWith(numOfDecimals: 1)
+            self.minTemperature.text = data.daily.temperatureMin.formatToStringWith(numOfDecimals: 1)
+            self.humidityText.text = data.currently.humidity.formatToStringWith(numOfDecimals: 1) + Constants.humidityUnit
             self.pressureText.text = String(Int(data.currently.pressure)) + Constants.pressureUnit
-            self.windSpeedText.text = data.currently.windSpeed.formatToStringWithOneDecimal() + self.viewModel.weatherUnits.windSpeedUnit
+            self.windSpeedText.text = data.currently.windSpeed.formatToStringWith(numOfDecimals: 1) + self.viewModel.weatherUnits.windSpeedUnit
         }).disposed(by: disposeBag)
         
     }
