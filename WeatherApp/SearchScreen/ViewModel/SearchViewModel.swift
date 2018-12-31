@@ -20,10 +20,10 @@ class SearchViewModel: SearchViewModelProtocol{
     var data: [Geoname] = []
     var dbHelper: DbHelperProtocol!
     
-    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelper) {
         self.repository = repository
         self.scheduler = scheduler
-        dbHelper = DbHelper()
+        self.dbHelper = dbHelper
     }
     
     func initGetingDataFromRepository() -> Disposable {

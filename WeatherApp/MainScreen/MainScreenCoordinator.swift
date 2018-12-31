@@ -43,4 +43,11 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
         searchCoordinator.mainViewModelDelegate = viewModel
         searchCoordinator.start()
     }
+    
+    func openSettingsScreenModally(){
+        let settingsCoordinator = SettingsCoordinator(presenter: self.presenter, transitionDelegate: controller, settingsDataDelegate: viewModel)
+        self.childCoordinators.append(settingsCoordinator)
+        settingsCoordinator.mainCoordinatorDelegate = self
+        settingsCoordinator.start()
+    }
 }

@@ -654,6 +654,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     
     @objc func openSettingsScreen(_ sender:UIButton){
         print("opening settingsScreenModaly")
+        mainCoordinatorDelegate?.openSettingsScreenModally()
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

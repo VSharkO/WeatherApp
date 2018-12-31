@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import RxSwift
 
 class SettingsViewController: UIViewController {
     
     var viewModel: SettingsViewModelProtocol!
+    var disposeBag: DisposeBag!
+    weak var coordinatorDelegate: CoordinatorDelegate!
     
     init(viewModel: SettingsViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        self.disposeBag = DisposeBag()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -23,7 +27,11 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .blue
+        viewModel.getCities().disposed(by: disposeBag)
+        print(String(viewModel.data.units.rawValue))
+        print(viewModel.data.cities[0].name)
+        print(viewModel.data.weatherParameters)
     }
 
 }

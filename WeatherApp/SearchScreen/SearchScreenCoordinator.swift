@@ -22,7 +22,7 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinat
     init(presenter: UINavigationController, transitionDelegate: UIViewControllerTransitioningDelegate) {
         self.presenter = presenter
         childCoordinators = []
-        viewModel = SearchViewModel(repository: Repository())
+        viewModel = SearchViewModel(repository: Repository(), dbHelper: DbHelper())
         controller = SearchViewController(viewModel: viewModel)
         self.transitionDelegate = transitionDelegate
     }

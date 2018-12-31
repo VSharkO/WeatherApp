@@ -10,4 +10,5 @@ import Foundation
 
 protocol MainCoordinatorDelegate: CoordinatorDelegate,ParentCoordinatorDelegate {
     func openSearchScreenModally()
+    func openSettingsScreenModally()
 }

@@ -9,12 +9,14 @@
 import Foundation
 import RxSwift
 
-class MainViewModel : MainViewModelProtocol,MainViewModelDelegate{
+class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDelegate{
     
     internal var data: MainDataModel!
     internal var units: UnitsType
     internal var weatherUnits: WeatherUnits!
     internal var city: Geoname!
+    internal var settings = WeatherParametersToShow(humidity: true, windSpeed: true, pressure: true)
+    
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
@@ -68,6 +70,12 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate{
         setData(response: weather)
         self.city = city
         updateView()
+    }
+    
+    func setNewSettings(settingsDataModel: SettingsDataModel) {
+        self.units = settingsDataModel.units
+        self.settings = settingsDataModel.weatherParameters
+        self.city = settingsDataModel.cities[settingsDataModel.cityToShow]
     }
     
     private func dataRequestTrigered(){

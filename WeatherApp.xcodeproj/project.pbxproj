@@ -65,6 +65,7 @@
 		D5F27CDE21D9A46700DFFAAC /* WeatherParametersToShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CDD21D9A46700DFFAAC /* WeatherParametersToShow.swift */; };
 		D5F27CE221D9BDD100DFFAAC /* DbHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CE121D9BDD100DFFAAC /* DbHelper.swift */; };
 		D5F27CE421D9C83B00DFFAAC /* DbHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CE321D9C83B00DFFAAC /* DbHelperProtocol.swift */; };
+		D5F27CE721D9DD4100DFFAAC /* SettingsDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F27CE621D9DD4100DFFAAC /* SettingsDataDelegate.swift */; };
 		D5F6140721CB767C004F1A6F /* GradientHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140621CB767C004F1A6F /* GradientHelper.swift */; };
 		D5F6140921CB76E4004F1A6F /* GradientParametersType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */; };
 /* End PBXBuildFile section */
@@ -151,6 +152,7 @@
 		D5F27CDD21D9A46700DFFAAC /* WeatherParametersToShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherParametersToShow.swift; sourceTree = "<group>"; };
 		D5F27CE121D9BDD100DFFAAC /* DbHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbHelper.swift; sourceTree = "<group>"; };
 		D5F27CE321D9C83B00DFFAAC /* DbHelperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbHelperProtocol.swift; sourceTree = "<group>"; };
+		D5F27CE621D9DD4100DFFAAC /* SettingsDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataDelegate.swift; sourceTree = "<group>"; };
 		D5F6140621CB767C004F1A6F /* GradientHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHelper.swift; sourceTree = "<group>"; };
 		D5F6140821CB76E4004F1A6F /* GradientParametersType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientParametersType.swift; sourceTree = "<group>"; };
 		F629E24779E9BF8A66F8FB1E /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +332,7 @@
 		D57F534D21C8D5AC00A62F24 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				D5F27CE521D9DD1000DFFAAC /* Utils */,
 				D5F6140521CB7668004F1A6F /* GradientHelper */,
 				D57F534E21C8D5AC00A62F24 /* ViewModel */,
 				D57F535821C8D5AC00A62F24 /* View */,
@@ -343,8 +346,6 @@
 			children = (
 				D57F534F21C8D5AC00A62F24 /* MainViewModel.swift */,
 				D57F535021C8D5AC00A62F24 /* MainViewModelProtocol.swift */,
-				D53D92D821CA694E00C8EB0E /* MainDataModel.swift */,
-				D5F27CDB21D9A1D500DFFAAC /* MainViewModelDelegate.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -414,6 +415,7 @@
 		D5F27CC121D9826500DFFAAC /* SettingsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				D5F27CE821D9DD4600DFFAAC /* Utils */,
 				D5F27CCB21D9847B00DFFAAC /* View */,
 				D5F27CCA21D9846A00DFFAAC /* ViewModel */,
 				D5F27CC421D9829500DFFAAC /* SettingsCoordinator.swift */,
@@ -455,6 +457,23 @@
 				D5F27CE321D9C83B00DFFAAC /* DbHelperProtocol.swift */,
 			);
 			path = Db;
+			sourceTree = "<group>";
+		};
+		D5F27CE521D9DD1000DFFAAC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D53D92D821CA694E00C8EB0E /* MainDataModel.swift */,
+				D5F27CDB21D9A1D500DFFAAC /* MainViewModelDelegate.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D5F27CE821D9DD4600DFFAAC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D5F27CE621D9DD4100DFFAAC /* SettingsDataDelegate.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		D5F6140521CB7668004F1A6F /* GradientHelper */ = {
@@ -781,6 +800,7 @@
 				D57F534B21C8D53000A62F24 /* CoordinatorDelegate.swift in Sources */,
 				D5F27CD621D99B0300DFFAAC /* Units.swift in Sources */,
 				D5E9B86021C9ACB200723198 /* Endpoint.swift in Sources */,
+				D5F27CE721D9DD4100DFFAAC /* SettingsDataDelegate.swift in Sources */,
 				D5E2A79321D7118B00A803FE /* SearchCoordinatorDelegate.swift in Sources */,
 				D5E9EB6521D5049700C46371 /* SearchViewModel.swift in Sources */,
 				D5E9EB6321D5023000C46371 /* SearchScreenCoordinator.swift in Sources */,

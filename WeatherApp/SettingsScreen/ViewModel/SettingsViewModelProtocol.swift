@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol SettingsViewModelProtocol {
-    
+    var data: SettingsDataModel!{get}
+    func getCities() -> Disposable
 }
