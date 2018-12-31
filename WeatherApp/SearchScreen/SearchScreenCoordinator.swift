@@ -12,6 +12,7 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinat
 
     var childCoordinators: [Coordinator] = []
     weak var mainCoordinatorDelegate: MainCoordinatorDelegate?
+    var mainViewModelDelegate: MainViewModelDelegate?
     var controller: SearchViewController
     var presenter: UINavigationController
     var viewModel: SearchViewModel!
@@ -40,7 +41,7 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinat
     }
     
     func closeScreenWithData(weather: Response, city: Geoname) {
-        mainCoordinatorDelegate?.getDataFromChildScreen(weather: weather, city: city)
+        mainViewModelDelegate?.receavedData(weather: weather, city: city)
         viewHasFinished()
     }
 }

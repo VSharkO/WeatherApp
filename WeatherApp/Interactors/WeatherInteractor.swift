@@ -1,8 +1,8 @@
 //
 //  Interactor.swift
-//  NewsApp
+//  WeatherApp
 //
-//  Created by Valentin Šarić on 23/10/2018.
+//  Created by Valentin Šarić on 18/12/2018.
 //  Copyright © 2018 Valentin Šarić. All rights reserved.
 //
 

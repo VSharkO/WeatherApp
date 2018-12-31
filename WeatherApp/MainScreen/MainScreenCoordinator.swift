@@ -40,12 +40,7 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
         let searchCoordinator = SearchScreenCoordinator(presenter: self.presenter, transitionDelegate: controller)
         self.childCoordinators.append(searchCoordinator)
         searchCoordinator.mainCoordinatorDelegate = self
+        searchCoordinator.mainViewModelDelegate = viewModel
         searchCoordinator.start()
-    }
-    
-    func getDataFromChildScreen(weather: Response, city: Geoname) {
-        viewModel.setData(response: weather)
-        viewModel.city = city
-        viewModel.updateView()
     }
 }

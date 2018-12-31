@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class MainViewModel : MainViewModelProtocol{
+class MainViewModel : MainViewModelProtocol,MainViewModelDelegate{
     
     internal var data: MainDataModel!
     internal var units: UnitsType
@@ -62,6 +62,12 @@ class MainViewModel : MainViewModelProtocol{
     
     func initialDataRequest(){
         dataRequestTrigered()
+    }
+    
+    func receavedData(weather: Response, city: Geoname) {
+        setData(response: weather)
+        self.city = city
+        updateView()
     }
     
     private func dataRequestTrigered(){
