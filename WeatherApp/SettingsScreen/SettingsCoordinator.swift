@@ -13,12 +13,13 @@ class SettingsCoordinator: Coordinator,CoordinatorDelegate{
     var controller: SettingsViewController
     weak var mainCoordinatorDelegate: MainCoordinatorDelegate?
     var presenter: UINavigationController
-    var transitionDelegate: UIViewControllerTransitioningDelegate!
+    var transitionDelegate: UIViewControllerTransitioningDelegate
     let viewModel: SettingsViewModel!
     
     init(presenter: UINavigationController,transitionDelegate: UIViewControllerTransitioningDelegate, settingsDataDelegate: SettingsDataDelegate) {
         self.presenter = presenter
         childCoordinators = []
+        self.transitionDelegate = transitionDelegate
         self.viewModel = SettingsViewModel(dbHelper: DbHelper(),settingsDataDelegate: settingsDataDelegate)
         self.controller = SettingsViewController(viewModel: viewModel)
     }
@@ -34,6 +35,5 @@ class SettingsCoordinator: Coordinator,CoordinatorDelegate{
         controller.dismiss(animated: true, completion: nil)
         mainCoordinatorDelegate?.childHasFinished(coordinator: self)
     }
-    
     
 }
