@@ -10,8 +10,6 @@ import Foundation
 import RxSwift
 
 class SearchViewModel: SearchViewModelProtocol{
-   
-    
     
     var searchCoordinatorDelegate: SearchCoordinatorDelegate!
     let repository: RepositoryProtocol
@@ -34,7 +32,7 @@ class SearchViewModel: SearchViewModelProtocol{
         return dynamicSearchString.flatMap({[unowned self] dynamicString -> Observable<Cities> in
             guard !dynamicString.isEmpty else{return Observable.just(Cities(geonames: []))}
             return self.repository.getCities(endpoint: Endpoint.getCitiesEndpoint(startingWith: dynamicString))
-        }).subscribeOn(MainScheduler.instance)
+        }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] cities in
                 self.data = cities.geonames
@@ -43,7 +41,7 @@ class SearchViewModel: SearchViewModelProtocol{
     }
     
     func initCitySelected() -> Disposable{
-            return citySelected.flatMap({ [unowned self] index -> Observable<Response> in
+            return citySelected.flatMap({[unowned self] index -> Observable<Response> in
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
                 let coordinates = self.data[index].lat + "," + self.data[index].lng

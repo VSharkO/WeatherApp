@@ -54,6 +54,7 @@ class SearchViewModelTests: QuickSpec {
                 beforeEach {
                     let mockRepository = MockRepositoryProtocol()
                     let testScheduler = TestScheduler(initialClock: 0)
+                    var subscriber = testScheduler.createObserver(Bool.self)
                     searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: MockDbHelperProtocol())
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     testScheduler.start()
@@ -79,15 +80,17 @@ class SearchViewModelTests: QuickSpec {
                     stub(mockRepository) { mock in
                         when(mock.getCities(endpoint: any()).thenReturn(Observable.just(supplyCitiesResponse)))
                     }
-                    stub(dbHelperProtocolMock) { mock in
-                        when(mock.saveGeonameToDb(geoname: any()).thenDoNothing())
-                    }
+//                    stub(dbHelperProtocolMock) { mock in
+//                        when(mock.saveGeonameToDb(geoname: any()).thenReturn(Observable.just(supplyWeatherResponse)))
+//                    }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver(String.self)
                     searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: dbHelperProtocolMock)
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     testScheduler.start()
+             
+              
                 }
                 it("requst is not sent for empty string"){
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
@@ -104,7 +107,7 @@ class SearchViewModelTests: QuickSpec {
                     searchViewModel.cityClicked(onIndex: 1)
                     verify(mockRepository).getWeather(endpoint: any())
                 }
-                it("When data is reseaved, saves it to db"){
+                it("When data is received, saves it to db"){
                     searchViewModel.dynamicSearchString.onNext("ple")
                     searchViewModel.cityClicked(onIndex: 1)
                     verify(dbHelperProtocolMock).saveGeonameToDb(geoname: any())
@@ -139,6 +142,8 @@ class SearchViewModelTests: QuickSpec {
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     testScheduler.start()
                     
+                 
+                    
                 }
                 it("loader is shown on start of request"){
                     searchViewModel.dynamicSearchString.onNext("pl")
@@ -146,10 +151,11 @@ class SearchViewModelTests: QuickSpec {
                     expect(subscriber.events.first!.value.element).to(equal(true))
                 }
                 it("loader is hiden after receiving data"){
-                    searchViewModel.dynamicSearchString.onNext("pl")
-                    searchViewModel.cityClicked(onIndex: 1)
+                    searchViewModel.dynamicSearchString.onNext("p")
                     //???????????????????????????????????????????????????????????? there is just one event on publish subject
                     //for showing and hideing loader, hideing of loader "wasnt trigered when testing, while on real app run it is trigered.
+                    searchViewModel.cityClicked(onIndex: 1)
+                    
                     expect(subscriber.events.last!.value.element).to(equal(false))
                 }
             }
