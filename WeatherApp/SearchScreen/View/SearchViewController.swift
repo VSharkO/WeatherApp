@@ -91,7 +91,6 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     override func viewDidLoad() {
-        self.view.backgroundColor = .clear
         setupViews()
         setupNotificationObservers()
         registerButtonTouchListeners()
@@ -127,6 +126,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     private func setupViews(){
+        self.view.backgroundColor = .clear
         tableVeiw.delegate = self
         tableVeiw.dataSource = self
         self.view.addSubview(blureBackground)

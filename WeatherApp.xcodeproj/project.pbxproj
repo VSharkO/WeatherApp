@@ -311,8 +311,8 @@
 				D5007E6821CAF17C00CB507D /* TimeDiferenceHelperTests.swift */,
 				D5007E6A21CAFF2800CB507D /* WeatherConditionsHelperTests.swift */,
 				D537A39121D8403D00AF89D3 /* SearchViewModelTests.swift */,
-				D57F532B21C8D48500A62F24 /* Info.plist */,
 				D5F27CCC21D989B900DFFAAC /* SettingsViewModelTests.swift */,
+				D57F532B21C8D48500A62F24 /* Info.plist */,
 			);
 			path = WeatherAppTests;
 			sourceTree = "<group>";
@@ -708,6 +708,7 @@
 			inputPaths = (
 				"${PROJECT_DIR}/${PROJECT_NAME}/Repository/RepositoryProtocol.swift",
 				"${PROJECT_DIR}/${PROJECT_NAME}/Db/DbHelperProtocol.swift",
+				"${PROJECT_DIR}/${PROJECT_NAME}/SettingsScreen/Utils/SettingsDataDelegate.swift",
 			);
 			outputFileListPaths = (
 			);

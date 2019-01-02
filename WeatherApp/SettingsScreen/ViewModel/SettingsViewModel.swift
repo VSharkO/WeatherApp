@@ -10,35 +10,30 @@ import Foundation
 import RxSwift
 
 class SettingsViewModel: SettingsViewModelProtocol{
-    var data: SettingsDataModel!
-    let scheduler: SchedulerType!
-    let dbHelper: DbHelper!
-    let settingsDelegate: SettingsDataDelegate!
-    //TODO: testni subject
-    var closeScreen = PublishSubject<Bool>()
+    var data: SettingsDataModel
+    let scheduler: SchedulerType
+    let dbHelper: DbHelperProtocol
+    let settingsDelegate: SettingsDataDelegate
+    let getCities = PublishSubject<Bool>()
     
-    init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background),dbHelper: DbHelper, settingsDataDelegate: SettingsDataDelegate) {
+    init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelperProtocol, settingsDataDelegate: SettingsDataDelegate) {
         self.scheduler = scheduler
         self.dbHelper = dbHelper
         self.settingsDelegate = settingsDataDelegate
         self.data = SettingsDataModel(cityToShow: 0, cities: [], units: settingsDelegate.units, weatherParameters: settingsDelegate.settings)
     }
     
-    func getCities() -> Disposable{
-        return dbHelper.getGeonamesFromDb().subscribe(onNext: { geonames in
-                self.data.cities = geonames
-            self.messWithData() //TODO: testno
-        })
-    }
-   
-    // TODO: Ovo je samo testno
-    func messWithData(){
-        self.data.weatherParameters.pressure = false
-        self.data.cityToShow = 2
-        self.data.units = .us
-        settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        self.closeScreen.onNext(true)
+    func initGetCities() -> Disposable{
+        return getCities.flatMap({[unowned self] _ -> Observable<[Geoname]> in
+            return self.dbHelper.getGeonamesFromDb()
+            }).subscribeOn(scheduler)
+                .observeOn(MainScheduler.init())
+                .subscribe(onNext: {[unowned self] geonames in
+                    self.data.cities = geonames
+                })
     }
     
-    
+    func getCitiesFromDb(){
+        getCities.onNext(true)
+    }
 }

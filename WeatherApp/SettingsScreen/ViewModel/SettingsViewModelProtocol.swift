@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol SettingsViewModelProtocol {
-    var data: SettingsDataModel!{get}
-    func getCities() -> Disposable
-    var closeScreen: PublishSubject<Bool>{get}
+    var data: SettingsDataModel{get}
+    func initGetCities() -> Disposable
+    func getCitiesFromDb()
 }

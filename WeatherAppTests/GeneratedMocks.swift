@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WeatherApp/Db/DbHelperProtocol.swift at 2019-01-02 01:55:12 +0000
+// MARK: - Mocks generated from file: WeatherApp/Db/DbHelperProtocol.swift at 2019-01-02 18:33:33 +0000
 
 //
 //  DbHelperProtocol.swift
@@ -156,7 +156,7 @@ class MockDbHelperProtocol: DbHelperProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/Repository/RepositoryProtocol.swift at 2019-01-02 01:55:12 +0000
+// MARK: - Mocks generated from file: WeatherApp/Repository/RepositoryProtocol.swift at 2019-01-02 18:33:33 +0000
 
 //
 //  RepositoryProtocol.swift
@@ -280,6 +280,185 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
     
      func getCities(endpoint: Endpoint)  -> Observable<Cities> {
         return DefaultValueRegistry.defaultValue(for: Observable<Cities>.self)
+    }
+    
+}
+
+
+// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-02 18:33:33 +0000
+
+//
+//  SettingsDataDelegate.swift
+//  WeatherApp
+//
+//  Created by Valentin Šarić on 31/12/2018.
+//  Copyright © 2018 Valentin Šarić. All rights reserved.
+import Cuckoo
+@testable import WeatherApp
+
+import Foundation
+
+class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
+    typealias MocksType = SettingsDataDelegate
+    typealias Stubbing = __StubbingProxy_SettingsDataDelegate
+    typealias Verification = __VerificationProxy_SettingsDataDelegate
+
+    private var __defaultImplStub: SettingsDataDelegate?
+
+    let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: false)
+
+    func enableDefaultImplementation(_ stub: SettingsDataDelegate) {
+        __defaultImplStub = stub
+        cuckoo_manager.enableDefaultStubImplementation()
+    }
+
+    
+    
+     var settings: WeatherParametersToShow {
+        get {
+            return cuckoo_manager.getter("settings",
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.settings)
+        }
+        
+        set {
+            cuckoo_manager.setter("settings",
+                value: newValue,
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.settings = newValue)
+        }
+        
+    }
+    
+    
+     var units: UnitsType {
+        get {
+            return cuckoo_manager.getter("units",
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.units)
+        }
+        
+        set {
+            cuckoo_manager.setter("units",
+                value: newValue,
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.units = newValue)
+        }
+        
+    }
+    
+
+    
+
+    
+    // ["name": "setNewSettings", "returnSignature": "", "fullyQualifiedName": "setNewSettings(settingsDataModel: SettingsDataModel)", "parameterSignature": "settingsDataModel: SettingsDataModel", "parameterSignatureWithoutNames": "settingsDataModel: SettingsDataModel", "inputTypes": "SettingsDataModel", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "settingsDataModel", "call": "settingsDataModel: settingsDataModel", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("settingsDataModel"), name: "settingsDataModel", type: "SettingsDataModel", range: CountableRange(329..<365), nameRange: CountableRange(329..<346))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "settingsDataModel", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+     func setNewSettings(settingsDataModel: SettingsDataModel)  {
+        
+            return cuckoo_manager.call("setNewSettings(settingsDataModel: SettingsDataModel)",
+                parameters: (settingsDataModel),
+                escapingParameters: (settingsDataModel),
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.setNewSettings(settingsDataModel: settingsDataModel))
+        
+    }
+    
+
+	struct __StubbingProxy_SettingsDataDelegate: Cuckoo.StubbingProxy {
+	    private let cuckoo_manager: Cuckoo.MockManager
+	
+	    init(manager: Cuckoo.MockManager) {
+	        self.cuckoo_manager = manager
+	    }
+	    
+	    var settings: Cuckoo.ProtocolToBeStubbedProperty<MockSettingsDataDelegate, WeatherParametersToShow> {
+	        return .init(manager: cuckoo_manager, name: "settings")
+	    }
+	    
+	    var units: Cuckoo.ProtocolToBeStubbedProperty<MockSettingsDataDelegate, UnitsType> {
+	        return .init(manager: cuckoo_manager, name: "units")
+	    }
+	    
+	    
+	    func setNewSettings<M1: Cuckoo.Matchable>(settingsDataModel: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(SettingsDataModel)> where M1.MatchedType == SettingsDataModel {
+	        let matchers: [Cuckoo.ParameterMatcher<(SettingsDataModel)>] = [wrap(matchable: settingsDataModel) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockSettingsDataDelegate.self, method: "setNewSettings(settingsDataModel: SettingsDataModel)", parameterMatchers: matchers))
+	    }
+	    
+	}
+
+	struct __VerificationProxy_SettingsDataDelegate: Cuckoo.VerificationProxy {
+	    private let cuckoo_manager: Cuckoo.MockManager
+	    private let callMatcher: Cuckoo.CallMatcher
+	    private let sourceLocation: Cuckoo.SourceLocation
+	
+	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+	        self.cuckoo_manager = manager
+	        self.callMatcher = callMatcher
+	        self.sourceLocation = sourceLocation
+	    }
+	
+	    
+	    var settings: Cuckoo.VerifyProperty<WeatherParametersToShow> {
+	        return .init(manager: cuckoo_manager, name: "settings", callMatcher: callMatcher, sourceLocation: sourceLocation)
+	    }
+	    
+	    var units: Cuckoo.VerifyProperty<UnitsType> {
+	        return .init(manager: cuckoo_manager, name: "units", callMatcher: callMatcher, sourceLocation: sourceLocation)
+	    }
+	    
+	
+	    
+	    @discardableResult
+	    func setNewSettings<M1: Cuckoo.Matchable>(settingsDataModel: M1) -> Cuckoo.__DoNotUse<Void> where M1.MatchedType == SettingsDataModel {
+	        let matchers: [Cuckoo.ParameterMatcher<(SettingsDataModel)>] = [wrap(matchable: settingsDataModel) { $0 }]
+	        return cuckoo_manager.verify("setNewSettings(settingsDataModel: SettingsDataModel)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	}
+
+}
+
+ class SettingsDataDelegateStub: SettingsDataDelegate {
+    
+     var settings: WeatherParametersToShow {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (WeatherParametersToShow).self)
+        }
+        
+        set { }
+        
+    }
+    
+     var units: UnitsType {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (UnitsType).self)
+        }
+        
+        set { }
+        
+    }
+    
+
+    
+
+    
+     func setNewSettings(settingsDataModel: SettingsDataModel)  {
+        return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
 }

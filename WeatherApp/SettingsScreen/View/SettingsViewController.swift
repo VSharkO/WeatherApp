@@ -27,23 +27,21 @@ class SettingsViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .blue
+        setupViews()
         initSubscripts()
+        viewModel.initGetCities().disposed(by: disposeBag)
         }
     
     override func viewDidAppear(_ animated: Bool) {
-        viewModel.getCities().disposed(by: disposeBag)
-        print(String(viewModel.data.units.rawValue))
-        print(viewModel.data.cities[0].name)
-        print(viewModel.data.weatherParameters)
+        viewModel.getCitiesFromDb()
+    }
+    
+    private func setupViews(){
+        view.backgroundColor = .blue
     }
     
     private func initSubscripts(){
-        //TODO: testno
-        viewModel.closeScreen.subscribe(onNext: { _ in
-            self.dismiss(animated: true, completion: nil)
-        }).disposed(by: disposeBag)
+        
     }
 
 }
