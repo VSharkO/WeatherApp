@@ -155,10 +155,10 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
             ])
         
         searchConteiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        leadingConstraint = searchConteiner.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30)
-        leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 100)
-        bottomConstraint = searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
-        trailingConstraint = searchConteiner.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.trailingAnchor,constant: -40)
+        leadingConstraint = searchConteiner.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor, constant: 30)
+        leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 100)
+        bottomConstraint = searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor, constant: -15)
+        trailingConstraint = searchConteiner.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.trailingAnchor,constant: -40)
         bottomConstraint.isActive = true
         leadingConstraint.isActive = true
         trailingConstraint.isActive = true

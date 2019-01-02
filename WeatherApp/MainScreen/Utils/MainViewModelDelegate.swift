@@ -9,5 +9,6 @@
 import Foundation
 
 protocol MainViewModelDelegate {
-    func receavedData(weather: Response, city: Geoname)
+    func receaveData(weather: Response, city: Geoname)
+    var units: UnitsType{get}
 }

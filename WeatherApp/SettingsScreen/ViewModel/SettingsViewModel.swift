@@ -10,17 +10,19 @@ import Foundation
 import RxSwift
 
 class SettingsViewModel: SettingsViewModelProtocol{
+    
+    weak var coordinatorDelegate: CoordinatorDelegate!
+    var settingsDelegate: SettingsDataDelegate
     var data: SettingsDataModel
     let scheduler: SchedulerType
     let dbHelper: DbHelperProtocol
-    let settingsDelegate: SettingsDataDelegate
     let getCities = PublishSubject<Bool>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelperProtocol, settingsDataDelegate: SettingsDataDelegate) {
         self.scheduler = scheduler
         self.dbHelper = dbHelper
         self.settingsDelegate = settingsDataDelegate
-        self.data = SettingsDataModel(cityToShow: 0, cities: [], units: settingsDelegate.units, weatherParameters: settingsDelegate.settings)
+        self.data = SettingsDataModel(cities: [], cityToShow: settingsDataDelegate.city, units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings)
     }
     
     func initGetCities() -> Disposable{
@@ -35,5 +37,9 @@ class SettingsViewModel: SettingsViewModelProtocol{
     
     func getCitiesFromDb(){
         getCities.onNext(true)
+    }
+    
+    func setNewCityToShow(indexOfCity: Int){
+        
     }
 }

@@ -11,21 +11,25 @@ import RxSwift
 
 class SearchViewModel: SearchViewModelProtocol{
     
-    var searchCoordinatorDelegate: SearchCoordinatorDelegate!
+    weak var coordinatorDelegate: CoordinatorDelegate!
+    var mainViewModelDelegate: MainViewModelDelegate
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var viewShowLoader = PublishSubject<Bool>()
     var viewRefreshTableViewData = PublishSubject<Bool>()
-    var dynamicSearchString = PublishSubject<String>()
+    private var units: UnitsType
+    private var dynamicSearchString = PublishSubject<String>()
     private var citySelected = PublishSubject<Int>()
-    var data: [Geoname] = []
-    var dbHelper: DbHelperProtocol!
-    var clickedItem = -1
+    internal var data: [Geoname] = []
+    private var dbHelper: DbHelperProtocol!
+    private var clickedItem = -1
     
-    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelperProtocol) {
+    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelperProtocol, mainViewModelDelegate: MainViewModelDelegate) {
         self.repository = repository
         self.scheduler = scheduler
         self.dbHelper = dbHelper
+        self.units = mainViewModelDelegate.units
+        self.mainViewModelDelegate = mainViewModelDelegate
     }
     
     func initGetingDataFromRepository() -> Disposable {
@@ -45,15 +49,16 @@ class SearchViewModel: SearchViewModelProtocol{
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
                 let coordinates = self.data[index].lat + "," + self.data[index].lng
-                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: Constants.siUnitsApi)).subscribeOn(self.scheduler)
+                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: self.units.rawValue)).subscribeOn(self.scheduler)
             }).subscribeOn(scheduler)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[unowned self] response in
                     self.viewShowLoader.onNext(false)
-                    self.dbHelper.saveGeonameToDb(geoname: self.data[ self.clickedItem])
-                    self.searchCoordinatorDelegate.closeScreenWithData(weather: response, city: self.data[ self.clickedItem])
+                    self.dbHelper.saveGeonameToDb(geoname: self.data[self.clickedItem])
+                    self.mainViewModelDelegate.receaveData(weather: response, city: self.data[self.clickedItem])
+                    self.coordinatorDelegate.viewHasFinished()
                 })
-        }
+    }
     
     func cityClicked(onIndex: Int){
         citySelected.onNext(onIndex)

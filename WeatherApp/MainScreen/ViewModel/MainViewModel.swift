@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDelegate{
-    
+
     internal var data: MainDataModel!
     internal var units: UnitsType
     internal var weatherUnits: WeatherUnits!
@@ -66,7 +66,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         dataRequestTrigered()
     }
     
-    func receavedData(weather: Response, city: Geoname) {
+    func receaveData(weather: Response, city: Geoname) {
         setData(response: weather)
         self.city = city
         updateView()
@@ -75,7 +75,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     func setNewSettings(settingsDataModel: SettingsDataModel) {
         self.units = settingsDataModel.units
         self.settings = settingsDataModel.weatherParameters
-        self.city = settingsDataModel.cities[settingsDataModel.cityToShow]
+        self.city = settingsDataModel.cityToShow
         self.dataRequestTriger.onNext(true)
     }
     

@@ -13,7 +13,6 @@ class SettingsViewController: UIViewController {
     
     var viewModel: SettingsViewModelProtocol!
     var disposeBag: DisposeBag!
-    weak var coordinatorDelegate: CoordinatorDelegate!
     
     init(viewModel: SettingsViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)

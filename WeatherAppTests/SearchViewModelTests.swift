@@ -54,7 +54,7 @@ class SearchViewModelTests: QuickSpec {
                 beforeEach {
                     let mockRepository = MockRepositoryProtocol()
                     let testScheduler = TestScheduler(initialClock: 0)
-                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: MockDbHelperProtocol())
+                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: MockDbHelperProtocol(), units: .si)
                     testScheduler.start()
                 }
                 it("is not nil"){
@@ -146,7 +146,7 @@ class SearchViewModelTests: QuickSpec {
 //                    //???????????????????????????????????????????????????????????? there is just one event on publish subject
 //                    //for showing and hideing loader, hideing of loader "wasnt trigered when testing, while on real app run it is trigered.
 //                    searchViewModel.cityClicked(onIndex: 1)
-//                    
+//
 //                    expect(subscriber.events.last!.value.element).to(equal(false))
 //                }
             }
