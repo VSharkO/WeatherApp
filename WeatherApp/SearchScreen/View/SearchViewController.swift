@@ -211,7 +211,10 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     private func setupObservingSearchText(){
-        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).bind(to: viewModel.dynamicSearchString).disposed(by: disposeBag)
+//        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).bind(to: viewModel.dynamicSearchString).disposed(by: disposeBag)
+        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).subscribe(onNext: {[unowned self] text in
+            self.viewModel.searchForText(text: text)
+            }).disposed(by: disposeBag)
     }
     
     private func displayLoader() {
@@ -243,7 +246,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     
     @objc func trigerSearchMaunaly(_ sender: UIButton){
         if let text = self.searchBarText.text{
-            self.viewModel.dynamicSearchString.onNext(text)
+            self.viewModel.searchForText(text: text)
         }
     }
         

@@ -10,6 +10,8 @@ import Foundation
 import RxSwift
 
 class SearchViewModel: SearchViewModelProtocol{
+   
+    
     
     var searchCoordinatorDelegate: SearchCoordinatorDelegate!
     let repository: RepositoryProtocol
@@ -57,5 +59,9 @@ class SearchViewModel: SearchViewModelProtocol{
     
     func cityClicked(onIndex: Int){
         citySelected.onNext(onIndex)
+    }
+    
+    func searchForText(text: String) {
+         dynamicSearchString.onNext(text)
     }
 }
