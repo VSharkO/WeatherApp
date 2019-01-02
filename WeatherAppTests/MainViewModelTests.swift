@@ -13,10 +13,10 @@ import RxSwift
 import Nimble
 @testable import WeatherApp
 
-class MainScreenTests: QuickSpec {
+class MainViewModelTests: QuickSpec {
     
     override func spec() {
-        let testBundle = Bundle.init(for: MainScreenTests.self)
+        let testBundle = Bundle.init(for: MainViewModelTests.self)
         let supplyListUrl = testBundle.url(forResource: "main_screen_response", withExtension: "json")!
         let supplyListData = try! Data(contentsOf: supplyListUrl)
         let supplyListResponse: Response? =

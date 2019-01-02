@@ -11,16 +11,24 @@ import RealmSwift
 import RxSwift
 
 class DbHelper : DbHelperProtocol{
-    let realm = try! Realm()
+    let realm: Realm!
+    
+    init(db: Realm ) {
+        realm = db
+    }
     
     func saveGeonameToDb(geoname: Geoname){
-        let dbGeoname = DbGeoname(name: geoname.name, lng: geoname.lng, ltd: geoname.lat, countryCode: geoname.countryCode ?? "")
+        var isContained = false
+        let geonameForDb = DbGeoname(name: geoname.name, lng: geoname.lng, ltd: geoname.lat, countryCode: geoname.countryCode ?? "")
+        let dbGeonames = realm.objects(DbGeoname.self)
         
-        guard !realm.objects(DbGeoname.self).contains(dbGeoname) else{
-            return
+        if !dbGeonames.filter({$0.name == geonameForDb.name}).isEmpty{
+            isContained = true
         }
-        try! realm.write {
-            realm.add(dbGeoname)
+        if !isContained{
+            try! realm.write {
+                realm.add(geonameForDb)
+            }
         }
     }
     

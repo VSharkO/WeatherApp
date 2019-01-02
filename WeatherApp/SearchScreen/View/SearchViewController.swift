@@ -101,6 +101,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     
     override func viewDidAppear(_ animated: Bool) {
         viewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+        viewModel.initCitySelected().disposed(by: disposeBag)
         searchBarText.becomeFirstResponder()
     }
     
@@ -122,7 +123,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.citySelected(index: indexPath.row).disposed(by: disposeBag)
+        viewModel.cityClicked(onIndex: indexPath.row)
     }
     
     private func setupViews(){

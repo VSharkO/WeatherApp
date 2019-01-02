@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SettingsCoordinator: Coordinator,CoordinatorDelegate{
     var childCoordinators: [Coordinator]
@@ -20,7 +21,7 @@ class SettingsCoordinator: Coordinator,CoordinatorDelegate{
         self.presenter = presenter
         childCoordinators = []
         self.transitionDelegate = transitionDelegate
-        self.viewModel = SettingsViewModel(dbHelper: DbHelper(),settingsDataDelegate: settingsDataDelegate)
+        self.viewModel = SettingsViewModel(dbHelper: DbHelper(db: try! Realm()),settingsDataDelegate: settingsDataDelegate)
         self.controller = SettingsViewController(viewModel: viewModel)
     }
     

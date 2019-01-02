@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinatorDelegate{
 
@@ -22,7 +23,7 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate, SearchCoordinat
     init(presenter: UINavigationController, transitionDelegate: UIViewControllerTransitioningDelegate) {
         self.presenter = presenter
         childCoordinators = []
-        viewModel = SearchViewModel(repository: Repository(), dbHelper: DbHelper())
+        viewModel = SearchViewModel(repository: Repository(), dbHelper: DbHelper(db: try! Realm()))
         controller = SearchViewController(viewModel: viewModel)
         self.transitionDelegate = transitionDelegate
     }

@@ -16,5 +16,7 @@ protocol SearchViewModelProtocol {
     var viewRefreshTableViewData: PublishSubject<Bool>{get}
     func initGetingDataFromRepository() -> Disposable
     var viewShowLoader: PublishSubject<Bool>{get}
-    func citySelected(index: Int) -> Disposable
+    func initCitySelected() -> Disposable
+    func cityClicked(onIndex: Int)
+//    func searchForText
 }
