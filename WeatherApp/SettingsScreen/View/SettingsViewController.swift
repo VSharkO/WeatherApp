@@ -138,6 +138,16 @@ class SettingsViewController: UIViewController {
         return button
     }()
     
+    let buttonDone: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 25
+        button.setImage(TransparentTextHelper.maskedImage(size: CGSize.init(width: 120, height: 50), text: "Done"), for: .normal)
+        return button
+    }()
+    
+    
     
     weak var coordinatorDelegate: CoordinatorDelegate?
     var viewModel: SettingsViewModelProtocol!
@@ -177,6 +187,7 @@ class SettingsViewController: UIViewController {
         self.view.addSubview(unitsTableView)
         self.view.addSubview(conditionsTitle)
         self.view.addSubview(horizontalStackConditions)
+        self.view.addSubview(buttonDone)
         self.horizontalStackConditions.addArrangedSubview(verticalStackHumidity)
         self.horizontalStackConditions.addArrangedSubview(verticalStackWind)
         self.horizontalStackConditions.addArrangedSubview(verticalStackPressure)
@@ -234,6 +245,13 @@ class SettingsViewController: UIViewController {
             horizontalStackConditions.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor, constant: -20),
             horizontalStackConditions.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.trailingAnchor, constant: -40),
             horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            buttonDone.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
+            buttonDone.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor, constant: -15),
+            buttonDone.widthAnchor.constraint(equalToConstant: 120),
+            buttonDone.heightAnchor.constraint(equalToConstant: 50)
             ])
         
         
