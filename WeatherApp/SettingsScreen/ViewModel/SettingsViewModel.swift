@@ -47,7 +47,6 @@ class SettingsViewModel: SettingsViewModelProtocol{
         if data.cities.count > 0{
             let index = data.cities.firstIndex(where: { $0.getCoordinates() == cityToShow.getCoordinates() })
             self.data.cityToShow = index ?? 0
-            
         }
         messWithData()
     }
@@ -57,7 +56,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
         self.data.cityToShow = 4
         self.data.units = .us
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        coordinatorDelegate.viewHasFinished()
+//        coordinatorDelegate.viewHasFinished()
     }
     
 }

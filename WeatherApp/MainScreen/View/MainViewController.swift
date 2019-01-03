@@ -369,12 +369,12 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     override func viewDidLoad() {
         setupViews()
         initSubscripts()
+        self.registerTouchListeners()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.initialDataRequest()
-        self.registerTouchListeners()
     }
     
     private func initSubscripts(){

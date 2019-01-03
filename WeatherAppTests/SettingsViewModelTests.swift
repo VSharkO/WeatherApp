@@ -30,6 +30,7 @@ class SettingsViewModelTests: QuickSpec {
                 beforeEach {
                     stub(mockSettingsDataDelegate) { mock in
                         when(mock.setNewSettings(settingsDataModel: any())).thenDoNothing()
+                        when(mock.city.get.thenReturn(Geoname(lng: "10", countryCode: nil, name: "Pleternica", lat: "20")))
                         when(mock.units.get.thenReturn(.si))
                         when(mock.settings.get.thenReturn(WeatherParametersToShow(humidity: true, windSpeed: false, pressure: true)))
                     }
@@ -73,9 +74,8 @@ class SettingsViewModelTests: QuickSpec {
                 let mockDbHelperProtocol = MockDbHelperProtocol()
                 beforeEach {
                     stub(mockSettingsDataDelegate) { mock in
-                        when(mock.setNewSettings(settingsDataModel: any())).then({ model in
-                            print("setings changed")
-                        })
+                        when(mock.setNewSettings(settingsDataModel: any())).thenDoNothing()
+                        when(mock.city.get.thenReturn(Geoname(lng: "10", countryCode: nil, name: "Pleternica", lat: "20")))
                         when(mock.units.get.thenReturn(.si))
                         when(mock.settings.get.thenReturn(WeatherParametersToShow(humidity: true, windSpeed: false, pressure: true)))
                     }

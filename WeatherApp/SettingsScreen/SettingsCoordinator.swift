@@ -14,19 +14,16 @@ class SettingsCoordinator: Coordinator,CoordinatorDelegate{
     var controller: SettingsViewController
     weak var mainCoordinatorDelegate: MainCoordinatorDelegate?
     var presenter: UINavigationController
-    var transitionDelegate: UIViewControllerTransitioningDelegate
     let viewModel: SettingsViewModel!
     
-    init(presenter: UINavigationController,transitionDelegate: UIViewControllerTransitioningDelegate, settingsDataDelegate: SettingsDataDelegate) {
+    init(presenter: UINavigationController, settingsDataDelegate: SettingsDataDelegate) {
         self.presenter = presenter
         childCoordinators = []
-        self.transitionDelegate = transitionDelegate
         self.viewModel = SettingsViewModel(dbHelper: DbHelper(db: try! Realm()), settingsDataDelegate: settingsDataDelegate)
         self.controller = SettingsViewController(viewModel: viewModel)
     }
     
     func start() {
-        controller.transitioningDelegate = transitionDelegate
         controller.modalPresentationStyle = .overCurrentContext
         viewModel.coordinatorDelegate = self
         presenter.present(controller, animated: true, completion: nil)

@@ -18,7 +18,7 @@ class SearchViewModel: SearchViewModelProtocol{
     var viewShowLoader = PublishSubject<Bool>()
     var viewRefreshTableViewData = PublishSubject<Bool>()
     private var units: UnitsType
-    private var dynamicSearchString = PublishSubject<String>()
+    var dynamicSearchString = PublishSubject<String>()
     private var citySelected = PublishSubject<Int>()
     internal var data: [Geoname] = []
     private var dbHelper: DbHelperProtocol!

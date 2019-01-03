@@ -53,8 +53,14 @@ class SearchViewModelTests: QuickSpec {
             context("Initionalized correctly"){
                 beforeEach {
                     let mockRepository = MockRepositoryProtocol()
+                    let mockDbHelperProtocol = MockDbHelperProtocol()
+                    let mockMainViewModelDelegate = MockMainViewModelDelegate()
                     let testScheduler = TestScheduler(initialClock: 0)
-                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: MockDbHelperProtocol(), units: .si)
+                    stub(mockMainViewModelDelegate) { mock in
+                        when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
+                        when(mock.units).get.thenReturn(.si)
+                    }
+                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: mockDbHelperProtocol, mainViewModelDelegate: mockMainViewModelDelegate)
                     testScheduler.start()
                 }
                 it("is not nil"){
@@ -68,6 +74,7 @@ class SearchViewModelTests: QuickSpec {
                 var testScheduler = TestScheduler(initialClock: 0)
                 var mockRepository = MockRepositoryProtocol()
                 var mockDbHelperProtocol = MockDbHelperProtocol()
+                let mockMainViewModelDelegate = MockMainViewModelDelegate()
                 beforeEach {
                     mockRepository = MockRepositoryProtocol()
                     mockDbHelperProtocol = MockDbHelperProtocol()
@@ -80,8 +87,12 @@ class SearchViewModelTests: QuickSpec {
                     stub(mockDbHelperProtocol) { mock in
                         when(mock.saveGeonameToDb(geoname: any()).thenDoNothing())
                     }
+                    stub(mockMainViewModelDelegate) { mock in
+                        when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
+                        when(mock.units).get.thenReturn(.si)
+                    }
                     testScheduler = TestScheduler(initialClock: 0)
-                    searchViewModel = SearchViewModel.init(repository: mockRepository, scheduler: testScheduler, dbHelper: mockDbHelperProtocol)
+                    searchViewModel = SearchViewModel.init(repository: mockRepository, scheduler: testScheduler, dbHelper: mockDbHelperProtocol, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     testScheduler.start()
@@ -115,6 +126,7 @@ class SearchViewModelTests: QuickSpec {
                 var subscriber = testScheduler.createObserver(Bool.self)
                 var mockRepository = MockRepositoryProtocol()
                 var dbHelperProtocolMock = MockDbHelperProtocol()
+                let mockMainViewModelDelegate = MockMainViewModelDelegate()
                 beforeEach {
                     mockRepository = MockRepositoryProtocol()
                     dbHelperProtocolMock = MockDbHelperProtocol()
@@ -127,9 +139,13 @@ class SearchViewModelTests: QuickSpec {
                     stub(dbHelperProtocolMock) { mock in
                         when(mock.saveGeonameToDb(geoname: any()).thenDoNothing())
                     }
+                    stub(mockMainViewModelDelegate) { mock in
+                        when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
+                        when(mock.units).get.thenReturn(.si)
+                    }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver(Bool.self)
-                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: dbHelperProtocolMock)
+                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, dbHelper: dbHelperProtocolMock, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)

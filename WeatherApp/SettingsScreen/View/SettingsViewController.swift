@@ -11,6 +11,13 @@ import RxSwift
 
 class SettingsViewController: UIViewController {
     
+    let blureBackground: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        return blurEffectView
+    }()
+    
     var viewModel: SettingsViewModelProtocol!
     var disposeBag: DisposeBag!
     
@@ -37,7 +44,18 @@ class SettingsViewController: UIViewController {
     }
     
     private func setupViews(){
-        view.backgroundColor = .blue
+        self.view.backgroundColor = .clear
+        self.view.addSubview(blureBackground)
+        self.setupConstraints()
+    }
+    
+    private func setupConstraints(){
+        NSLayoutConstraint.activate([
+            blureBackground.topAnchor.constraint(equalTo: self.view.topAnchor),
+            blureBackground.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            blureBackground.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            blureBackground.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            ])
     }
     
     private func initSubscripts(){
