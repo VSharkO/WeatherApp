@@ -249,7 +249,7 @@ class SettingsViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             buttonDone.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
-            buttonDone.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor, constant: -15),
+            buttonDone.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             buttonDone.widthAnchor.constraint(equalToConstant: 110),
             buttonDone.heightAnchor.constraint(equalToConstant: 40)
             ])
