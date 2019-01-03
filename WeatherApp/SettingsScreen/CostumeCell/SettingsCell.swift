@@ -64,7 +64,6 @@ class SettingsCell: UITableViewCell {
         self.checkBoxImageView.addSubview(textViewForX)
         self.contentView.addSubview(cityNameText)
         setupConstraints()
-        
     }
     
     private func setupConstraints(){
@@ -80,7 +79,7 @@ class SettingsCell: UITableViewCell {
             separator.topAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
             separator.leadingAnchor.constraint(equalTo: checkBoxImageView.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor),
-            separator.heightAnchor.constraint(equalToConstant: 1),
+            separator.heightAnchor.constraint(equalToConstant: 2),
             separator.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
             ])
         

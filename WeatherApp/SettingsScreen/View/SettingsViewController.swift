@@ -47,8 +47,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     let unitsTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .blue
-        tableView.separatorColor = .red
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -168,6 +169,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         setupViews()
         initSubscripts()
+        self.registerCells()
         viewModel.initGetCities().disposed(by: disposeBag)
         }
     
@@ -176,20 +178,42 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.setCityToShowInDataModel()
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return viewModel.data.cities.count
-        return 3
+        if tableView == citiesTableView{
+            return viewModel.data.cities.count
+        }else{
+            return 2
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = SettingsCell()
-        cell.backgroundColor = .clear
-        return cell
+        
+        if tableView == citiesTableView,
+            let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell {
+            cell.backgroundColor = .clear
+            //logic
+            return cell
+        } else if tableView == unitsTableView,
+            let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell {
+            cell.backgroundColor = .clear
+            //logic
+            return cell
+        }else{
+            return SettingsCell()
+        }
+    }
+    
+    private func registerCells(){
+        self.citiesTableView.register(SettingsCell.self, forCellReuseIdentifier: "\(SettingsCell.self)")
+        self.unitsTableView.register(SettingsCell.self, forCellReuseIdentifier: "\(SettingsCell.self)")
     }
     
     private func setupViews(){
         self.citiesTableView.delegate = self
         self.citiesTableView.dataSource = self
+        self.unitsTableView.delegate = self
+        self.unitsTableView.dataSource = self
         self.view.backgroundColor = .clear
         self.view.addSubview(blureBackground)
         self.view.addSubview(locationsTitle)
@@ -228,7 +252,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             citiesTableView.topAnchor.constraint(equalTo: self.locationsTitle.bottomAnchor, constant: 22),
             citiesTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
             citiesTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            citiesTableView.heightAnchor.constraint(equalToConstant: 200)
+            citiesTableView.heightAnchor.constraint(equalToConstant: 155)
             ])
         
         NSLayoutConstraint.activate([
@@ -263,18 +287,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             buttonDone.widthAnchor.constraint(equalToConstant: 110),
             buttonDone.heightAnchor.constraint(equalToConstant: 40)
             ])
-        
-        
     }
     
     private func initSubscripts(){
+        
         viewModel.viewCloseScreen.subscribe(onNext: { [unowned self] _ in
             self.coordinatorDelegate?.viewHasFinished()
         }).disposed(by: disposeBag)
         
-        viewModel.viewRefreshCitiesTableData.subscribe(onNext: { [unowned self] _ in
+        viewModel.viewRefreshCitiesTableData.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
             self.citiesTableView.reloadData()
-            self.view.layoutSubviews()
         }).disposed(by: disposeBag)
     }
 
