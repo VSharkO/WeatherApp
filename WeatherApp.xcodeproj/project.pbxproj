@@ -289,7 +289,6 @@
 				D5F27CDF21D9B80300DFFAAC /* Networking */,
 				D5F27CC121D9826500DFFAAC /* SettingsScreen */,
 				D5E8E1C221D453DA00846D8C /* SearchScreen */,
-				D5E9B85A21C9ACB100723198 /* Repository */,
 				D552067121C8E8FD00FCB1CC /* Model */,
 				D552066921C8E7F500FCB1CC /* Utils */,
 				D57F534D21C8D5AC00A62F24 /* MainScreen */,
@@ -435,9 +434,9 @@
 		D5F27CDF21D9B80300DFFAAC /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				D5E9B85D21C9ACB100723198 /* Endpoint.swift */,
-				D552066A21C8E7FE00FCB1CC /* NetworkHelper.swift */,
 				D552066621C8E7DD00FCB1CC /* Interactors */,
+				D5F50C8521DDF43A00D59204 /* Helper */,
+				D5E9B85A21C9ACB100723198 /* Repository */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -466,6 +465,15 @@
 				D5F27CE621D9DD4100DFFAAC /* SettingsDataDelegate.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		D5F50C8521DDF43A00D59204 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				D5E9B85D21C9ACB100723198 /* Endpoint.swift */,
+				D552066A21C8E7FE00FCB1CC /* NetworkHelper.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		D5F6140521CB7668004F1A6F /* GradientHelper */ = {
