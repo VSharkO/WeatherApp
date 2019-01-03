@@ -98,5 +98,14 @@ class SettingsCell: UITableViewCell {
             ])
     }
     
+    func setChecked(isTrue: Bool){
+        if isTrue{
+            self.checkBoxImageView.image = UIImage(named: "square_checkmark_check")
+            self.textViewForX.text = ""
+        }else{
+            self.checkBoxImageView.image = UIImage(named: "square_checkmark_uncheck")
+            self.textViewForX.text = "x"
+        }
+    }
     
 }

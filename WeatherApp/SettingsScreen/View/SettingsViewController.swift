@@ -192,7 +192,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if tableView == citiesTableView,
             let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell {
             cell.backgroundColor = .clear
-            //logic
+            let city = viewModel.data.cities[indexPath.row]
+            cell.cityNameText.text = city.name
+            if let code = city.countryCode{
+                cell.cityNameText.text.append(", " + code)
+            }
+            if indexPath.row == viewModel.data.cityToShow{
+                cell.setChecked(isTrue: true)
+            }else{
+                cell.setChecked(isTrue: false)
+            }
             return cell
         } else if tableView == unitsTableView,
             let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell {
