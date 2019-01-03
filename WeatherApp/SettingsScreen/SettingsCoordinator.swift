@@ -19,7 +19,7 @@ class SettingsCoordinator: Coordinator,CoordinatorDelegate{
     init(presenter: UINavigationController, settingsDataDelegate: SettingsDataDelegate) {
         self.presenter = presenter
         childCoordinators = []
-        self.viewModel = SettingsViewModel(dbHelper: DbHelper(db: try! Realm()), settingsDataDelegate: settingsDataDelegate)
+        self.viewModel = SettingsViewModel(dbHelper: DbHelper(), settingsDataDelegate: settingsDataDelegate)
         self.controller = SettingsViewController(viewModel: viewModel)
     }
     

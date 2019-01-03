@@ -11,11 +11,7 @@ import RealmSwift
 import RxSwift
 
 class DbHelper : DbHelperProtocol{
-    let realm: Realm!
-    
-    init(db: Realm ) {
-        realm = db
-    }
+    let realm = try! Realm()
     
     func saveGeonameToDb(geoname: Geoname){
         var isContained = false
@@ -46,5 +42,4 @@ class DbHelper : DbHelperProtocol{
             }
         }
     }
-    
 }

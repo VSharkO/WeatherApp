@@ -48,15 +48,15 @@ class SettingsViewModel: SettingsViewModelProtocol{
             let index = data.cities.firstIndex(where: { $0.getCoordinates() == cityToShow.getCoordinates() })
             self.data.cityToShow = index ?? 0
         }
-        messWithData()
+        
     }
     
-    func messWithData(){
+    func applyChangesAndClose(){
         self.data.weatherParameters.windSpeed = false
         self.data.cityToShow = 4
         self.data.units = .us
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-//        coordinatorDelegate.viewHasFinished()
+        coordinatorDelegate.viewHasFinished()
     }
     
 }

@@ -24,7 +24,7 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate{
         self.presenter = presenter
         childCoordinators = []
         self.mainViewModelDelegate = mainViewModelDelegate
-        viewModel = SearchViewModel(repository: Repository(), dbHelper: DbHelper(db: try! Realm()), mainViewModelDelegate: mainViewModelDelegate)
+        viewModel = SearchViewModel(repository: Repository(), dbHelper: DbHelper(), mainViewModelDelegate: mainViewModelDelegate)
         controller = SearchViewController(viewModel: viewModel)
         self.transitionDelegate = transitionDelegate
     }
