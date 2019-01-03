@@ -12,6 +12,6 @@ import RxSwift
 protocol SettingsViewModelProtocol {
     var data: SettingsDataModel{get}
     func initGetCities() -> Disposable
-    func setNewCityToShow(indexOfCity: Int)
     func getCitiesFromDb()
+    func setCityToShowInDataModel()
 }

@@ -407,6 +407,21 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             self.windSpeedText.text = data.currently.windSpeed.formatToStringWith(numOfDecimals: 1) + self.viewModel.weatherUnits.windSpeedUnit
         }).disposed(by: disposeBag)
         
+        viewModel.viewSetupSettings.observeOn(MainScheduler.instance).subscribe(onNext: { parameters in
+            if !parameters.pressure{
+                self.horizontalStackConditions.removeArrangedSubview(self.verticalPressureStack)
+                self.verticalPressureStack.isHidden = true
+            }
+            if !parameters.windSpeed{
+                self.horizontalStackConditions.removeArrangedSubview(self.verticalWindStack)
+                self.verticalWindStack.isHidden = true
+            }
+            if !parameters.humidity{
+                self.horizontalStackConditions.removeArrangedSubview(self.verticalHumidityStack)
+                self.verticalHumidityStack.isHidden = true
+            }
+            self.view.layoutIfNeeded()
+        }).disposed(by: disposeBag)
     }
     
     private func setupViews(){
@@ -597,14 +612,14 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         NSLayoutConstraint.activate([
             searchConteiner.topAnchor.constraint(greaterThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 15),
             searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: settingsButton.trailingAnchor, constant: 10),
-            searchConteiner.trailingAnchor.constraint(equalTo: self.pressureText.trailingAnchor, constant: -10),
+            searchConteiner.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             searchConteiner.heightAnchor.constraint(equalToConstant: 30),
             searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
             ])
         
         NSLayoutConstraint.activate([
             settingsButton.centerYAnchor.constraint(equalTo: searchConteiner.centerYAnchor),
-            settingsButton.leadingAnchor.constraint(equalTo: humidityText.leadingAnchor),
+            settingsButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             settingsButton.trailingAnchor.constraint(equalTo: searchConteiner.leadingAnchor, constant: -10),
             ])
             settingsButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)

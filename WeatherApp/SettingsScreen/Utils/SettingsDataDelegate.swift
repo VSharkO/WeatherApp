@@ -8,8 +8,9 @@
 
 import Foundation
 
-protocol SettingsDataDelegate: MainViewModelDelegate {
+protocol SettingsDataDelegate{
     var settings: WeatherParametersToShow{get set}
-    var units: UnitsType{get set}
     var city: Geoname!{get set}
+    var units: UnitsType{get}
+    func setNewSettings(settingsDataModel: SettingsDataModel)
 }

@@ -22,7 +22,7 @@ class DbHelper : DbHelperProtocol{
         let geonameForDb = DbGeoname(name: geoname.name, lng: geoname.lng, ltd: geoname.lat, countryCode: geoname.countryCode ?? "")
         let dbGeonames = realm.objects(DbGeoname.self)
         
-        if !dbGeonames.filter({$0.name == geonameForDb.name}).isEmpty{
+        if !dbGeonames.filter({$0.lng == geonameForDb.lng && $0.ltd == geonameForDb.ltd}).isEmpty{
             isContained = true
         }
         if !isContained{

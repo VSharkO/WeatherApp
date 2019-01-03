@@ -31,8 +31,9 @@ class SettingsViewController: UIViewController {
         viewModel.initGetCities().disposed(by: disposeBag)
         }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         viewModel.getCitiesFromDb()
+        viewModel.setCityToShowInDataModel()
     }
     
     private func setupViews(){

@@ -17,4 +17,5 @@ protocol MainViewModelProtocol{
     var viewShowLoader: PublishSubject<Bool>{get}
     var viewLoadWithData: PublishSubject<MainDataModel>{get}
     var viewSetBackgroundImages: PublishSubject<(icon: String, gradientInfo: Condition?)>{get}
+    var viewSetupSettings: PublishSubject<WeatherParametersToShow>{get}
 }

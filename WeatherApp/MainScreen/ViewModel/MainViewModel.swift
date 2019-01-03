@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 
 class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDelegate{
-
     internal var data: MainDataModel!
     internal var units: UnitsType
     internal var weatherUnits: WeatherUnits!
@@ -23,6 +22,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     var viewShowLoader = PublishSubject<Bool>()
     var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
     var viewLoadWithData = PublishSubject<MainDataModel>()
+    var viewSetupSettings = PublishSubject<WeatherParametersToShow>()
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
@@ -59,6 +59,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     func updateView(){
         self.viewSetBackgroundImages.onNext((icon: data.currently.icon,gradientInfo: data.conditions))
         self.viewLoadWithData.onNext(data)
+        self.viewSetupSettings.onNext(self.settings)
         self.viewShowLoader.onNext(false)
     }
     
@@ -75,7 +76,9 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     func setNewSettings(settingsDataModel: SettingsDataModel) {
         self.units = settingsDataModel.units
         self.settings = settingsDataModel.weatherParameters
-        self.city = settingsDataModel.cityToShow
+        if settingsDataModel.cities.count > 0{
+            self.city = settingsDataModel.cities[settingsDataModel.cityToShow]
+        }
         self.dataRequestTriger.onNext(true)
     }
     
