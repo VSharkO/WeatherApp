@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WeatherApp/Db/DbHelperProtocol.swift at 2019-01-03 08:58:29 +0000
+// MARK: - Mocks generated from file: WeatherApp/Db/DbHelperProtocol.swift at 2019-01-03 09:30:02 +0000
 
 //
 //  DbHelperProtocol.swift
@@ -156,7 +156,7 @@ class MockDbHelperProtocol: DbHelperProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-03 08:58:29 +0000
+// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-03 09:30:02 +0000
 
 //
 //  MainViewModelDelegate.swift
@@ -283,7 +283,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/Networking/Repository/RepositoryProtocol.swift at 2019-01-03 08:58:29 +0000
+// MARK: - Mocks generated from file: WeatherApp/Networking/Repository/RepositoryProtocol.swift at 2019-01-03 09:30:02 +0000
 
 //
 //  RepositoryProtocol.swift
@@ -412,7 +412,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-03 08:58:29 +0000
+// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-03 09:30:02 +0000
 
 //
 //  SettingsDataDelegate.swift

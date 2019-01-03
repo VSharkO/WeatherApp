@@ -66,6 +66,10 @@ class SettingsViewModelTests: QuickSpec {
                     settingsViewModel.getCitiesFromDb()
                     expect(settingsViewModel.data.cities.count).to(equal(2))
                 }
+                it("has correct highlighted location"){
+                    settingsViewModel.setCityToShowInDataModel()
+                    expect(settingsViewModel.data.cityToShow).to(equal(0))
+                }
             }
         }
         describe("SearchViewModel changeing settings logic"){
@@ -88,10 +92,12 @@ class SettingsViewModelTests: QuickSpec {
                     settingsViewModel = SettingsViewModel(scheduler: testScheduler, dbHelper: mockDbHelperProtocol, settingsDataDelegate: mockSettingsDataDelegate)
                     settingsViewModel.initGetCities().disposed(by: disposeBag)
                     settingsViewModel.getCitiesFromDb()
+                    settingsViewModel.setCityToShowInDataModel()
                     testScheduler.start()
                 }
                 it("becomes location to show weather for"){
-                    
+                    settingsViewModel.clickedOnCity(index: 1)
+                    expect(settingsViewModel.data.cityToShow).to(equal(1))
                 }
                 
             }

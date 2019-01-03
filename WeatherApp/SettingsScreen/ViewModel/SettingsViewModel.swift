@@ -13,7 +13,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     
     var settingsDelegate: SettingsDataDelegate
     var data: SettingsDataModel
-    let cityToShow: Geoname
+    var cityToShow: Geoname
     let scheduler: SchedulerType
     let dbHelper: DbHelperProtocol
     let viewMarkCityAsCurrent = PublishSubject<Int>()
@@ -48,13 +48,16 @@ class SettingsViewModel: SettingsViewModelProtocol{
             let index = data.cities.firstIndex(where: { $0.getCoordinates() == cityToShow.getCoordinates() })
             self.data.cityToShow = index ?? 0
         }
-        applyChangesAndClose()
+    }
+    
+    func clickedOnCity(index: Int){
+        self.data.cityToShow = index
     }
     
     func applyChangesAndClose(){
-        self.data.weatherParameters.windSpeed = false
-        self.data.cityToShow = 4
-        self.data.units = .us
+//        self.data.weatherParameters.windSpeed = false
+//        self.data.cityToShow = 4
+//        self.data.units = .us
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
         viewCloseScreen.onNext(true)
     }
