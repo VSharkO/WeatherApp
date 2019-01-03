@@ -11,14 +11,14 @@ import RxSwift
 
 class SearchViewModel: SearchViewModelProtocol{
     
-    weak var coordinatorDelegate: CoordinatorDelegate!
     var mainViewModelDelegate: MainViewModelDelegate
     let repository: RepositoryProtocol
     let scheduler : SchedulerType
     var viewShowLoader = PublishSubject<Bool>()
     var viewRefreshTableViewData = PublishSubject<Bool>()
-    private var units: UnitsType
+    var viewCloseScreen = PublishSubject<Bool>()
     var dynamicSearchString = PublishSubject<String>()
+    private var units: UnitsType
     private var citySelected = PublishSubject<Int>()
     internal var data: [Geoname] = []
     private var dbHelper: DbHelperProtocol!
@@ -49,14 +49,14 @@ class SearchViewModel: SearchViewModelProtocol{
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
                 let coordinates = self.data[index].lat + "," + self.data[index].lng
-                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: self.units.rawValue)).subscribeOn(self.scheduler)
+                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: self.units.rawValue))
             }).subscribeOn(scheduler)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[unowned self] response in
                     self.viewShowLoader.onNext(false)
                     self.dbHelper.saveGeonameToDb(geoname: self.data[self.clickedItem])
                     self.mainViewModelDelegate.receaveData(weather: response, city: self.data[self.clickedItem])
-                    self.coordinatorDelegate.viewHasFinished()
+                    self.viewCloseScreen.onNext(true)
                 })
     }
     
@@ -67,4 +67,5 @@ class SearchViewModel: SearchViewModelProtocol{
     func searchForText(text: String) {
          dynamicSearchString.onNext(text)
     }
+
 }

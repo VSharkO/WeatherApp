@@ -11,7 +11,6 @@ import RxSwift
 
 class SettingsViewModel: SettingsViewModelProtocol{
     
-    weak var coordinatorDelegate: CoordinatorDelegate!
     var settingsDelegate: SettingsDataDelegate
     var data: SettingsDataModel
     let cityToShow: Geoname
@@ -19,6 +18,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let dbHelper: DbHelperProtocol
     let viewMarkCityAsCurrent = PublishSubject<Int>()
     let viewMarkUnitAsCurrent = PublishSubject<Int>()
+    let viewCloseScreen = PublishSubject<Bool>()
     private let getCities = PublishSubject<Bool>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelperProtocol, settingsDataDelegate: SettingsDataDelegate) {
@@ -48,7 +48,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
             let index = data.cities.firstIndex(where: { $0.getCoordinates() == cityToShow.getCoordinates() })
             self.data.cityToShow = index ?? 0
         }
-        
+        applyChangesAndClose()
     }
     
     func applyChangesAndClose(){
@@ -56,7 +56,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
         self.data.cityToShow = 4
         self.data.units = .us
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        coordinatorDelegate.viewHasFinished()
+        viewCloseScreen.onNext(true)
     }
     
 }

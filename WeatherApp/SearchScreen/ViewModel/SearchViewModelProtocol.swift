@@ -11,10 +11,10 @@ import RxSwift
 
 protocol SearchViewModelProtocol {
     var data: [Geoname]{get}
-    var coordinatorDelegate: CoordinatorDelegate!{get}
 //    var dynamicSearchString: PublishSubject<String>{get}
     var viewRefreshTableViewData: PublishSubject<Bool>{get}
     func initGetingDataFromRepository() -> Disposable
+    var viewCloseScreen: PublishSubject<Bool>{get}
     var viewShowLoader: PublishSubject<Bool>{get}
     func initCitySelected() -> Disposable
     func cityClicked(onIndex: Int)

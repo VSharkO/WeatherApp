@@ -110,12 +110,12 @@ class SearchViewModelTests: QuickSpec {
                     searchViewModel.cityClicked(onIndex: 1)
                     verify(mockRepository).getWeather(endpoint: any())
                 }
-//                it("When data is received, saves it to db"){
-//                    searchViewModel.dynamicSearchString.onNext("ple")
-//                    searchViewModel.cityClicked(onIndex: 1)
-//                    // When testing, closure for reacting on cityClicked events doesnt execute
-//                    verify(mockDbHelperProtocol).saveGeonameToDb(geoname: any())
-//                }
+                it("When data is received, saves it to db"){
+                    searchViewModel.dynamicSearchString.onNext("ple")
+                    searchViewModel.cityClicked(onIndex: 1)
+                    // When testing, closure for reacting on cityClicked events doesnt execute
+                    verify(mockDbHelperProtocol).saveGeonameToDb(geoname: any())
+                }
             
             }
         }
@@ -150,21 +150,21 @@ class SearchViewModelTests: QuickSpec {
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     testScheduler.start()
-                    
                 }
+                
                 it("loader is shown on start of request"){
                     searchViewModel.dynamicSearchString.onNext("pl")
                     searchViewModel.cityClicked(onIndex: 1)
                     expect(subscriber.events.first!.value.element).to(equal(true))
                 }
-//                it("loader is hiden after receiving data"){
-//                    searchViewModel.dynamicSearchString.onNext("p")
-//                    //???????????????????????????????????????????????????????????? there is just one event on publish subject
-//                    //for showing and hideing loader, hideing of loader "wasnt trigered when testing, while on real app run it is trigered.
-//                    searchViewModel.cityClicked(onIndex: 1)
-//
-//                    expect(subscriber.events.last!.value.element).to(equal(false))
-//                }
+                
+                it("loader is hiden after receiving data"){
+                    searchViewModel.dynamicSearchString.onNext("p")
+                    //???????????????????????????????????????????????????????????? there is just one event on publish subject
+                    //for showing and hideing loader, hideing of loader "wasnt trigered when testing, while on real app run it is trigered.
+                    searchViewModel.cityClicked(onIndex: 1)
+                    expect(subscriber.events.last!.value.element).to(equal(false))
+                }
             }
         }
     }

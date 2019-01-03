@@ -25,7 +25,7 @@ class SettingsCoordinator: Coordinator,CoordinatorDelegate{
     
     func start() {
         controller.modalPresentationStyle = .overCurrentContext
-        viewModel.coordinatorDelegate = self
+        controller.coordinatorDelegate = self
         presenter.present(controller, animated: true, completion: nil)
     }
     

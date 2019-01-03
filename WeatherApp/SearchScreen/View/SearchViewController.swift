@@ -77,13 +77,17 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
         return tableView
     }()
     
+    weak var coordinatorDelegate: CoordinatorDelegate?
     private var viewModel: SearchViewModelProtocol!
-    var coordinatorDelegate: CoordinatorDelegate!
     let disposeBag = DisposeBag()
     
     init(viewModel: SearchViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+    }
+    
+    deinit {
+        print("SearchScreen deinited")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -197,7 +201,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     
     private func initSubscripts(){
         
-        viewModel.viewShowLoader.observeOn(MainScheduler.instance).subscribe(onNext:{ isActive in
+        viewModel.viewShowLoader.observeOn(MainScheduler.instance).subscribe(onNext:{[unowned self] isActive in
             if isActive{
                 self.displayLoader()
             }else{
@@ -207,6 +211,10 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
         
         viewModel.viewRefreshTableViewData.subscribe(onNext: { [unowned self] _ in
             self.tableVeiw.reloadData()
+        }).disposed(by: disposeBag)
+        
+        viewModel.viewCloseScreen.subscribe(onNext: { [unowned self] _ in
+            self.coordinatorDelegate?.viewHasFinished()
         }).disposed(by: disposeBag)
     }
     
@@ -241,7 +249,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     @objc func closeScreen(_ sender: UIButton){
         print("closeing SearchScreen")
         searchBarText.resignFirstResponder()
-        self.coordinatorDelegate.viewHasFinished()
+        self.coordinatorDelegate?.viewHasFinished()
     }
     
     @objc func trigerSearchMaunaly(_ sender: UIButton){
@@ -267,7 +275,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
             self.view.layoutIfNeeded()
         })
         if notification.name == UIResponder.keyboardWillHideNotification{
-            self.coordinatorDelegate.viewHasFinished()
+            self.coordinatorDelegate?.viewHasFinished()
         }
     }
     

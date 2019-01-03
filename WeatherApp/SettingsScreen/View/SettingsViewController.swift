@@ -18,6 +18,8 @@ class SettingsViewController: UIViewController {
         return blurEffectView
     }()
     
+    
+    weak var coordinatorDelegate: CoordinatorDelegate?
     var viewModel: SettingsViewModelProtocol!
     var disposeBag: DisposeBag!
     
@@ -26,6 +28,10 @@ class SettingsViewController: UIViewController {
         self.viewModel = viewModel
         self.disposeBag = DisposeBag()
         
+    }
+    
+    deinit {
+        print("Settings screen deinited")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -59,7 +65,9 @@ class SettingsViewController: UIViewController {
     }
     
     private func initSubscripts(){
-        
+        viewModel.viewCloseScreen.subscribe(onNext: { [unowned self] _ in
+            self.coordinatorDelegate?.viewHasFinished()
+        }).disposed(by: disposeBag)
     }
 
 }

@@ -14,4 +14,5 @@ protocol SettingsViewModelProtocol {
     func initGetCities() -> Disposable
     func getCitiesFromDb()
     func setCityToShowInDataModel()
+    var viewCloseScreen: PublishSubject<Bool>{get}
 }

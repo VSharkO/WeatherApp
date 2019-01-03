@@ -33,12 +33,11 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate{
         controller.transitioningDelegate = transitionDelegate
         controller.modalPresentationStyle = .overCurrentContext
         controller.coordinatorDelegate = self
-        viewModel.coordinatorDelegate = self
         presenter.present(controller, animated: true, completion: nil)
     }
     
     func viewHasFinished() {
-        controller.dismiss(animated: true, completion: nil)
         mainCoordinatorDelegate?.childHasFinished(coordinator: self)
+        controller.dismiss(animated: true, completion: nil)
     }
 }
