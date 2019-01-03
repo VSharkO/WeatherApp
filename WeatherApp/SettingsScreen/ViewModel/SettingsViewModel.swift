@@ -16,6 +16,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     var cityToShow: Geoname
     let scheduler: SchedulerType
     let dbHelper: DbHelperProtocol
+    let viewRefreshCitiesTableData = PublishSubject<Bool>()
     let viewMarkCityAsCurrent = PublishSubject<Int>()
     let viewMarkUnitAsCurrent = PublishSubject<Int>()
     let viewCloseScreen = PublishSubject<Bool>()
@@ -36,6 +37,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
                 .observeOn(MainScheduler.init())
                 .subscribe(onNext: {[unowned self] geonames in
                     self.data.cities = geonames
+                    self.viewRefreshCitiesTableData.onNext(true)
                 })
     }
     

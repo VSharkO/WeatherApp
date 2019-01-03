@@ -15,4 +15,5 @@ protocol SettingsViewModelProtocol {
     func getCitiesFromDb()
     func setCityToShowInDataModel()
     var viewCloseScreen: PublishSubject<Bool>{get}
+    var viewRefreshCitiesTableData: PublishSubject<Bool>{get}
 }

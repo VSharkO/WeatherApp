@@ -130,9 +130,9 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     private func setupViews(){
-        self.view.backgroundColor = .clear
         tableVeiw.delegate = self
         tableVeiw.dataSource = self
+        self.view.backgroundColor = .clear
         self.view.addSubview(blureBackground)
         self.view.addSubview(tableVeiw)
         self.searchConteiner.addSubview(searchBarText)

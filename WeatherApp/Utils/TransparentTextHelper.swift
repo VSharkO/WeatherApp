@@ -8,7 +8,7 @@
 
 import UIKit
 class TransparentTextHelper{
-    static func maskedImage(size: CGSize, text: String) -> UIImage? {
+    static func maskedImage(size: CGSize, text: String, alpha: CGFloat) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, true, 0)
         
         let context = UIGraphicsGetCurrentContext()
@@ -55,7 +55,7 @@ class TransparentTextHelper{
         let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         UIGraphicsGetCurrentContext()?.clip(to: rect, mask: mask)
-        UIColor.white.withAlphaComponent(1).setFill()
+        UIColor.white.withAlphaComponent(alpha).setFill()
         UIBezierPath(rect: rect).fill()
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

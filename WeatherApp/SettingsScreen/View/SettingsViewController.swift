@@ -9,8 +9,8 @@
 import UIKit
 import RxSwift
 
-class SettingsViewController: UIViewController {
-    
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+ 
     let blureBackground: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -27,11 +27,11 @@ class SettingsViewController: UIViewController {
         return label
     }()
     
-    let locationsTableView: UITableView = {
+    let citiesTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .blue
-        tableView.separatorColor = .red
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -74,7 +74,7 @@ class SettingsViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 10
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -83,7 +83,7 @@ class SettingsViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 10
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -92,7 +92,7 @@ class SettingsViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 10
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -143,11 +143,9 @@ class SettingsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
-        button.setImage(TransparentTextHelper.maskedImage(size: CGSize.init(width: 110, height: 40), text: "Done"), for: .normal)
+        button.setImage(TransparentTextHelper.maskedImage(size: CGSize.init(width: 110, height: 40), text: "Done", alpha: 1), for: .normal)
         return button
     }()
-    
-    
     
     weak var coordinatorDelegate: CoordinatorDelegate?
     var viewModel: SettingsViewModelProtocol!
@@ -178,11 +176,24 @@ class SettingsViewController: UIViewController {
         viewModel.setCityToShowInDataModel()
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return viewModel.data.cities.count
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = SettingsCell()
+        cell.backgroundColor = .clear
+        return cell
+    }
+    
     private func setupViews(){
+        self.citiesTableView.delegate = self
+        self.citiesTableView.dataSource = self
         self.view.backgroundColor = .clear
         self.view.addSubview(blureBackground)
         self.view.addSubview(locationsTitle)
-        self.view.addSubview(locationsTableView)
+        self.view.addSubview(citiesTableView)
         self.view.addSubview(unitsTitle)
         self.view.addSubview(unitsTableView)
         self.view.addSubview(conditionsTitle)
@@ -197,7 +208,6 @@ class SettingsViewController: UIViewController {
         self.verticalStackWind.addArrangedSubview(buttonWind)
         self.verticalStackPressure.addArrangedSubview(imagePressure)
         self.verticalStackPressure.addArrangedSubview(buttonPressure)
-        
         self.setupConstraints()
     }
     
@@ -215,14 +225,14 @@ class SettingsViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activate([
-            locationsTableView.topAnchor.constraint(equalTo: self.locationsTitle.bottomAnchor, constant: 22),
-            locationsTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
-            locationsTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            locationsTableView.bottomAnchor.constraint(lessThanOrEqualTo: self.locationsTitle.bottomAnchor, constant: 160)
+            citiesTableView.topAnchor.constraint(equalTo: self.locationsTitle.bottomAnchor, constant: 22),
+            citiesTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            citiesTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+            citiesTableView.heightAnchor.constraint(equalToConstant: 200)
             ])
         
         NSLayoutConstraint.activate([
-            unitsTitle.topAnchor.constraint(equalTo: self.locationsTableView.bottomAnchor, constant: 22),
+            unitsTitle.topAnchor.constraint(equalTo: self.citiesTableView.bottomAnchor, constant: 22),
             unitsTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
             ])
         
@@ -260,6 +270,11 @@ class SettingsViewController: UIViewController {
     private func initSubscripts(){
         viewModel.viewCloseScreen.subscribe(onNext: { [unowned self] _ in
             self.coordinatorDelegate?.viewHasFinished()
+        }).disposed(by: disposeBag)
+        
+        viewModel.viewRefreshCitiesTableData.subscribe(onNext: { [unowned self] _ in
+            self.citiesTableView.reloadData()
+            self.view.layoutSubviews()
         }).disposed(by: disposeBag)
     }
 

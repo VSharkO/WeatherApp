@@ -1,30 +1,31 @@
 //
-//  SearchCell.swift
+//  SettingsCell.swift
 //  WeatherApp
 //
-//  Created by Valentin Šarić on 28/12/2018.
-//  Copyright © 2018 Valentin Šarić. All rights reserved.
+//  Created by Valentin Šarić on 03/01/2019.
+//  Copyright © 2019 Valentin Šarić. All rights reserved.
 //
 
 import UIKit
 
-class SearchCell: UITableViewCell {
-
-    let firstLetterImageView: UIImageView = {
+class SettingsCell: UITableViewCell {
+    
+    let checkBoxImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "square_checkmark_uncheck")
         return imageView
     }()
     
-    let firstLetterTextView: UITextView = {
+    let textViewForX: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
-        textView.font = UIFont(name:"GothamRounded-Book", size: 15)
+        textView.font = UIFont(name:"GothamRounded-Book", size: 26)
         textView.textAlignment = .center
-        textView.textColor = .white
+        textView.textColor = UIColor.init(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.2)
+        textView.text = "x"
         textView.backgroundColor = .clear
         return textView
     }()
@@ -58,9 +59,9 @@ class SearchCell: UITableViewCell {
     }
     
     private func setupViews(){
-        self.contentView.addSubview(firstLetterImageView)
+        self.contentView.addSubview(checkBoxImageView)
         self.contentView.addSubview(separator)
-        self.firstLetterImageView.addSubview(firstLetterTextView)
+        self.checkBoxImageView.addSubview(textViewForX)
         self.contentView.addSubview(cityNameText)
         setupConstraints()
         
@@ -69,33 +70,34 @@ class SearchCell: UITableViewCell {
     private func setupConstraints(){
         
         NSLayoutConstraint.activate([
-            firstLetterImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            firstLetterImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            firstLetterImageView.heightAnchor.constraint(equalToConstant: 50),
-            firstLetterImageView.widthAnchor.constraint(equalToConstant: 50)
+            checkBoxImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            checkBoxImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            checkBoxImageView.heightAnchor.constraint(equalToConstant: 50),
+            checkBoxImageView.widthAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
-            separator.topAnchor.constraint(equalTo: firstLetterImageView.bottomAnchor),
-            separator.leadingAnchor.constraint(equalTo: firstLetterImageView.leadingAnchor),
-            separator.trailingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor),
+            separator.topAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
+            separator.leadingAnchor.constraint(equalTo: checkBoxImageView.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor),
             separator.heightAnchor.constraint(equalToConstant: 1),
             separator.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            firstLetterTextView.bottomAnchor.constraint(equalTo: firstLetterImageView.bottomAnchor),
-            firstLetterTextView.leadingAnchor.constraint(equalTo: firstLetterImageView.leadingAnchor),
-            firstLetterTextView.trailingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor),
-            firstLetterTextView.topAnchor.constraint(equalTo: firstLetterImageView.topAnchor, constant: 10)
+            textViewForX.bottomAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
+            textViewForX.leadingAnchor.constraint(equalTo: checkBoxImageView.leadingAnchor),
+            textViewForX.trailingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor),
+            textViewForX.topAnchor.constraint(equalTo: checkBoxImageView.topAnchor, constant: 5)
             ])
         
         NSLayoutConstraint.activate([
-            cityNameText.bottomAnchor.constraint(equalTo: firstLetterImageView.bottomAnchor),
-            cityNameText.leadingAnchor.constraint(equalTo: firstLetterImageView.trailingAnchor, constant: 10),
+            cityNameText.bottomAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
+            cityNameText.leadingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor, constant: 10),
             cityNameText.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            cityNameText.centerYAnchor.constraint(equalTo: firstLetterTextView.centerYAnchor)
+            cityNameText.centerYAnchor.constraint(equalTo: checkBoxImageView.centerYAnchor)
             ])
     }
+    
     
 }
