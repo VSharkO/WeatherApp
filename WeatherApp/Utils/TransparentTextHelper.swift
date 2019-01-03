@@ -12,8 +12,8 @@ class TransparentTextHelper{
         UIGraphicsBeginImageContextWithOptions(size, true, 0)
         
         let context = UIGraphicsGetCurrentContext()
-        context?.scaleBy(x: 1.7, y: -1.7)
-        context?.translateBy(x: -24, y: -40)
+        context?.scaleBy(x: 1.4, y: -1.4)
+        context?.translateBy(x: -15, y: -35)
         
         // draw rounded rectange inset of the button's entire dimensions
 //
@@ -55,7 +55,7 @@ class TransparentTextHelper{
         let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         UIGraphicsGetCurrentContext()?.clip(to: rect, mask: mask)
-        UIColor.white.withAlphaComponent(0.9).setFill()
+        UIColor.white.withAlphaComponent(1).setFill()
         UIBezierPath(rect: rect).fill()
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

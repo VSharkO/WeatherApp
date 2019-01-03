@@ -142,8 +142,8 @@ class SettingsViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.clipsToBounds = true
-        button.layer.cornerRadius = 25
-        button.setImage(TransparentTextHelper.maskedImage(size: CGSize.init(width: 120, height: 50), text: "Done"), for: .normal)
+        button.layer.cornerRadius = 20
+        button.setImage(TransparentTextHelper.maskedImage(size: CGSize.init(width: 110, height: 40), text: "Done"), for: .normal)
         return button
     }()
     
@@ -250,8 +250,8 @@ class SettingsViewController: UIViewController {
         NSLayoutConstraint.activate([
             buttonDone.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
             buttonDone.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor, constant: -15),
-            buttonDone.widthAnchor.constraint(equalToConstant: 120),
-            buttonDone.heightAnchor.constraint(equalToConstant: 50)
+            buttonDone.widthAnchor.constraint(equalToConstant: 110),
+            buttonDone.heightAnchor.constraint(equalToConstant: 40)
             ])
         
         
