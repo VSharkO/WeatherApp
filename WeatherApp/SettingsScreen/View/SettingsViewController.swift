@@ -219,6 +219,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.citiesTableView.dataSource = self
         self.unitsTableView.delegate = self
         self.unitsTableView.dataSource = self
+        self.setupConditionsChecked()
         self.view.backgroundColor = .clear
         self.view.addSubview(blureBackground)
         self.view.addSubview(locationsTitle)
@@ -303,6 +304,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.viewRefreshCitiesTableData.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
             self.citiesTableView.reloadData()
         }).disposed(by: disposeBag)
+    }
+    
+    private func setupConditionsChecked(){
+        let pressureButtonImage = viewModel.data.weatherParameters.pressure ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_check")
+        let humidityButtonImage = viewModel.data.weatherParameters.humidity ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_check")
+        let windSpeedButtonImage = viewModel.data.weatherParameters.windSpeed ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_check")
+        buttonPressure.setImage(pressureButtonImage, for: .normal)
+        buttonHumidity.setImage(humidityButtonImage, for: .normal)
+        buttonWind.setImage(windSpeedButtonImage, for: .normal)
     }
 
 }

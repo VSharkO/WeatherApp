@@ -99,7 +99,7 @@ class SettingsCell: UITableViewCell {
     }
     
     func setCheckedUnits(units: UnitsType, index: Int){
-        if units == .si && index == 0{
+        if (units == .si && index == 0) || (units == .us && index == 1){
             self.checkBoxImageView.image = UIImage(named: "square_checkmark_check")
             self.textViewForX.text = ""
         }else{
@@ -117,5 +117,4 @@ class SettingsCell: UITableViewCell {
     func setUnitsText(index: Int){
       cellText.text = index == 1 ? Constants.unitsMetric : Constants.unitsImperial
     }
-    
 }
