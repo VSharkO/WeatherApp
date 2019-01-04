@@ -10,16 +10,15 @@ import Foundation
 import RxSwift
 
 class SettingsViewModel: SettingsViewModelProtocol{
-
+    
     var settingsDelegate: SettingsDataDelegate
     var data: SettingsDataModel
     let scheduler: SchedulerType
     let dbHelper: DbHelperProtocol
     let repository: RepositoryProtocol
     let viewRefreshCitiesTableData = PublishSubject<Bool>()
-    let viewMarkCityAsCurrent = PublishSubject<Int>()
     let setupCheckViews = PublishSubject<Bool>()
-    let viewMarkUnitAsCurrent = PublishSubject<Int>()
+    let viewMarkUnitAsCurrent = PublishSubject<Bool>()
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
     private var citySelected = PublishSubject<Int>()
@@ -70,7 +69,12 @@ class SettingsViewModel: SettingsViewModelProtocol{
     
     func applyChangesAndClose(){
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        viewCloseScreen.onNext(true)
+        if let selectedCity = data.cities.firstIndex(where: {$0.name == self.settingsDelegate.city.name}){
+            self.citySelected.onNext(selectedCity)
+        }
+        else{
+            self.viewCloseScreen.onNext(true)
+        }
     }
     
     func clickedHumidityButtonCheck(){
@@ -86,6 +90,12 @@ class SettingsViewModel: SettingsViewModelProtocol{
     func clickedWindButtonCheck(){
         self.data.weatherParameters.windSpeed = !self.data.weatherParameters.windSpeed
         self.setupCheckViews.onNext(true)
+    }
+    
+    func unitsClicked(withIndex: Int) {
+        let units = UnitsHelper.getUnitsFromIndex(index: withIndex)
+        self.data.units = units
+        self.viewMarkUnitAsCurrent.onNext(true)
     }
     
 }

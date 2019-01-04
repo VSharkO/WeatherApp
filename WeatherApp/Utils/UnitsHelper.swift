@@ -18,5 +18,9 @@ class UnitsHelper{
             return weatherUnits
         }
     }
+    
+    static func getUnitsFromIndex(index: Int) -> UnitsType{
+        return index == 0 ? .si : .us
+    }
 }
 

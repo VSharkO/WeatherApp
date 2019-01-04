@@ -86,12 +86,12 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
         self.viewModel = viewModel
     }
     
-    deinit {
-        print("SearchScreen deinited")
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("SearchScreen deinited")
     }
     
     override func viewDidLoad() {

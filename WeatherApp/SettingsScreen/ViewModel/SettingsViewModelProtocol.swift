@@ -17,10 +17,12 @@ protocol SettingsViewModelProtocol {
     var setupCheckViews: PublishSubject<Bool>{get}
     var viewRefreshCitiesTableData: PublishSubject<Bool>{get}
     var viewShowLoader: PublishSubject<Bool>{get}
+    var viewMarkUnitAsCurrent: PublishSubject<Bool>{get}
     func initCitySelected() -> Disposable
     func cityClicked(onIndex: Int)
     func clickedHumidityButtonCheck()
     func clickedPressureButtonCheck()
     func clickedWindButtonCheck()
     func applyChangesAndClose()
+    func unitsClicked(withIndex: Int)
 }

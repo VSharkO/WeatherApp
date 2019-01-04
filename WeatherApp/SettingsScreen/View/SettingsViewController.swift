@@ -191,7 +191,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.cityClicked(onIndex: indexPath.row)
+        if tableView == citiesTableView{
+            viewModel.cityClicked(onIndex: indexPath.row)
+        }
+        if tableView == unitsTableView{
+            viewModel.unitsClicked(withIndex: indexPath.row)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -333,6 +338,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.viewCloseScreen.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
             self.coordinatorDelegate?.viewHasFinished()
         }).disposed(by: disposeBag)
+        
+        viewModel.viewMarkUnitAsCurrent.observeOn(MainScheduler.instance).subscribe(onNext: { _ in
+            self.unitsTableView.reloadData()
+            self.view.layoutSubviews()
+        }).disposed(by: disposeBag)
     }
     
     private func displayLoader() {
@@ -367,6 +377,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func clickedConditionsCheckButton(_ sender: UIButton){
+        //U viewController tako da napravim tag na buttonima, i tu samo dam viewControlleru button?
         if sender == buttonHumidity{
             viewModel.clickedHumidityButtonCheck()
         }

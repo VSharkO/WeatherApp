@@ -75,6 +75,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     
     func setNewSettings(settingsDataModel: SettingsDataModel) {
         self.units = settingsDataModel.units
+        setUnits()
         self.settings = settingsDataModel.weatherParameters
         self.updateView()
     }
