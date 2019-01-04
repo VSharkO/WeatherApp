@@ -14,7 +14,6 @@ class SettingsViewModel: SettingsViewModelProtocol{
     var settingsDelegate: SettingsDataDelegate
     var data: SettingsDataModel
     let scheduler: SchedulerType
-    let dbHelper: DbHelperProtocol
     let repository: RepositoryProtocol
     let viewRefreshCitiesTableData = PublishSubject<Bool>()
     let setupCheckViews = PublishSubject<Bool>()
@@ -22,26 +21,14 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
     private var citySelected = PublishSubject<Int>()
-    private let getCities = PublishSubject<Bool>()
     var clickedItem: Int = 0
     
-    init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelperProtocol, settingsDataDelegate: SettingsDataDelegate, repository: RepositoryProtocol) {
+    init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), settingsDataDelegate: SettingsDataDelegate, repository: RepositoryProtocol) {
         self.scheduler = scheduler
         self.repository = repository
-        self.dbHelper = dbHelper
         self.settingsDelegate = settingsDataDelegate
         self.data = SettingsDataModel(cities: [], units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings)
-    }
-    
-    func initGetCities() -> Disposable{
-        return getCities.flatMap({[unowned self] _ -> Observable<[Geoname]> in
-            return self.dbHelper.getGeonamesFromDb()
-            }).subscribeOn(scheduler)
-                .observeOn(MainScheduler.init())
-                .subscribe(onNext: {[unowned self] geonames in
-                    self.data.cities = geonames
-                    self.viewRefreshCitiesTableData.onNext(true)
-                })
+        self.data.cities = settingsDataDelegate.citiesFromDb
     }
     
     func initCitySelected() -> Disposable{
@@ -61,10 +48,6 @@ class SettingsViewModel: SettingsViewModelProtocol{
     func cityClicked(onIndex: Int){
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
         citySelected.onNext(onIndex)
-    }
-    
-    func getCitiesFromDb(){
-        getCities.onNext(true)
     }
     
     func applyChangesAndClose(){

@@ -11,5 +11,6 @@ import Foundation
 protocol SettingsDataDelegate: MainViewModelDelegate{
     var settings: WeatherParametersToShow{get set}
     var city: Geoname!{get set}
+    var citiesFromDb: [Geoname]!{get}
     func setNewSettings(settingsDataModel: SettingsDataModel)
 }

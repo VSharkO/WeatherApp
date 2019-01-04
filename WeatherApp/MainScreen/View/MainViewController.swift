@@ -361,6 +361,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     init(viewModel: MainViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        viewModel.initGetCities().disposed(by: disposeBag)
         viewModel.initGetingDataFromRepository().disposed(by: self.disposeBag)
     }
     
@@ -380,6 +381,10 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             viewModel.initialDataRequest()
             firstTimeLaunched = false
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        viewModel.getCitiesFromDb()
     }
     
     private func initSubscripts(){

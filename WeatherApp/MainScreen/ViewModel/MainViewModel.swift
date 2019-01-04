@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDelegate{
+
     internal var data: MainDataModel!
     internal var units: UnitsType
     internal var weatherUnits: WeatherUnits!
@@ -17,16 +18,21 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     internal var settings = WeatherParametersToShow(humidity: true, windSpeed: true, pressure: true)
     
     let repository: RepositoryProtocol
+    let dbHelper: DbHelper!
     let scheduler : SchedulerType
-    var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
+    var dataRequestTriger = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
     var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
     var viewLoadWithData = PublishSubject<MainDataModel>()
     var viewSetupSettings = PublishSubject<WeatherParametersToShow>()
+    var citiesFromDb: [Geoname]!
+    private let getCities = PublishSubject<Bool>()
     
-    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+    
+    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelper) {
         self.repository = repository
         self.scheduler = scheduler
+        self.dbHelper = dbHelper
         units = .si
         self.city = Geoname(lng: Constants.defaultCityLng, countryCode: Constants.defaultCountryCode, name: Constants.defaultCityName, lat: Constants.defaultCityLat)
     }
@@ -41,6 +47,16 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
                 self.setData(response: response)
                 self.setUnits()
                 self.updateView()
+            })
+    }
+    
+    func initGetCities() -> Disposable{
+        return getCities.flatMap({[unowned self] _ -> Observable<[Geoname]> in
+            return self.dbHelper.getGeonamesFromDb()
+        }).subscribeOn(scheduler)
+            .observeOn(MainScheduler.init())
+            .subscribe(onNext: {[unowned self] geonames in
+                self.citiesFromDb = geonames
             })
     }
     
@@ -78,6 +94,14 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         setUnits()
         self.settings = settingsDataModel.weatherParameters
         self.updateView()
+    }
+    
+    func trigerGetFromDbData() {
+        self.getCities.onNext(true)
+    }
+    
+    func getCitiesFromDb() {
+        self.getCities.onNext(true)
     }
     
     private func dataRequestTrigered(){

@@ -11,8 +11,6 @@ import RxSwift
 
 protocol SettingsViewModelProtocol {
     var data: SettingsDataModel{get}
-    func initGetCities() -> Disposable
-    func getCitiesFromDb()
     var viewCloseScreen: PublishSubject<Bool>{get}
     var setupCheckViews: PublishSubject<Bool>{get}
     var viewRefreshCitiesTableData: PublishSubject<Bool>{get}

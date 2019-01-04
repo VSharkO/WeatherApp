@@ -12,6 +12,8 @@ import RxSwift
 protocol MainViewModelProtocol{
     func initGetingDataFromRepository() -> Disposable
     func initialDataRequest()
+    func getCitiesFromDb()
+    func initGetCities() -> Disposable
     var weatherUnits: WeatherUnits! {get}
     var city: Geoname!{get}
     var viewShowLoader: PublishSubject<Bool>{get}

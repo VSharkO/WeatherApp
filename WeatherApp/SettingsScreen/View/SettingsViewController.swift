@@ -173,14 +173,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         initSubscripts()
         registerCells()
         registerButtonTouchListeners()
-        viewModel.initGetCities().disposed(by: disposeBag)
         viewModel.initCitySelected().disposed(by: disposeBag)
         }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        viewModel.getCitiesFromDb()
-    }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == citiesTableView{
@@ -189,7 +183,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return 2
         }
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == citiesTableView{
             viewModel.cityClicked(onIndex: indexPath.row)
@@ -200,20 +193,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = viewModel.data
-        let city = data.cities.count > 0 ? data.cities[indexPath.row] : nil
-       
         if let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell{
             cell.backgroundColor = .clear
             switch tableView{
             case citiesTableView:
-                cell.cellText.text = city?.name
-                cell.appendCountryCode(countryCode: city?.countryCode)
+                let city = viewModel.data.cities[indexPath.row]
+                cell.cellText.text = city.name
+                cell.appendCountryCode(countryCode: city.countryCode)
                 cell.indexOfCell = indexPath.row
                 return cell
             case unitsTableView:
                 cell.setUnitsText(index: indexPath.row)
-                cell.setCheckedUnits(units: data.units, index: indexPath.row)
+                cell.setCheckedUnits(units: viewModel.data.units, index: indexPath.row)
+                cell.checkBoxButton.isUserInteractionEnabled = false
                 return cell
             default:
                 return cell

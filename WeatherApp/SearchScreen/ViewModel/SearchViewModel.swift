@@ -56,6 +56,7 @@ class SearchViewModel: SearchViewModelProtocol{
                     self.viewShowLoader.onNext(false)
                     self.dbHelper.saveGeonameToDb(geoname: self.data[self.clickedItem])
                     self.mainViewModelDelegate.receaveData(weather: response, city: self.data[self.clickedItem])
+                    self.mainViewModelDelegate.trigerGetFromDbData()
                     self.viewCloseScreen.onNext(true)
                 })
     }
