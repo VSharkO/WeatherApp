@@ -76,7 +76,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     func setNewSettings(settingsDataModel: SettingsDataModel) {
         self.units = settingsDataModel.units
         self.settings = settingsDataModel.weatherParameters
-        self.dataRequestTriger.onNext(true)
+        self.updateView()
     }
     
     private func dataRequestTrigered(){

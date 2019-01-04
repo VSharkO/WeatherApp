@@ -661,7 +661,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     }
     
     private func displayLoader() {
-        loader = displayLoader(onView: self.view, backgroundColor: nil)
+        loader = displayLoader(onView: self.view, backgroundColor: .clear)
     }
     
     private func hideLoader() {
