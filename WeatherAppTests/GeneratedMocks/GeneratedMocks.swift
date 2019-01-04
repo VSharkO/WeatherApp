@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WeatherApp/Db/DbHelperProtocol.swift at 2019-01-03 09:30:02 +0000
+// MARK: - Mocks generated from file: WeatherApp/Db/DbHelperProtocol.swift at 2019-01-04 12:58:46 +0000
 
 //
 //  DbHelperProtocol.swift
@@ -156,7 +156,7 @@ class MockDbHelperProtocol: DbHelperProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-03 09:30:02 +0000
+// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-04 12:58:46 +0000
 
 //
 //  MainViewModelDelegate.swift
@@ -283,7 +283,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/Networking/Repository/RepositoryProtocol.swift at 2019-01-03 09:30:02 +0000
+// MARK: - Mocks generated from file: WeatherApp/Networking/Repository/RepositoryProtocol.swift at 2019-01-04 12:58:46 +0000
 
 //
 //  RepositoryProtocol.swift
@@ -412,7 +412,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-03 09:30:02 +0000
+// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-04 12:58:46 +0000
 
 //
 //  SettingsDataDelegate.swift
@@ -503,7 +503,7 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
     
 
     
-    // ["name": "setNewSettings", "returnSignature": "", "fullyQualifiedName": "setNewSettings(settingsDataModel: SettingsDataModel)", "parameterSignature": "settingsDataModel: SettingsDataModel", "parameterSignatureWithoutNames": "settingsDataModel: SettingsDataModel", "inputTypes": "SettingsDataModel", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "settingsDataModel", "call": "settingsDataModel: settingsDataModel", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("settingsDataModel"), name: "settingsDataModel", type: "SettingsDataModel", range: CountableRange(351..<387), nameRange: CountableRange(351..<368))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "settingsDataModel", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "setNewSettings", "returnSignature": "", "fullyQualifiedName": "setNewSettings(settingsDataModel: SettingsDataModel)", "parameterSignature": "settingsDataModel: SettingsDataModel", "parameterSignatureWithoutNames": "settingsDataModel: SettingsDataModel", "inputTypes": "SettingsDataModel", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "settingsDataModel", "call": "settingsDataModel: settingsDataModel", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("settingsDataModel"), name: "settingsDataModel", type: "SettingsDataModel", range: CountableRange(344..<380), nameRange: CountableRange(344..<361))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "settingsDataModel", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func setNewSettings(settingsDataModel: SettingsDataModel)  {
         
             return cuckoo_manager.call("setNewSettings(settingsDataModel: SettingsDataModel)",
@@ -514,6 +514,20 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
                 defaultCall: __defaultImplStub!.setNewSettings(settingsDataModel: settingsDataModel))
+        
+    }
+    
+    // ["name": "receaveData", "returnSignature": "", "fullyQualifiedName": "receaveData(weather: Response, city: Geoname)", "parameterSignature": "weather: Response, city: Geoname", "parameterSignatureWithoutNames": "weather: Response, city: Geoname", "inputTypes": "Response, Geoname", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "weather, city", "call": "weather: weather, city: city", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("weather"), name: "weather", type: "Response", range: CountableRange(238..<255), nameRange: CountableRange(238..<245)), CuckooGeneratorFramework.MethodParameter(label: Optional("city"), name: "city", type: "Geoname", range: CountableRange(257..<270), nameRange: CountableRange(257..<261))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "weather, city", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+     func receaveData(weather: Response, city: Geoname)  {
+        
+            return cuckoo_manager.call("receaveData(weather: Response, city: Geoname)",
+                parameters: (weather, city),
+                escapingParameters: (weather, city),
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.receaveData(weather: weather, city: city))
         
     }
     
@@ -541,6 +555,11 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 	    func setNewSettings<M1: Cuckoo.Matchable>(settingsDataModel: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(SettingsDataModel)> where M1.MatchedType == SettingsDataModel {
 	        let matchers: [Cuckoo.ParameterMatcher<(SettingsDataModel)>] = [wrap(matchable: settingsDataModel) { $0 }]
 	        return .init(stub: cuckoo_manager.createStub(for: MockSettingsDataDelegate.self, method: "setNewSettings(settingsDataModel: SettingsDataModel)", parameterMatchers: matchers))
+	    }
+	    
+	    func receaveData<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(weather: M1, city: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(Response, Geoname)> where M1.MatchedType == Response, M2.MatchedType == Geoname {
+	        let matchers: [Cuckoo.ParameterMatcher<(Response, Geoname)>] = [wrap(matchable: weather) { $0.0 }, wrap(matchable: city) { $0.1 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockSettingsDataDelegate.self, method: "receaveData(weather: Response, city: Geoname)", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -575,6 +594,12 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 	    func setNewSettings<M1: Cuckoo.Matchable>(settingsDataModel: M1) -> Cuckoo.__DoNotUse<Void> where M1.MatchedType == SettingsDataModel {
 	        let matchers: [Cuckoo.ParameterMatcher<(SettingsDataModel)>] = [wrap(matchable: settingsDataModel) { $0 }]
 	        return cuckoo_manager.verify("setNewSettings(settingsDataModel: SettingsDataModel)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	    @discardableResult
+	    func receaveData<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(weather: M1, city: M2) -> Cuckoo.__DoNotUse<Void> where M1.MatchedType == Response, M2.MatchedType == Geoname {
+	        let matchers: [Cuckoo.ParameterMatcher<(Response, Geoname)>] = [wrap(matchable: weather) { $0.0 }, wrap(matchable: city) { $0.1 }]
+	        return cuckoo_manager.verify("receaveData(weather: Response, city: Geoname)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -613,6 +638,10 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 
     
      func setNewSettings(settingsDataModel: SettingsDataModel)  {
+        return DefaultValueRegistry.defaultValue(for: Void.self)
+    }
+    
+     func receaveData(weather: Response, city: Geoname)  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     

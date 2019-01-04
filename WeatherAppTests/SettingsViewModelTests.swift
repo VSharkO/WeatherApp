@@ -27,6 +27,7 @@ class SettingsViewModelTests: QuickSpec {
             context("Initionalized correctly"){
                 let mockSettingsDataDelegate = MockSettingsDataDelegate()
                 let mockDbHelperProtocol = MockDbHelperProtocol()
+                let mockRepositoryProtocl = MockRepositoryProtocol()
                 beforeEach {
                     stub(mockSettingsDataDelegate) { mock in
                         when(mock.setNewSettings(settingsDataModel: any())).thenDoNothing()
@@ -40,7 +41,7 @@ class SettingsViewModelTests: QuickSpec {
                         when(mock.getGeonamesFromDb()).thenReturn(Observable.just([geoname,geoname1]))
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
-                    settingsViewModel = SettingsViewModel(scheduler: testScheduler, dbHelper: mockDbHelperProtocol, settingsDataDelegate: mockSettingsDataDelegate)
+                    settingsViewModel = SettingsViewModel(scheduler: testScheduler, dbHelper: mockDbHelperProtocol, settingsDataDelegate: mockSettingsDataDelegate, repository: mockRepositoryProtocl)
                     settingsViewModel.initGetCities().disposed(by: disposeBag)
                     testScheduler.start()
                 }
@@ -55,7 +56,6 @@ class SettingsViewModelTests: QuickSpec {
                     expect(settingsViewModel.data.weatherParameters.humidity).to(equal(mockSettingsDataDelegate.settings.humidity))
                     expect(settingsViewModel.data.weatherParameters.pressure).to(equal(mockSettingsDataDelegate.settings.pressure))
                     expect(settingsViewModel.data.weatherParameters.windSpeed).to(equal(mockSettingsDataDelegate.settings.windSpeed))
-                    expect(settingsViewModel.data.cityToShow).to(equal(0))
                     expect(settingsViewModel.data.cities.count).to(equal(0))
                 }
                 it("gettingCitiesFromDb is triggered"){
@@ -66,16 +66,13 @@ class SettingsViewModelTests: QuickSpec {
                     settingsViewModel.getCitiesFromDb()
                     expect(settingsViewModel.data.cities.count).to(equal(2))
                 }
-                it("has correct highlighted location"){
-                    settingsViewModel.setCityToShowInDataModel()
-                    expect(settingsViewModel.data.cityToShow).to(equal(0))
-                }
             }
         }
         describe("SearchViewModel changeing settings logic"){
             context("User click on Location"){
                 let mockSettingsDataDelegate = MockSettingsDataDelegate()
                 let mockDbHelperProtocol = MockDbHelperProtocol()
+                 let mockRepositoryProtocl = MockRepositoryProtocol()
                 beforeEach {
                     stub(mockSettingsDataDelegate) { mock in
                         when(mock.setNewSettings(settingsDataModel: any())).thenDoNothing()
@@ -89,15 +86,10 @@ class SettingsViewModelTests: QuickSpec {
                         when(mock.getGeonamesFromDb()).thenReturn(Observable.just([geoname,geoname1]))
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
-                    settingsViewModel = SettingsViewModel(scheduler: testScheduler, dbHelper: mockDbHelperProtocol, settingsDataDelegate: mockSettingsDataDelegate)
+                    settingsViewModel = SettingsViewModel(scheduler: testScheduler, dbHelper: mockDbHelperProtocol, settingsDataDelegate: mockSettingsDataDelegate, repository: mockRepositoryProtocl)
                     settingsViewModel.initGetCities().disposed(by: disposeBag)
                     settingsViewModel.getCitiesFromDb()
-                    settingsViewModel.setCityToShowInDataModel()
                     testScheduler.start()
-                }
-                it("becomes location to show weather for"){
-                    settingsViewModel.clickedOnCity(index: 1)
-                    expect(settingsViewModel.data.cityToShow).to(equal(1))
                 }
                 
             }
