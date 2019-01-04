@@ -9,8 +9,10 @@
 import UIKit
 import RxSwift
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
- 
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,LoaderManager {
+  
+    var loader : UIView?
+    
     let blureBackground: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -169,8 +171,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         setupViews()
         initSubscripts()
-        self.registerCells()
+        registerCells()
+        registerButtonTouchListeners()
         viewModel.initGetCities().disposed(by: disposeBag)
+        viewModel.initCitySelected().disposed(by: disposeBag)
         }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -258,7 +262,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             citiesTableView.topAnchor.constraint(equalTo: self.locationsTitle.bottomAnchor, constant: 22),
             citiesTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
             citiesTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            citiesTableView.heightAnchor.constraint(equalToConstant: 155)
+            citiesTableView.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 155)
             ])
         
         NSLayoutConstraint.activate([
@@ -304,15 +308,67 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.viewRefreshCitiesTableData.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
             self.citiesTableView.reloadData()
         }).disposed(by: disposeBag)
+        
+        viewModel.viewShowLoader.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] isActive in
+            if isActive{
+                self.displayLoader()
+            }else{
+                self.hideLoader()
+            }
+        }).disposed(by: disposeBag)
+        
+        viewModel.setupCheckViews.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
+            self.setupConditionsChecked()
+            self.view.layoutIfNeeded()
+        }).disposed(by: disposeBag)
+        
+        viewModel.viewCloseScreen.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
+            self.coordinatorDelegate?.viewHasFinished()
+        }).disposed(by: disposeBag)
+    }
+    
+    private func displayLoader() {
+        loader = displayLoader(onView: self.view, backgroundColor: .clear)
+    }
+    
+    private func hideLoader() {
+        if let loader = loader{
+            removeLoader(loader: loader)
+        }
     }
     
     private func setupConditionsChecked(){
-        let pressureButtonImage = viewModel.data.weatherParameters.pressure ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_check")
-        let humidityButtonImage = viewModel.data.weatherParameters.humidity ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_check")
-        let windSpeedButtonImage = viewModel.data.weatherParameters.windSpeed ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_check")
+        let pressureButtonImage = viewModel.data.weatherParameters.pressure ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_uncheck")
+        let humidityButtonImage = viewModel.data.weatherParameters.humidity ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_uncheck")
+        let windSpeedButtonImage = viewModel.data.weatherParameters.windSpeed ? UIImage(named: "checkmark_check") : UIImage(named: "checkmark_uncheck")
         buttonPressure.setImage(pressureButtonImage, for: .normal)
         buttonHumidity.setImage(humidityButtonImage, for: .normal)
         buttonWind.setImage(windSpeedButtonImage, for: .normal)
+    }
+    
+    private func registerButtonTouchListeners(){
+        let conditionsButtons = [buttonHumidity,buttonWind,buttonPressure]
+        conditionsButtons.forEach { $0.addTarget(self, action:  #selector (self.clickedConditionsCheckButton(_:)), for: UIControl.Event.touchUpInside)
+        }
+        buttonDone.addTarget(self, action: #selector (self.closeScreen(_:)), for: UIControl.Event.touchUpInside)
+        
+    }
+    
+    @objc func closeScreen(_ sender: UIButton){
+        print("closeing SearchScreen")
+        viewModel.applyChangesAndClose()
+    }
+    
+    @objc func clickedConditionsCheckButton(_ sender: UIButton){
+        if sender == buttonHumidity{
+            viewModel.clickedHumidityButtonCheck()
+        }
+        if sender == buttonWind{
+            viewModel.clickedWindButtonCheck()
+        }
+        if sender == buttonPressure{
+            viewModel.clickedPressureButtonCheck()
+        }
     }
 
 }

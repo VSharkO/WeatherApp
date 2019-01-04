@@ -14,5 +14,12 @@ protocol SettingsViewModelProtocol {
     func initGetCities() -> Disposable
     func getCitiesFromDb()
     var viewCloseScreen: PublishSubject<Bool>{get}
+    var setupCheckViews: PublishSubject<Bool>{get}
     var viewRefreshCitiesTableData: PublishSubject<Bool>{get}
+    var viewShowLoader: PublishSubject<Bool>{get}
+    func initCitySelected() -> Disposable
+    func clickedHumidityButtonCheck()
+    func clickedPressureButtonCheck()
+    func clickedWindButtonCheck()
+    func applyChangesAndClose()
 }

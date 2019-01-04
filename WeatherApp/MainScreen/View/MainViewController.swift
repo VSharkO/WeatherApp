@@ -409,17 +409,26 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         }).disposed(by: disposeBag)
         
         viewModel.viewSetupSettings.observeOn(MainScheduler.instance).subscribe(onNext: { parameters in
-            if !parameters.pressure{
-                self.horizontalStackConditions.removeArrangedSubview(self.verticalPressureStack)
-                self.verticalPressureStack.isHidden = true
+            if !parameters.humidity{
+                self.horizontalStackConditions.removeArrangedSubview(self.verticalHumidityStack)
+                self.verticalHumidityStack.isHidden = true
+            }else{
+                self.horizontalStackConditions.addArrangedSubview(self.verticalHumidityStack)
+                self.verticalHumidityStack.isHidden = false
             }
             if !parameters.windSpeed{
                 self.horizontalStackConditions.removeArrangedSubview(self.verticalWindStack)
                 self.verticalWindStack.isHidden = true
+            }else{
+                self.horizontalStackConditions.addArrangedSubview(self.verticalWindStack)
+                self.verticalWindStack.isHidden = false
             }
-            if !parameters.humidity{
-                self.horizontalStackConditions.removeArrangedSubview(self.verticalHumidityStack)
-                self.verticalHumidityStack.isHidden = true
+            if !parameters.pressure{
+                self.horizontalStackConditions.removeArrangedSubview(self.verticalPressureStack)
+                self.verticalPressureStack.isHidden = true
+            }else{
+                self.horizontalStackConditions.addArrangedSubview(self.verticalPressureStack)
+                self.verticalPressureStack.isHidden = false
             }
             self.view.layoutIfNeeded()
         }).disposed(by: disposeBag)
