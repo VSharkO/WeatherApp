@@ -175,7 +175,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.getCitiesFromDb()
-        viewModel.setCityToShowInDataModel()
     }
     
     
@@ -188,26 +187,23 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView == citiesTableView,
-            let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell {
+        let data = viewModel.data
+        let city = data.cities.count > 0 ? data.cities[indexPath.row] : nil
+       
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell{
             cell.backgroundColor = .clear
-            let city = viewModel.data.cities[indexPath.row]
-            cell.cityNameText.text = city.name
-            if let code = city.countryCode{
-                cell.cityNameText.text.append(", " + code)
+            switch tableView{
+            case citiesTableView:
+                cell.cellText.text = city?.name
+                cell.appendCountryCode(countryCode: city?.countryCode)
+                return cell
+            case unitsTableView:
+                cell.setUnitsText(index: indexPath.row)
+                cell.setCheckedUnits(units: data.units, index: indexPath.row)
+                return cell
+            default:
+                return cell
             }
-            if indexPath.row == viewModel.data.cityToShow{
-                cell.setChecked(isTrue: true)
-            }else{
-                cell.setChecked(isTrue: false)
-            }
-            return cell
-        } else if tableView == unitsTableView,
-            let cell = tableView.dequeueReusableCell(withIdentifier: "\(SettingsCell.self)") as? SettingsCell {
-            cell.backgroundColor = .clear
-            //logic
-            return cell
         }else{
             return SettingsCell()
         }

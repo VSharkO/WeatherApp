@@ -13,7 +13,6 @@ protocol SettingsViewModelProtocol {
     var data: SettingsDataModel{get}
     func initGetCities() -> Disposable
     func getCitiesFromDb()
-    func setCityToShowInDataModel()
     var viewCloseScreen: PublishSubject<Bool>{get}
     var viewRefreshCitiesTableData: PublishSubject<Bool>{get}
 }

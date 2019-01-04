@@ -10,10 +10,9 @@ import Foundation
 import RxSwift
 
 class SettingsViewModel: SettingsViewModelProtocol{
-    
+
     var settingsDelegate: SettingsDataDelegate
     var data: SettingsDataModel
-    var cityToShow: Geoname
     let scheduler: SchedulerType
     let dbHelper: DbHelperProtocol
     let viewRefreshCitiesTableData = PublishSubject<Bool>()
@@ -26,7 +25,6 @@ class SettingsViewModel: SettingsViewModelProtocol{
         self.scheduler = scheduler
         self.dbHelper = dbHelper
         self.settingsDelegate = settingsDataDelegate
-        self.cityToShow = settingsDataDelegate.city
         self.data = SettingsDataModel(cities: [], cityToShow: 0, units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings)
     }
     
@@ -45,21 +43,11 @@ class SettingsViewModel: SettingsViewModelProtocol{
         getCities.onNext(true)
     }
     
-    func setCityToShowInDataModel(){
-        if data.cities.count > 0{
-            let index = data.cities.firstIndex(where: { $0.getCoordinates() == cityToShow.getCoordinates() })
-            self.data.cityToShow = index ?? 0
-        }
-    }
-    
     func clickedOnCity(index: Int){
         self.data.cityToShow = index
     }
     
     func applyChangesAndClose(){
-//        self.data.weatherParameters.windSpeed = false
-//        self.data.cityToShow = 4
-//        self.data.units = .us
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
         viewCloseScreen.onNext(true)
     }

@@ -18,7 +18,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 20
         view.alpha = 0
         view.isUserInteractionEnabled = true
         return view
@@ -46,7 +46,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     let searchButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setBackgroundImage(UIImage(named: "search_icon"), for: UIControl.State.normal)
+        button.setBackgroundImage(UIImage(named: "cloud_search"), for: UIControl.State.normal)
         button.isUserInteractionEnabled = true
         return button
     }()
@@ -158,7 +158,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
             blureBackground.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
             ])
         
-        searchConteiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        searchConteiner.heightAnchor.constraint(equalToConstant: 39).isActive = true
         leadingConstraint = searchConteiner.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor, constant: 30)
         leadingConstraint = searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 100)
         bottomConstraint = searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor, constant: -15)

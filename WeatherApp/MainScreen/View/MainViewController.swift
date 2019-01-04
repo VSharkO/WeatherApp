@@ -322,7 +322,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 20
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -338,6 +338,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
+        label.font = UIFont(name: "GothamRounded-Book", size: 14)
         label.text = "Search"
         label.isUserInteractionEnabled = false
         return label
@@ -613,7 +614,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             searchConteiner.topAnchor.constraint(greaterThanOrEqualTo: self.horizontalStackConditions.bottomAnchor, constant: 15),
             searchConteiner.leadingAnchor.constraint(lessThanOrEqualTo: settingsButton.trailingAnchor, constant: 10),
             searchConteiner.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            searchConteiner.heightAnchor.constraint(equalToConstant: 30),
+            searchConteiner.heightAnchor.constraint(equalToConstant: 39),
             searchConteiner.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
             ])
         

@@ -30,4 +30,6 @@ struct Constants {
     public static let windSpeedUnitUs = " mps"
     public static let pressureUnit = " hpa"
     public static let humidityUnit = "%"
+    public static let unitsMetric = "Metric"
+    public static let unitsImperial = "Imperial"
 }

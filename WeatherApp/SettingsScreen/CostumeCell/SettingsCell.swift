@@ -30,7 +30,7 @@ class SettingsCell: UITableViewCell {
         return textView
     }()
     
-    let cityNameText: UITextView = {
+    let cellText: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
@@ -62,7 +62,7 @@ class SettingsCell: UITableViewCell {
         self.contentView.addSubview(checkBoxImageView)
         self.contentView.addSubview(separator)
         self.checkBoxImageView.addSubview(textViewForX)
-        self.contentView.addSubview(cityNameText)
+        self.contentView.addSubview(cellText)
         setupConstraints()
     }
     
@@ -91,21 +91,31 @@ class SettingsCell: UITableViewCell {
             ])
         
         NSLayoutConstraint.activate([
-            cityNameText.bottomAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
-            cityNameText.leadingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor, constant: 10),
-            cityNameText.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            cityNameText.centerYAnchor.constraint(equalTo: checkBoxImageView.centerYAnchor)
+            cellText.bottomAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
+            cellText.leadingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor, constant: 10),
+            cellText.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            cellText.centerYAnchor.constraint(equalTo: checkBoxImageView.centerYAnchor)
             ])
     }
     
-    func setChecked(isTrue: Bool){
-        if isTrue{
+    func setCheckedUnits(units: UnitsType, index: Int){
+        if units == .si && index == 0{
             self.checkBoxImageView.image = UIImage(named: "square_checkmark_check")
             self.textViewForX.text = ""
         }else{
             self.checkBoxImageView.image = UIImage(named: "square_checkmark_uncheck")
-            self.textViewForX.text = "x"
+            self.textViewForX.text = ""
         }
+    }
+    
+    func appendCountryCode(countryCode: String?){
+        if let code = countryCode{
+            self.cellText.text.append(", "+code)
+        }
+    }
+    
+    func setUnitsText(index: Int){
+      cellText.text = index == 1 ? Constants.unitsMetric : Constants.unitsImperial
     }
     
 }
