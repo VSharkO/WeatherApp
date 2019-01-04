@@ -190,6 +190,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.cityClicked(onIndex: indexPath.row)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = viewModel.data
         let city = data.cities.count > 0 ? data.cities[indexPath.row] : nil
@@ -200,6 +204,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             case citiesTableView:
                 cell.cellText.text = city?.name
                 cell.appendCountryCode(countryCode: city?.countryCode)
+                cell.indexOfCell = indexPath.row
                 return cell
             case unitsTableView:
                 cell.setUnitsText(index: indexPath.row)
@@ -257,12 +262,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             locationsTitle.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 22),
             locationsTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
             ])
+            locationsTitle.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         NSLayoutConstraint.activate([
             citiesTableView.topAnchor.constraint(equalTo: self.locationsTitle.bottomAnchor, constant: 22),
             citiesTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
             citiesTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            citiesTableView.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 155)
+            citiesTableView.heightAnchor.constraint(lessThanOrEqualToConstant: 155),
+            citiesTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
             ])
         
         NSLayoutConstraint.activate([
@@ -274,7 +281,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             unitsTableView.topAnchor.constraint(equalTo: self.unitsTitle.bottomAnchor, constant: 20),
             unitsTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
             unitsTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            unitsTableView.bottomAnchor.constraint(lessThanOrEqualTo: self.unitsTitle.bottomAnchor, constant: 120)
+            unitsTableView.heightAnchor.constraint(equalToConstant: 110)
             ])
         
         NSLayoutConstraint.activate([
@@ -288,14 +295,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             horizontalStackConditions.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 40),
             horizontalStackConditions.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor, constant: -20),
             horizontalStackConditions.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.trailingAnchor, constant: -40),
-            horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            horizontalStackConditions.bottomAnchor.constraint(lessThanOrEqualTo: buttonDone.topAnchor, constant: -10)
             ])
         
         NSLayoutConstraint.activate([
             buttonDone.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
             buttonDone.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             buttonDone.widthAnchor.constraint(equalToConstant: 110),
-            buttonDone.heightAnchor.constraint(equalToConstant: 40)
+            buttonDone.heightAnchor.constraint(equalToConstant: 40),
+            
             ])
     }
     
@@ -319,7 +328,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         viewModel.setupCheckViews.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
             self.setupConditionsChecked()
-            self.view.layoutIfNeeded()
         }).disposed(by: disposeBag)
         
         viewModel.viewCloseScreen.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
@@ -328,7 +336,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     private func displayLoader() {
-        loader = displayLoader(onView: self.view, backgroundColor: self.view.backgroundColor)
+        loader = displayLoader(onView: self.view, backgroundColor: .clear)
     }
     
     private func hideLoader() {
@@ -344,6 +352,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         buttonPressure.setImage(pressureButtonImage, for: .normal)
         buttonHumidity.setImage(humidityButtonImage, for: .normal)
         buttonWind.setImage(windSpeedButtonImage, for: .normal)
+        self.view.layoutIfNeeded()
     }
     
     private func registerButtonTouchListeners(){
@@ -351,7 +360,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         conditionsButtons.forEach { $0.addTarget(self, action:  #selector (self.clickedConditionsCheckButton(_:)), for: UIControl.Event.touchUpInside)
         }
         buttonDone.addTarget(self, action: #selector (self.closeScreen(_:)), for: UIControl.Event.touchUpInside)
-        
     }
     
     @objc func closeScreen(_ sender: UIButton){

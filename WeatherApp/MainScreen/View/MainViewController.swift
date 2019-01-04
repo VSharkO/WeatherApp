@@ -352,6 +352,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         return imageView
     }()
     
+    var firstTimeLaunched = true
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
@@ -375,7 +376,10 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.initialDataRequest()
+        if firstTimeLaunched{
+            viewModel.initialDataRequest()
+            firstTimeLaunched = false
+        }
     }
     
     private func initSubscripts(){

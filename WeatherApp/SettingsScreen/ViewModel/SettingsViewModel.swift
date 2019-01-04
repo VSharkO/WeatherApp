@@ -20,8 +20,8 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let viewMarkCityAsCurrent = PublishSubject<Int>()
     let setupCheckViews = PublishSubject<Bool>()
     let viewMarkUnitAsCurrent = PublishSubject<Int>()
-    let viewCloseScreen = PublishSubject<Bool>() //TODO
-    var viewShowLoader = PublishSubject<Bool>() //TODO
+    let viewCloseScreen = PublishSubject<Bool>()
+    var viewShowLoader = PublishSubject<Bool>()
     private var citySelected = PublishSubject<Int>()
     private let getCities = PublishSubject<Bool>()
     var clickedItem: Int = 0
@@ -54,13 +54,13 @@ class SettingsViewModel: SettingsViewModelProtocol{
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
-                self.viewShowLoader.onNext(false)
                 self.settingsDelegate.receaveData(weather: response, city: self.data.cities[self.clickedItem])
                 self.viewCloseScreen.onNext(true)
             })
     }
     
     func cityClicked(onIndex: Int){
+        settingsDelegate.setNewSettings(settingsDataModel: self.data)
         citySelected.onNext(onIndex)
     }
     
@@ -70,7 +70,6 @@ class SettingsViewModel: SettingsViewModelProtocol{
     
     func applyChangesAndClose(){
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        viewShowLoader.onNext(true)
         viewCloseScreen.onNext(true)
     }
     

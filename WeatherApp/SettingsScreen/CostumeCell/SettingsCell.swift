@@ -10,11 +10,13 @@ import UIKit
 
 class SettingsCell: UITableViewCell {
     
-    let checkBoxImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "square_checkmark_uncheck")
-        return imageView
+    var indexOfCell: Int!
+    
+    let checkBoxButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setBackgroundImage(UIImage(named: "square_checkmark_uncheck"), for: .normal)
+        return button
     }()
     
     let textViewForX: UITextView = {
@@ -51,6 +53,7 @@ class SettingsCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         setupViews()
     }
     
@@ -59,9 +62,9 @@ class SettingsCell: UITableViewCell {
     }
     
     private func setupViews(){
-        self.contentView.addSubview(checkBoxImageView)
+        self.contentView.addSubview(checkBoxButton)
         self.contentView.addSubview(separator)
-        self.checkBoxImageView.addSubview(textViewForX)
+        self.checkBoxButton.addSubview(textViewForX)
         self.contentView.addSubview(cellText)
         setupConstraints()
     }
@@ -69,41 +72,41 @@ class SettingsCell: UITableViewCell {
     private func setupConstraints(){
         
         NSLayoutConstraint.activate([
-            checkBoxImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            checkBoxImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            checkBoxImageView.heightAnchor.constraint(equalToConstant: 50),
-            checkBoxImageView.widthAnchor.constraint(equalToConstant: 50)
+            checkBoxButton.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            checkBoxButton.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            checkBoxButton.heightAnchor.constraint(equalToConstant: 50),
+            checkBoxButton.widthAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
-            separator.topAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
-            separator.leadingAnchor.constraint(equalTo: checkBoxImageView.leadingAnchor),
-            separator.trailingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor),
+            separator.topAnchor.constraint(equalTo: checkBoxButton.bottomAnchor),
+            separator.leadingAnchor.constraint(equalTo: checkBoxButton.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: checkBoxButton.trailingAnchor),
             separator.heightAnchor.constraint(equalToConstant: 2),
             separator.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            textViewForX.bottomAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
-            textViewForX.leadingAnchor.constraint(equalTo: checkBoxImageView.leadingAnchor),
-            textViewForX.trailingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor),
-            textViewForX.topAnchor.constraint(equalTo: checkBoxImageView.topAnchor, constant: 5)
+            textViewForX.bottomAnchor.constraint(equalTo: checkBoxButton.bottomAnchor),
+            textViewForX.leadingAnchor.constraint(equalTo: checkBoxButton.leadingAnchor),
+            textViewForX.trailingAnchor.constraint(equalTo: checkBoxButton.trailingAnchor),
+            textViewForX.topAnchor.constraint(equalTo: checkBoxButton.topAnchor, constant: 5)
             ])
         
         NSLayoutConstraint.activate([
-            cellText.bottomAnchor.constraint(equalTo: checkBoxImageView.bottomAnchor),
-            cellText.leadingAnchor.constraint(equalTo: checkBoxImageView.trailingAnchor, constant: 10),
+            cellText.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            cellText.leadingAnchor.constraint(equalTo: checkBoxButton.trailingAnchor, constant: 10),
             cellText.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            cellText.centerYAnchor.constraint(equalTo: checkBoxImageView.centerYAnchor)
+            cellText.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10)
             ])
     }
     
     func setCheckedUnits(units: UnitsType, index: Int){
         if (units == .si && index == 0) || (units == .us && index == 1){
-            self.checkBoxImageView.image = UIImage(named: "square_checkmark_check")
+            self.checkBoxButton.setBackgroundImage(UIImage(named: "square_checkmark_check"), for: .normal)
             self.textViewForX.text = ""
         }else{
-            self.checkBoxImageView.image = UIImage(named: "square_checkmark_uncheck")
+            self.checkBoxButton.setBackgroundImage(UIImage(named: "square_checkmark_uncheck"), for: .normal)
             self.textViewForX.text = ""
         }
     }
@@ -117,4 +120,7 @@ class SettingsCell: UITableViewCell {
     func setUnitsText(index: Int){
       cellText.text = index == 1 ? Constants.unitsMetric : Constants.unitsImperial
     }
+    
+//    setListener
+    
 }
