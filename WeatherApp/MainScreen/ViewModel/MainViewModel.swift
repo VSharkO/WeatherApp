@@ -76,9 +76,6 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     func setNewSettings(settingsDataModel: SettingsDataModel) {
         self.units = settingsDataModel.units
         self.settings = settingsDataModel.weatherParameters
-        if settingsDataModel.cities.count > 0{
-            self.city = settingsDataModel.cities[settingsDataModel.cityToShow]
-        }
         self.dataRequestTriger.onNext(true)
     }
     

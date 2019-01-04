@@ -31,7 +31,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
         self.repository = repository
         self.dbHelper = dbHelper
         self.settingsDelegate = settingsDataDelegate
-        self.data = SettingsDataModel(cities: [], cityToShow: 0, units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings)
+        self.data = SettingsDataModel(cities: [], units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings)
     }
     
     func initGetCities() -> Disposable{
@@ -70,12 +70,12 @@ class SettingsViewModel: SettingsViewModelProtocol{
     
     func applyChangesAndClose(){
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
+        viewShowLoader.onNext(true)
         viewCloseScreen.onNext(true)
     }
     
     func clickedHumidityButtonCheck(){
         self.data.weatherParameters.humidity = !self.data.weatherParameters.humidity
-        print("clickedHumidity: \(self.data.weatherParameters.humidity)")
         self.setupCheckViews.onNext(true)
     }
     

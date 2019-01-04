@@ -328,7 +328,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     private func displayLoader() {
-        loader = displayLoader(onView: self.view, backgroundColor: .clear)
+        loader = displayLoader(onView: self.view, backgroundColor: self.view.backgroundColor)
     }
     
     private func hideLoader() {
@@ -355,7 +355,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func closeScreen(_ sender: UIButton){
-        print("closeing SearchScreen")
         viewModel.applyChangesAndClose()
     }
     
