@@ -52,7 +52,8 @@ class SettingsViewModel: SettingsViewModelProtocol{
     
     func applyChangesAndClose(){
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        if let selectedCity = data.cities.firstIndex(where: {$0.name == self.settingsDelegate.city.name}){
+        if let selectedCity = data.cities.firstIndex(where: {
+            $0.name == self.settingsDelegate.city.name}){
             self.citySelected.onNext(selectedCity)
         }
         else{

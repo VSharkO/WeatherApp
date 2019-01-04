@@ -331,7 +331,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             self.coordinatorDelegate?.viewHasFinished()
         }).disposed(by: disposeBag)
         
-        viewModel.viewMarkUnitAsCurrent.observeOn(MainScheduler.instance).subscribe(onNext: { _ in
+        viewModel.viewMarkUnitAsCurrent.observeOn(MainScheduler.instance).subscribe(onNext: {[unowned self] _ in
             self.unitsTableView.reloadData()
             self.view.layoutSubviews()
         }).disposed(by: disposeBag)
