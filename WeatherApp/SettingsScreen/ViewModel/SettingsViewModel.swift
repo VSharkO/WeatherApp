@@ -76,6 +76,11 @@ class SettingsViewModel: SettingsViewModelProtocol{
         self.setupCheckViews.onNext(true)
     }
     
+    func deleteCity(index: Int){
+        self.data.cities.remove(at: index)
+        settingsDelegate.deleteCityFromDb(index: index)
+    }
+    
     func unitsClicked(withIndex: Int) {
         let units = UnitsHelper.getUnitsFromIndex(index: withIndex)
         self.data.units = units

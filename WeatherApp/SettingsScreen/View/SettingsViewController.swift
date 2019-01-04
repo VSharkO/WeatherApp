@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,LoaderManager {
-  
     var loader : UIView?
     
     let blureBackground: UIVisualEffectView = {
@@ -176,6 +175,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.initCitySelected().disposed(by: disposeBag)
         }
     
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if tableView == citiesTableView{
+//            if editingStyle == .delete {
+//                print("Deleted")
+//                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//            }
+//        }
+//    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == citiesTableView{
             return viewModel.data.cities.count
@@ -183,6 +191,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return 2
         }
     }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        print("triggered!")
+        
+        let more = UITableViewRowAction(style: .default, title: "More") { action, index in
+            print("more button tapped")
+        }
+        more.backgroundColor = UIColor.blue
+        
+        return [more]
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == citiesTableView{
             viewModel.cityClicked(onIndex: indexPath.row)
@@ -201,6 +221,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 cell.cellText.text = city.name
                 cell.appendCountryCode(countryCode: city.countryCode)
                 cell.indexOfCell = indexPath.row
+                cell.setButtonTag(tag: indexPath.row)
+                cell.setDeleteClickListener(listener: self)
                 return cell
             case unitsTableView:
                 cell.setUnitsText(index: indexPath.row)
@@ -366,6 +388,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc func closeScreen(_ sender: UIButton){
         viewModel.applyChangesAndClose()
+    }
+    
+    @objc func deleteCell(button: UIButton){
+        viewModel.deleteCity(index: button.tag)
+        self.citiesTableView.performBatchUpdates({
+            citiesTableView.deleteRows(at: [IndexPath(row: button.tag, section: 0)], with: .right)
+        }, completion: {[unowned self] isFinished in
+            if isFinished{
+                self.citiesTableView.reloadData()
+            }
+        })
     }
     
     @objc func clickedConditionsCheckButton(_ sender: UIButton){

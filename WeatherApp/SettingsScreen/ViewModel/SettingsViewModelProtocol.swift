@@ -22,5 +22,6 @@ protocol SettingsViewModelProtocol {
     func clickedPressureButtonCheck()
     func clickedWindButtonCheck()
     func applyChangesAndClose()
+    func deleteCity(index: Int)
     func unitsClicked(withIndex: Int)
 }

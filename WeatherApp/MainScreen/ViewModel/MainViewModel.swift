@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDelegate{
-
+   
     internal var data: MainDataModel!
     internal var units: UnitsType
     internal var weatherUnits: WeatherUnits!
@@ -112,4 +112,8 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         self.weatherUnits = UnitsHelper.getUnits(units: self.units)
     }
     
+    func deleteCityFromDb(index: Int) {
+        self.dbHelper.deleteGeonameFromDb(geoname: citiesFromDb[index])
+        getCitiesFromDb()
+    }
 }

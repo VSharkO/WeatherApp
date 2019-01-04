@@ -121,6 +121,12 @@ class SettingsCell: UITableViewCell {
       cellText.text = index == 1 ? Constants.unitsMetric : Constants.unitsImperial
     }
     
-//    setListener
+    func setButtonTag(tag: Int){
+        self.checkBoxButton.tag = tag
+    }
+    
+    func setDeleteClickListener(listener: SettingsViewController){
+        checkBoxButton.addTarget(listener, action: #selector (listener.deleteCell(button:)), for: UIControl.Event.touchUpInside)
+    }
     
 }

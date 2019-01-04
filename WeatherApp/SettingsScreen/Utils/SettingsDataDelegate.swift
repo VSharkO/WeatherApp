@@ -13,4 +13,5 @@ protocol SettingsDataDelegate: MainViewModelDelegate{
     var city: Geoname!{get set}
     var citiesFromDb: [Geoname]!{get}
     func setNewSettings(settingsDataModel: SettingsDataModel)
+    func deleteCityFromDb(index: Int)
 }
