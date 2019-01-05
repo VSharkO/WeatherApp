@@ -17,7 +17,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let repository: RepositoryProtocol
     let viewRefreshCitiesTableData = PublishSubject<Bool>()
     let setupCheckViews = PublishSubject<Bool>()
-    let viewMarkUnitAsCurrent = PublishSubject<Bool>()
+    let viewReloadUnitsTableData = PublishSubject<Bool>()
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
     private var citySelected = PublishSubject<Int>()
@@ -84,7 +84,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     func unitsClicked(withIndex: Int) {
         let units = UnitsHelper.getUnitsFromIndex(index: withIndex)
         self.data.units = units
-        self.viewMarkUnitAsCurrent.onNext(true)
+        self.viewReloadUnitsTableData.onNext(true)
     }
     
 }

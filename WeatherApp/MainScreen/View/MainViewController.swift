@@ -377,10 +377,10 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if firstTimeLaunched{
+//        if firstTimeLaunched{
             viewModel.initialDataRequest()
             firstTimeLaunched = false
-        }
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -175,32 +175,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.initCitySelected().disposed(by: disposeBag)
         }
     
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if tableView == citiesTableView{
-//            if editingStyle == .delete {
-//                print("Deleted")
-//                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-//            }
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == citiesTableView{
             return viewModel.data.cities.count
         }else{
             return 2
         }
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        print("triggered!")
-        
-        let more = UITableViewRowAction(style: .default, title: "More") { action, index in
-            print("more button tapped")
-        }
-        more.backgroundColor = UIColor.blue
-        
-        return [more]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -329,10 +309,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private func initSubscripts(){
         
-        viewModel.viewCloseScreen.subscribe(onNext: { [unowned self] _ in
-            self.coordinatorDelegate?.viewHasFinished()
-        }).disposed(by: disposeBag)
-        
         viewModel.viewRefreshCitiesTableData.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
             self.citiesTableView.reloadData()
         }).disposed(by: disposeBag)
@@ -353,9 +329,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             self.coordinatorDelegate?.viewHasFinished()
         }).disposed(by: disposeBag)
         
-        viewModel.viewMarkUnitAsCurrent.observeOn(MainScheduler.instance).subscribe(onNext: {[unowned self] _ in
+        viewModel.viewReloadUnitsTableData.observeOn(MainScheduler.instance).subscribe(onNext: {[unowned self] _ in
             self.unitsTableView.reloadData()
-            self.view.layoutSubviews()
         }).disposed(by: disposeBag)
     }
     

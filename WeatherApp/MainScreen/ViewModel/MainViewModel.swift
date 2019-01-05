@@ -47,6 +47,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
                 self.setData(response: response)
                 self.setUnits()
                 self.dbHelper.saveGeonameToDb(geoname: self.city)
+                
                 self.updateView()
             })
     }
