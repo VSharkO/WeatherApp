@@ -118,7 +118,7 @@ class SettingsCell: UITableViewCell {
     }
     
     func setUnitsText(index: Int){
-      cellText.text = index == 1 ? Constants.unitsMetric : Constants.unitsImperial
+      cellText.text = index == 0 ? Constants.unitsMetric : Constants.unitsImperial
     }
     
     func setButtonTag(tag: Int){
