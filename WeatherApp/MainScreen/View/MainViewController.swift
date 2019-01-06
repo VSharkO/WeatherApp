@@ -384,7 +384,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        viewModel.getCitiesFromDb()
+        viewModel.trigerGetFromDbData()
     }
     
     private func initSubscripts(){

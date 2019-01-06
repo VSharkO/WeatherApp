@@ -43,7 +43,7 @@ class SearchViewModel: SearchViewModelProtocol{
     }
     
     func initCitySelected() -> Disposable{
-            return citySelected.flatMap({[unowned self] index -> Observable<Response> in
+            return citySelected.flatMapLatest({[unowned self] index -> Observable<Response> in
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
                 let coordinates = self.data[index].lat + "," + self.data[index].lng

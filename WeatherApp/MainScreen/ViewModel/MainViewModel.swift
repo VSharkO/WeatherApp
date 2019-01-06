@@ -85,6 +85,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         setData(response: weather)
         self.city = city
         updateView()
+        self.getCities.onNext(true)
     }
     
     func setNewSettings(settingsDataModel: SettingsDataModel) {
@@ -98,10 +99,6 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         self.getCities.onNext(true)
     }
     
-    func getCitiesFromDb() {
-        self.getCities.onNext(true)
-    }
-    
     private func dataRequestTrigered(){
         dataRequestTriger.onNext(true)
     }
@@ -112,6 +109,6 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     
     func deleteCityFromDb(index: Int) {
         self.repository.deleteGeonameFromDb(geoname: citiesFromDb[index])
-        getCitiesFromDb()
+        trigerGetFromDbData()
     }
 }

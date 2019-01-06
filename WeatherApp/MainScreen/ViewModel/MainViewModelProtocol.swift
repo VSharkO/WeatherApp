@@ -12,7 +12,7 @@ import RxSwift
 protocol MainViewModelProtocol{
     func initGetingDataFromRepository() -> Disposable
     func initialDataRequest()
-    func getCitiesFromDb()
+    func trigerGetFromDbData()
     func initGetCities() -> Disposable
     var weatherUnits: WeatherUnits! {get}
     var city: Geoname!{get}
