@@ -19,7 +19,7 @@ class MainScreenCoordinator : Coordinator, ParentCoordinatorDelegate, MainCoordi
     init(presenter: UINavigationController) {
         self.presenter = presenter
         self.presenter.navigationBar.isTranslucent = false
-        viewModel = MainViewModel(repository: Repository(), dbHelper: DbHelper())
+        viewModel = MainViewModel(repository: Repository())
         controller = MainViewController(viewModel: viewModel)
     }
     

@@ -21,13 +21,11 @@ class SearchViewModel: SearchViewModelProtocol{
     private var units: UnitsType
     private var citySelected = PublishSubject<Int>()
     internal var data: [Geoname] = []
-    private var dbHelper: DbHelperProtocol!
     private var clickedItem = -1
     
-    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelperProtocol, mainViewModelDelegate: MainViewModelDelegate) {
+    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), mainViewModelDelegate: MainViewModelDelegate) {
         self.repository = repository
         self.scheduler = scheduler
-        self.dbHelper = dbHelper
         self.units = mainViewModelDelegate.units
         self.mainViewModelDelegate = mainViewModelDelegate
     }
@@ -54,7 +52,7 @@ class SearchViewModel: SearchViewModelProtocol{
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[unowned self] response in
                     self.viewShowLoader.onNext(false)
-                    self.dbHelper.saveGeonameToDb(geoname: self.data[self.clickedItem])
+                    self.repository.saveGeonameToDb(geoname: self.data[self.clickedItem])
                     self.mainViewModelDelegate.receaveData(weather: response, city: self.data[self.clickedItem])
                     self.mainViewModelDelegate.trigerGetFromDbData()
                     self.viewCloseScreen.onNext(true)

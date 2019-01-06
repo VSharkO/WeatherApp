@@ -18,7 +18,6 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     internal var settings = WeatherParametersToShow(humidity: true, windSpeed: true, pressure: true)
     
     let repository: RepositoryProtocol
-    let dbHelper: DbHelper!
     let scheduler : SchedulerType
     var dataRequestTriger = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
@@ -29,10 +28,9 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     private let getCities = PublishSubject<Bool>()
     
     
-    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), dbHelper: DbHelper) {
+    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
         self.scheduler = scheduler
-        self.dbHelper = dbHelper
         units = .si
         self.city = Geoname(lng: Constants.defaultCityLng, countryCode: Constants.defaultCountryCode, name: Constants.defaultCityName, lat: Constants.defaultCityLat)
     }
@@ -52,7 +50,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     
     func initGetCities() -> Disposable{
         return getCities.flatMap({[unowned self] _ -> Observable<[Geoname]> in
-            return self.dbHelper.getGeonamesFromDb()
+            return self.repository.getGeonamesFromDb()
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.init())
             .subscribe(onNext: {[unowned self] geonames in
@@ -113,7 +111,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     }
     
     func deleteCityFromDb(index: Int) {
-        self.dbHelper.deleteGeonameFromDb(geoname: citiesFromDb[index])
+        self.repository.deleteGeonameFromDb(geoname: citiesFromDb[index])
         getCitiesFromDb()
     }
 }

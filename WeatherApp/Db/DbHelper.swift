@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-class DbHelper : DbHelperProtocol{
+class DbHelper{
     let realm = try! Realm()
     
     func saveGeonameToDb(geoname: Geoname){
