@@ -16,7 +16,7 @@ protocol SettingsViewModelProtocol {
     var viewRefreshCitiesTableData: PublishSubject<Bool>{get}
     var viewShowLoader: PublishSubject<Bool>{get}
     var viewReloadUnitsTableData: PublishSubject<Bool>{get}
-    func initCitySelected() -> Disposable
+    func initRequestForCity() -> Disposable
     func cityClicked(onIndex: Int)
     func clickedHumidityButtonCheck()
     func clickedPressureButtonCheck()

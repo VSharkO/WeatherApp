@@ -172,8 +172,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         initSubscripts()
         registerCells()
         registerButtonTouchListeners()
-        viewModel.initCitySelected().disposed(by: disposeBag)
+        viewModel.initRequestForCity().disposed(by: disposeBag)
         }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == citiesTableView{
@@ -351,7 +352,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         buttonPressure.setImage(pressureButtonImage, for: .normal)
         buttonHumidity.setImage(humidityButtonImage, for: .normal)
         buttonWind.setImage(windSpeedButtonImage, for: .normal)
-        self.view.layoutIfNeeded()
     }
     
     private func registerButtonTouchListeners(){
@@ -377,7 +377,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func clickedConditionsCheckButton(_ sender: UIButton){
-        //U viewController tako da napravim tag na buttonima, i tu samo dam viewControlleru button?
         if sender == buttonHumidity{
             viewModel.clickedHumidityButtonCheck()
         }

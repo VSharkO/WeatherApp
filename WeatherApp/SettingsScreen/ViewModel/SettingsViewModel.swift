@@ -30,7 +30,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
         self.data.cities = settingsDataDelegate.citiesFromDb
     }
     
-    func initCitySelected() -> Disposable{
+    func initRequestForCity() -> Disposable{
         return sendRequestForCity.flatMap({[unowned self] city -> Observable<Response> in
             self.data.cityToShow = city
             self.viewShowLoader.onNext(true)
@@ -39,6 +39,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
                 self.settingsDelegate.receaveData(weather: response, city: self.data.cityToShow)
+                self.viewShowLoader.onNext(false)
                 self.viewCloseScreen.onNext(true)
             })
     }
