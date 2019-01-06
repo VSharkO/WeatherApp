@@ -54,7 +54,7 @@ class MainViewModelTests: QuickSpec {
                     expect(mainViewModel.data).to(beNil())
                 }
             }
-            context("Called data from repo"){
+            context("Called data from api"){
                 var testScheduler = TestScheduler(initialClock: 0)
                 var subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
                 var mockRepository = MockRepositoryProtocol()
@@ -90,6 +90,7 @@ class MainViewModelTests: QuickSpec {
                     expect(subscriber.events.first!.value.element!.icon).to(equal(supplyListResponse?.currently.icon))
                     expect(subscriber.events.first!.value.element!.gradientInfo).to(equal(conditions))
                 }
+                
             }
             
             describe("Loader logic"){

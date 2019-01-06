@@ -58,8 +58,6 @@ class SearchViewModelTests: QuickSpec {
                     stub(mockMainViewModelDelegate) { mock in
                         when(mock.units).get.thenReturn(.si)
                         when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
-                        when(mock.trigerGetFromDbData().thenDoNothing())
-                        when(mock.trigerGetFromDbData().thenDoNothing())
                         
                     }
                     searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
@@ -81,13 +79,11 @@ class SearchViewModelTests: QuickSpec {
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyWeatherResponse)))
                         when(mock.getCities(endpoint: any()).thenReturn(Observable.just(supplyCitiesResponse)))
-                        when(mock.saveGeonameToDb(geoname: any()).thenDoNothing())
+                        when(mock.saveCityToDb(geoname: any()).thenDoNothing())
                     }
                     stub(mockMainViewModelDelegate) { mock in
                         when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
                         when(mock.units).get.thenReturn(.si)
-                        when(mock.trigerGetFromDbData().thenDoNothing())
-                        when(mock.trigerGetFromDbData().thenDoNothing())
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     searchViewModel = SearchViewModel.init(repository: mockRepository, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
@@ -122,13 +118,11 @@ class SearchViewModelTests: QuickSpec {
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyWeatherResponse)))
                         when(mock.getCities(endpoint: any()).thenReturn(Observable.just(supplyCitiesResponse)))
-                        when(mock.saveGeonameToDb(geoname: any()).thenDoNothing())
+                        when(mock.saveCityToDb(geoname: any()).thenDoNothing())
                     }
                     stub(mockMainViewModelDelegate) { mock in
                         when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
                         when(mock.units).get.thenReturn(.si)
-                        when(mock.trigerGetFromDbData().thenDoNothing())
-                        when(mock.trigerGetFromDbData().thenDoNothing())
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver(Bool.self)

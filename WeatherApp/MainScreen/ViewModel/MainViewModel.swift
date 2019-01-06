@@ -58,6 +58,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     }
     
     func initialDataRequest(){
+        trigerGetCitiesFromDb()
         dataRequestTrigered()
     }
     
