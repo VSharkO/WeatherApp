@@ -25,7 +25,7 @@ class Repository : RepositoryProtocol,WeatherInteractor,CitiesInteractor{
         dbHelper.saveGeonameToDb(geoname: geoname)
     }
     
-    func getCityFromDb() -> Observable<[City]> {
+    func getCitiesFromDb() -> Observable<[City]> {
         return dbHelper.getGeonamesFromDb()
     }
     

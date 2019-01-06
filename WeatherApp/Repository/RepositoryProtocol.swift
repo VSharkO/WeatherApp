@@ -13,6 +13,6 @@ protocol RepositoryProtocol{
     func getWeather(endpoint: Endpoint) -> Observable<WeatherResponse>
     func getCities(endpoint: Endpoint) -> Observable<Cities>
     func saveCityToDb(geoname: City)
-    func getCityFromDb() -> Observable<[City]>
+    func getCitiesFromDb() -> Observable<[City]>
     func deleteCityFromDb(geoname: City)
 }

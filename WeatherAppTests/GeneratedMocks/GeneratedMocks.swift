@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-06 23:33:45 +0000
+// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-06 23:47:23 +0000
 
 //
 //  MainViewModelDelegate.swift
@@ -125,7 +125,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/Repository/RepositoryProtocol.swift at 2019-01-06 23:33:45 +0000
+// MARK: - Mocks generated from file: WeatherApp/Repository/RepositoryProtocol.swift at 2019-01-06 23:47:23 +0000
 
 //
 //  RepositoryProtocol.swift
@@ -201,7 +201,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
     }
     
     // ["name": "getCityFromDb", "returnSignature": " -> Observable<[City]>", "fullyQualifiedName": "getCityFromDb() -> Observable<[City]>", "parameterSignature": "", "parameterSignatureWithoutNames": "", "inputTypes": "", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "", "call": "", "parameters": [], "returnType": "Observable<[City]>", "isOptional": false, "escapingParameterNames": "", "stubFunction": "Cuckoo.ProtocolStubFunction"]
-     func getCityFromDb()  -> Observable<[City]> {
+     func getCitiesFromDb()  -> Observable<[City]> {
         
             return cuckoo_manager.call("getCityFromDb() -> Observable<[City]>",
                 parameters: (),
@@ -210,7 +210,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
-                defaultCall: __defaultImplStub!.getCityFromDb())
+                defaultCall: __defaultImplStub!.getCitiesFromDb())
         
     }
     
@@ -330,7 +330,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
-     func getCityFromDb()  -> Observable<[City]> {
+     func getCitiesFromDb()  -> Observable<[City]> {
         return DefaultValueRegistry.defaultValue(for: Observable<[City]>.self)
     }
     
@@ -341,7 +341,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-06 23:33:45 +0000
+// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-06 23:47:23 +0000
 
 //
 //  SettingsDataDelegate.swift

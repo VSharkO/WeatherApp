@@ -41,8 +41,7 @@ class MainViewModelTests: QuickSpec {
                     let mockRepository = MockRepositoryProtocol()
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                        when(mock.getCities(endpoint: any()).thenReturn(Observable.just(Cities.init(geonames:
-                            [City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")]))))
+                        when(mock.getCityFromDb().thenReturn(Observable.just([City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")]))
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)

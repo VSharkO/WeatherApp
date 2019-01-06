@@ -49,7 +49,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     
     func initGetCitiesFromDb() -> Disposable{
         return getCitiesFromDb.flatMap({[unowned self] _ -> Observable<[City]> in
-            return self.repository.getCityFromDb()
+            return self.repository.getCitiesFromDb()
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.init())
             .subscribe(onNext: {[unowned self] geonames in
