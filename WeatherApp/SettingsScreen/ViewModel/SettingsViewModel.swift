@@ -27,7 +27,9 @@ class SettingsViewModel: SettingsViewModelProtocol{
         self.repository = repository
         self.settingsDelegate = settingsDataDelegate
         self.data = SettingsDataModel(cities: [], units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings, cityToShow: settingsDataDelegate.city)
-        self.data.cities = settingsDataDelegate.citiesFromDb
+        if settingsDataDelegate.citiesFromDb != nil{
+            self.data.cities = settingsDataDelegate.citiesFromDb
+        }
     }
     
     func initRequestForCity() -> Disposable{

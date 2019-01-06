@@ -66,7 +66,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     let horizontalStackConditions: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .equalCentering
+        stackView.spacing = 50
         stackView.alignment = .center
         return stackView
     }()
@@ -268,7 +268,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             citiesTableView.topAnchor.constraint(equalTo: self.locationsTitle.bottomAnchor, constant: 22),
             citiesTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
             citiesTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            citiesTableView.heightAnchor.constraint(lessThanOrEqualToConstant: 155),
+            citiesTableView.heightAnchor.constraint(lessThanOrEqualToConstant: 500),
             citiesTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
             ])
         
@@ -291,10 +291,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         NSLayoutConstraint.activate([
             horizontalStackConditions.topAnchor.constraint(equalTo: self.conditionsTitle.bottomAnchor, constant: 20),
-            horizontalStackConditions.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor, constant: 20),
-            horizontalStackConditions.leadingAnchor.constraint(lessThanOrEqualTo: self.view.leadingAnchor, constant: 40),
-            horizontalStackConditions.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor, constant: -20),
-            horizontalStackConditions.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.trailingAnchor, constant: -40),
+            horizontalStackConditions.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
+            horizontalStackConditions.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor),
             horizontalStackConditions.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             horizontalStackConditions.bottomAnchor.constraint(lessThanOrEqualTo: buttonDone.topAnchor, constant: -10)
             ])
