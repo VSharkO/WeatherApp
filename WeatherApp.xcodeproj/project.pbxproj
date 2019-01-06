@@ -256,9 +256,10 @@
 		D552067121C8E8FD00FCB1CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D53D92D821CA694E00C8EB0E /* MainDataModel.swift */,
+				D5F27CCE21D98BE500DFFAAC /* SettingsDataModel.swift */,
 				D552067321C8E8FD00FCB1CC /* WeatherResponse.swift */,
 				D5E2A78C21D6EC9300A803FE /* Cities.swift */,
-				D5F27CCE21D98BE500DFFAAC /* SettingsDataModel.swift */,
 				D5F27CD521D99B0300DFFAAC /* Units.swift */,
 				D5F27CD721D99B2F00DFFAAC /* Conditions.swift */,
 				D5F27CDD21D9A46700DFFAAC /* WeatherParametersToShow.swift */,
@@ -354,7 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				D5F27CE521D9DD1000DFFAAC /* Utils */,
-				D5F6140521CB7668004F1A6F /* GradientHelper */,
 				D57F534E21C8D5AC00A62F24 /* ViewModel */,
 				D57F535821C8D5AC00A62F24 /* View */,
 				D57F535A21C8D5AC00A62F24 /* MainScreenCoordinator.swift */,
@@ -475,7 +475,7 @@
 		D5F27CE521D9DD1000DFFAAC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				D53D92D821CA694E00C8EB0E /* MainDataModel.swift */,
+				D5F6140521CB7668004F1A6F /* GradientHelper */,
 				D5F27CDB21D9A1D500DFFAAC /* MainViewModelDelegate.swift */,
 			);
 			path = Utils;
