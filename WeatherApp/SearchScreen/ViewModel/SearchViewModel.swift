@@ -46,8 +46,7 @@ class SearchViewModel: SearchViewModelProtocol{
             return citySelected.flatMapLatest({[unowned self] index -> Observable<WeatherResponse> in
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
-                let coordinates = self.data[index].lat + "," + self.data[index].lng
-                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: self.units.rawValue))
+                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.data[index].getCoordinates(), units: self.units.rawValue))
             }).subscribeOn(scheduler)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[unowned self] response in
@@ -59,12 +58,12 @@ class SearchViewModel: SearchViewModelProtocol{
                 })
     }
     
-    func cityClicked(onIndex: Int){
-        citySelected.onNext(onIndex)
-    }
-    
     func searchForText(text: String) {
          dynamicSearchString.onNext(text)
+    }
+    
+    func cityClicked(onIndex: Int){
+        citySelected.onNext(onIndex)
     }
 
 }
