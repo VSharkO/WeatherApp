@@ -305,6 +305,7 @@
 		D57F531321C8D48400A62F24 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				D5E9B85A21C9ACB100723198 /* Repository */,
 				D5F27CE021D9B88600DFFAAC /* Db */,
 				D5F27CDF21D9B80300DFFAAC /* Networking */,
 				D5F27CC121D9826500DFFAAC /* SettingsScreen */,
@@ -456,7 +457,6 @@
 			children = (
 				D552066621C8E7DD00FCB1CC /* Interactors */,
 				D5F50C8521DDF43A00D59204 /* Helper */,
-				D5E9B85A21C9ACB100723198 /* Repository */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -725,7 +725,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PROJECT_DIR}/${PROJECT_NAME}/Networking/Repository/RepositoryProtocol.swift",
+				"${PROJECT_DIR}/${PROJECT_NAME}/Repository/RepositoryProtocol.swift",
 				"${PROJECT_DIR}/${PROJECT_NAME}/Db/DbHelperProtocol.swift",
 				"${PROJECT_DIR}/${PROJECT_NAME}/SettingsScreen/Utils/SettingsDataDelegate.swift",
 				"${PROJECT_DIR}/${PROJECT_NAME}/MainScreen/Utils/MainViewModelDelegate.swift",
