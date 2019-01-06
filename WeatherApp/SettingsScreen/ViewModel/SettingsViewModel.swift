@@ -20,45 +20,38 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let viewReloadUnitsTableData = PublishSubject<Bool>()
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
-    private var citySelected = PublishSubject<Int>()
-    var clickedItem: Int = 0
+    private var sendRequestForCity = PublishSubject<Geoname>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), settingsDataDelegate: SettingsDataDelegate, repository: RepositoryProtocol) {
         self.scheduler = scheduler
         self.repository = repository
         self.settingsDelegate = settingsDataDelegate
-        self.data = SettingsDataModel(cities: [], units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings)
+        self.data = SettingsDataModel(cities: [], units: settingsDataDelegate.units, weatherParameters: settingsDataDelegate.settings, cityToShow: settingsDataDelegate.city)
         self.data.cities = settingsDataDelegate.citiesFromDb
     }
     
     func initCitySelected() -> Disposable{
-        return citySelected.flatMap({[unowned self] index -> Observable<Response> in
-            self.clickedItem = index
+        return sendRequestForCity.flatMap({[unowned self] city -> Observable<Response> in
+            self.data.cityToShow = city
             self.viewShowLoader.onNext(true)
-            let coordinates = self.data.cities[index].lat + "," + self.data.cities[index].lng
-            return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: self.data.units.rawValue))
+            return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: city.getCoordinates(), units: self.data.units.rawValue))
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in
-                self.settingsDelegate.receaveData(weather: response, city: self.data.cities[self.clickedItem])
+                self.settingsDelegate.receaveData(weather: response, city: self.data.cityToShow)
                 self.viewCloseScreen.onNext(true)
             })
     }
     
     func cityClicked(onIndex: Int){
+        self.data.cityToShow = self.data.cities[onIndex]
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        citySelected.onNext(onIndex)
+        sendRequestForCity.onNext(self.data.cityToShow)
     }
     
     func applyChangesAndClose(){
         settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        if let selectedCity = data.cities.firstIndex(where: {
-            $0.name == self.settingsDelegate.city.name}){
-            self.citySelected.onNext(selectedCity)
-        }
-        else{
-            self.viewCloseScreen.onNext(true)
-        }
+        self.sendRequestForCity.onNext(self.data.cityToShow)
     }
     
     func clickedHumidityButtonCheck(){

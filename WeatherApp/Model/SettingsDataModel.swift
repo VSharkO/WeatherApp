@@ -13,4 +13,5 @@ struct SettingsDataModel {
     var cities: [Geoname]
     var units: UnitsType
     var weatherParameters: WeatherParametersToShow
+    var cityToShow: Geoname
 }

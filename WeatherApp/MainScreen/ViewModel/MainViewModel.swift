@@ -46,8 +46,6 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
             .subscribe(onNext: {[unowned self] response in
                 self.setData(response: response)
                 self.setUnits()
-                self.dbHelper.saveGeonameToDb(geoname: self.city)
-                
                 self.updateView()
             })
     }
