@@ -10,14 +10,14 @@ import Foundation
 import RxSwift
 
 protocol MainViewModelProtocol{
-    func initGetingDataFromRepository() -> Disposable
-    func initialDataRequest()
-    func trigerGetFromDbData()
-    func initGetCities() -> Disposable
     var weatherUnits: WeatherUnits! {get}
-    var city: Geoname!{get}
+    var city: City!{get}
     var viewShowLoader: PublishSubject<Bool>{get}
     var viewLoadWithData: PublishSubject<MainDataModel>{get}
     var viewSetBackgroundImages: PublishSubject<(icon: String, gradientInfo: Condition?)>{get}
     var viewSetupSettings: PublishSubject<WeatherParametersToShow>{get}
+    func initGetingDataFromApi() -> Disposable
+    func initGetCitiesFromDb() -> Disposable
+    func initialDataRequest()
+    func trigerGetCitiesFromDb()
 }

@@ -19,10 +19,10 @@ class MainViewModelTests: QuickSpec {
         let testBundle = Bundle.init(for: MainViewModelTests.self)
         let supplyListUrl = testBundle.url(forResource: "main_screen_response", withExtension: "json")!
         let supplyListData = try! Data(contentsOf: supplyListUrl)
-        let supplyListResponse: Response? =
+        let supplyListResponse: WeatherResponse? =
         {
             do{
-                let response = try JSONDecoder().decode(Response.self, from: supplyListData)
+                let response = try JSONDecoder().decode(WeatherResponse.self, from: supplyListData)
                 return response
             }catch{
                 return nil
@@ -44,7 +44,7 @@ class MainViewModelTests: QuickSpec {
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
-                    mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("is not nil"){
@@ -66,7 +66,7 @@ class MainViewModelTests: QuickSpec {
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
-                    mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
                     mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
                     testScheduler.start()
                 }
@@ -104,7 +104,7 @@ class MainViewModelTests: QuickSpec {
                         testScheduler = TestScheduler(initialClock: 0)
                         subscriber = testScheduler.createObserver(Bool.self)
                         mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
-                        mainViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                        mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
                         mainViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
                         testScheduler.start()
                         mainViewModel.initialDataRequest()

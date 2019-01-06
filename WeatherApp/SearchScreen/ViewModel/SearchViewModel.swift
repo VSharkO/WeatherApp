@@ -20,7 +20,7 @@ class SearchViewModel: SearchViewModelProtocol{
     var dynamicSearchString = PublishSubject<String>()
     private var units: UnitsType
     private var citySelected = PublishSubject<Int>()
-    internal var data: [Geoname] = []
+    internal var data: [City] = []
     private var clickedItem = -1
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), mainViewModelDelegate: MainViewModelDelegate) {
@@ -43,7 +43,7 @@ class SearchViewModel: SearchViewModelProtocol{
     }
     
     func initCitySelected() -> Disposable{
-            return citySelected.flatMapLatest({[unowned self] index -> Observable<Response> in
+            return citySelected.flatMapLatest({[unowned self] index -> Observable<WeatherResponse> in
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
                 let coordinates = self.data[index].lat + "," + self.data[index].lng
@@ -51,11 +51,11 @@ class SearchViewModel: SearchViewModelProtocol{
             }).subscribeOn(scheduler)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[unowned self] response in
-                    self.viewShowLoader.onNext(false)
-                    self.repository.saveGeonameToDb(geoname: self.data[self.clickedItem])
+                    self.repository.saveCityToDb(geoname: self.data[self.clickedItem])
                     self.mainViewModelDelegate.receaveData(weather: response, city: self.data[self.clickedItem])
-                    self.mainViewModelDelegate.trigerGetFromDbData()
+                    self.viewShowLoader.onNext(false)
                     self.viewCloseScreen.onNext(true)
+                    
                 })
     }
     

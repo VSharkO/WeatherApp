@@ -100,11 +100,11 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
         registerButtonTouchListeners()
         setupObservingSearchText()
         initSubscripts()
+        viewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+        viewModel.initCitySelected().disposed(by: disposeBag)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        viewModel.initGetingDataFromRepository().disposed(by: disposeBag)
-        viewModel.initCitySelected().disposed(by: disposeBag)
         searchBarText.becomeFirstResponder()
     }
     
@@ -114,6 +114,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SearchCell()
+        cell.backgroundColor = .clear
         let cityInfo = viewModel.data[indexPath.row]
         var cityName = cityInfo.name
         if let countryCode = cityInfo.countryCode{
@@ -121,7 +122,6 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
         }
         cell.cityNameText.text = cityName
         cell.firstLetterTextView.text = String(viewModel.data[indexPath.row].name.prefix(1))
-        cell.backgroundColor = .clear
         return cell
     }
     
@@ -130,9 +130,10 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     private func setupViews(){
+        
+        self.view.backgroundColor = .clear
         tableVeiw.delegate = self
         tableVeiw.dataSource = self
-        self.view.backgroundColor = .clear
         self.view.addSubview(blureBackground)
         self.view.addSubview(tableVeiw)
         self.searchConteiner.addSubview(searchBarText)

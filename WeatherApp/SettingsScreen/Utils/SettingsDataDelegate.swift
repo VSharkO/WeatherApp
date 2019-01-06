@@ -10,8 +10,8 @@ import Foundation
 
 protocol SettingsDataDelegate: MainViewModelDelegate{
     var settings: WeatherParametersToShow{get set}
-    var city: Geoname!{get set}
-    var citiesFromDb: [Geoname]!{get}
+    var city: City!{get set}
+    var citiesFromDb: [City]!{get}
     func setNewSettings(settingsDataModel: SettingsDataModel)
     func deleteCityFromDb(index: Int)
 }

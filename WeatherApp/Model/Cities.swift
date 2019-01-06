@@ -10,17 +10,17 @@ import Foundation
 import RealmSwift
 
 struct Cities: Codable {
-    let geonames: [Geoname]
+    let geonames: [City]
 }
 
-struct Geoname: Codable {
+struct City: Codable {
     let lng: String
     let countryCode: String?
     let name: String
     let lat: String
 }
 
-extension Geoname{
+extension City{
     func getCoordinates() -> String{
         return  lat + "," + lng
     }

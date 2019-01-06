@@ -10,47 +10,46 @@ import Foundation
 import RxSwift
 
 class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDelegate{
-   
+    
     internal var data: MainDataModel!
     internal var units: UnitsType
     internal var weatherUnits: WeatherUnits!
-    internal var city: Geoname!
     internal var settings = WeatherParametersToShow(humidity: true, windSpeed: true, pressure: true)
+    internal var city: City!
+    internal var citiesFromDb: [City]!
     
-    let repository: RepositoryProtocol
-    let scheduler : SchedulerType
-    var dataRequestTriger = PublishSubject<Bool>()
-    var viewShowLoader = PublishSubject<Bool>()
-    var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
-    var viewLoadWithData = PublishSubject<MainDataModel>()
-    var viewSetupSettings = PublishSubject<WeatherParametersToShow>()
-    var citiesFromDb: [Geoname]!
-    private let getCities = PublishSubject<Bool>()
-    
+    private let repository: RepositoryProtocol
+    private let scheduler : SchedulerType
+    private var dataRequestTriger = PublishSubject<Bool>()
+    private let getCitiesFromDb = PublishSubject<Bool>()
+    internal var viewShowLoader = PublishSubject<Bool>()
+    internal var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
+    internal var viewLoadWithData = PublishSubject<MainDataModel>()
+    internal var viewSetupSettings = PublishSubject<WeatherParametersToShow>()
     
     init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.repository = repository
         self.scheduler = scheduler
         units = .si
-        self.city = Geoname(lng: Constants.defaultCityLng, countryCode: Constants.defaultCountryCode, name: Constants.defaultCityName, lat: Constants.defaultCityLat)
+        self.city = City(lng: Constants.defaultCityLng, countryCode: Constants.defaultCountryCode, name: Constants.defaultCityName, lat: Constants.defaultCityLat)
     }
     
-    func initGetingDataFromRepository() -> Disposable {
-        return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<Response> in
+    func initGetingDataFromApi() -> Disposable {
+        return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<WeatherResponse> in
             self.viewShowLoader.onNext(true)
             return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.city.getCoordinates(), units: self.units.rawValue))
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: {[unowned self] response in
-                self.setData(response: response)
-                self.setUnits()
+            .subscribe(onNext: {[unowned self] weatherResponse in
+                self.setData(response: weatherResponse)
                 self.updateView()
+                self.viewShowLoader.onNext(false)
             })
     }
     
-    func initGetCities() -> Disposable{
-        return getCities.flatMap({[unowned self] _ -> Observable<[Geoname]> in
-            return self.repository.getGeonamesFromDb()
+    func initGetCitiesFromDb() -> Disposable{
+        return getCitiesFromDb.flatMap({[unowned self] _ -> Observable<[City]> in
+            return self.repository.getCityFromDb()
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.init())
             .subscribe(onNext: {[unowned self] geonames in
@@ -58,34 +57,15 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
             })
     }
     
-    func setData(response: Response){
-        let currently = response.currently
-        let gradientInfo = WeatherConditionsHelper.returnConditionThatStringContains(for: currently.icon)
-        if let daily = response.daily.data.last(where: { dailyData -> Bool in
-            TimeDiferenceHelper.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: dailyData.time)
-        }){
-            self.data = MainDataModel(currently: currently, daily: daily, conditions: gradientInfo)
-        }else{
-            print("Error setting data, response doesnt contain daily")
-        }
-    }
-    
-    func updateView(){
-        self.viewSetBackgroundImages.onNext((icon: data.currently.icon,gradientInfo: data.conditions))
-        self.viewLoadWithData.onNext(data)
-        self.viewSetupSettings.onNext(self.settings)
-        self.viewShowLoader.onNext(false)
-    }
-    
     func initialDataRequest(){
         dataRequestTrigered()
     }
     
-    func receaveData(weather: Response, city: Geoname) {
+    func receaveData(weather: WeatherResponse, city: City) {
         setData(response: weather)
         self.city = city
+        trigerGetCitiesFromDb()
         updateView()
-        self.getCities.onNext(true)
     }
     
     func setNewSettings(settingsDataModel: SettingsDataModel) {
@@ -95,8 +75,32 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         self.updateView()
     }
     
-    func trigerGetFromDbData() {
-        self.getCities.onNext(true)
+    func trigerGetCitiesFromDb() {
+        self.getCitiesFromDb.onNext(true)
+    }
+    
+    func deleteCityFromDb(index: Int) {
+        self.repository.deleteCityFromDb(geoname: citiesFromDb[index])
+        trigerGetCitiesFromDb()
+    }
+    
+    private func setData(response: WeatherResponse){
+        let currently = response.currently
+        let gradientInfo = WeatherConditionsHelper.returnConditionThatStringContains(for: currently.icon)
+        if let daily = response.daily.data.last(where: {
+            TimeDiferenceHelper.isTimeDiferenceInADay(fromSeconds: currently.time, toSeconds: $0.time)
+        }){
+            self.data = MainDataModel(currently: currently, daily: daily, conditions: gradientInfo)
+        }else{
+            print("Error setting data, response doesnt contain daily")
+        }
+        self.setUnits()
+    }
+    
+    private func updateView(){
+        self.viewSetBackgroundImages.onNext((icon: data.currently.icon,gradientInfo: data.conditions))
+        self.viewLoadWithData.onNext(data)
+        self.viewSetupSettings.onNext(self.settings)
     }
     
     private func dataRequestTrigered(){
@@ -107,8 +111,4 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         self.weatherUnits = UnitsHelper.getUnits(units: self.units)
     }
     
-    func deleteCityFromDb(index: Int) {
-        self.repository.deleteGeonameFromDb(geoname: citiesFromDb[index])
-        trigerGetFromDbData()
-    }
 }

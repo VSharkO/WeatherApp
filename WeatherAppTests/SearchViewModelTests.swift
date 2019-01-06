@@ -33,13 +33,13 @@ class SearchViewModelTests: QuickSpec {
         let testBundleMain = Bundle.init(for: SearchViewModelTests.self)
         let supplyListUrlMain = testBundleMain.url(forResource: "main_screen_response", withExtension: "json")!
         let supplyListDataMain = try! Data(contentsOf: supplyListUrlMain)
-        let supplyWeatherResponse: Response =
+        let supplyWeatherResponse: WeatherResponse =
         {
             do{
-                let response = try JSONDecoder().decode(Response.self, from: supplyListDataMain)
+                let response = try JSONDecoder().decode(WeatherResponse.self, from: supplyListDataMain)
                 return response
             }catch{
-                return Response(latitude: 0, longitude: 0, timezone: "", currently: Currently.init(time: 0, summary: "", icon: "", temperature: 0, humidity: 0, pressure: 0, windSpeed: 0), daily: Daily.init(summary: "", icon: "", data: []), offset: 0)
+                return WeatherResponse(latitude: 0, longitude: 0, timezone: "", currently: Currently.init(time: 0, summary: "", icon: "", temperature: 0, humidity: 0, pressure: 0, windSpeed: 0), daily: Daily.init(summary: "", icon: "", data: []), offset: 0)
             }
             
         }()

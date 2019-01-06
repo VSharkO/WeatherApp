@@ -10,9 +10,9 @@ import Foundation
 import RxSwift
 
 protocol RepositoryProtocol{
-    func getWeather(endpoint: Endpoint) -> Observable<Response>
+    func getWeather(endpoint: Endpoint) -> Observable<WeatherResponse>
     func getCities(endpoint: Endpoint) -> Observable<Cities>
-    func saveGeonameToDb(geoname: Geoname)
-    func getGeonamesFromDb() -> Observable<[Geoname]>
-    func deleteGeonameFromDb(geoname: Geoname)
+    func saveCityToDb(geoname: City)
+    func getCityFromDb() -> Observable<[City]>
+    func deleteCityFromDb(geoname: City)
 }

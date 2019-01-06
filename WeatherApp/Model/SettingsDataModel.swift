@@ -10,8 +10,8 @@ import Foundation
 import RealmSwift
 
 struct SettingsDataModel {
-    var cities: [Geoname]
+    var cities: [City]
     var units: UnitsType
     var weatherParameters: WeatherParametersToShow
-    var cityToShow: Geoname
+    var cityToShow: City
 }

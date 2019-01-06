@@ -58,7 +58,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
     }
     
     // ["name": "trigerGetFromDbData", "returnSignature": "", "fullyQualifiedName": "trigerGetFromDbData()", "parameterSignature": "", "parameterSignatureWithoutNames": "", "inputTypes": "", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "", "call": "", "parameters": [], "returnType": "Void", "isOptional": false, "escapingParameterNames": "", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
-     func trigerGetFromDbData()  {
+     func trigerGetCitiesFromDbData()  {
         
             return cuckoo_manager.call("trigerGetFromDbData()",
                 parameters: (),
@@ -67,7 +67,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
-                defaultCall: __defaultImplStub!.trigerGetFromDbData())
+                defaultCall: __defaultImplStub!.trigerGetCitiesFromDbData())
         
     }
     
@@ -147,7 +147,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
-     func trigerGetFromDbData()  {
+     func trigerGetCitiesFromDbData()  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
@@ -517,7 +517,7 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
     }
     
     // ["name": "trigerGetFromDbData", "returnSignature": "", "fullyQualifiedName": "trigerGetFromDbData()", "parameterSignature": "", "parameterSignatureWithoutNames": "", "inputTypes": "", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "", "call": "", "parameters": [], "returnType": "Void", "isOptional": false, "escapingParameterNames": "", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
-     func trigerGetFromDbData()  {
+     func trigerGetCitiesFromDbData()  {
         
             return cuckoo_manager.call("trigerGetFromDbData()",
                 parameters: (),
@@ -526,7 +526,7 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
-                defaultCall: __defaultImplStub!.trigerGetFromDbData())
+                defaultCall: __defaultImplStub!.trigerGetCitiesFromDbData())
         
     }
     
@@ -685,7 +685,7 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
-     func trigerGetFromDbData()  {
+     func trigerGetCitiesFromDbData()  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     

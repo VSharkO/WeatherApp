@@ -17,19 +17,19 @@ class Repository : RepositoryProtocol,WeatherInteractor,CitiesInteractor{
         return getCitiesFromEndpoint(endpoint: endpoint)
     }
     
-    func getWeather(endpoint: Endpoint) -> Observable<Response> {
+    func getWeather(endpoint: Endpoint) -> Observable<WeatherResponse> {
         return getWeatherFromEndpoint(endpoint: endpoint)
     }
     
-    func saveGeonameToDb(geoname: Geoname) {
+    func saveCityToDb(geoname: City) {
         dbHelper.saveGeonameToDb(geoname: geoname)
     }
     
-    func getGeonamesFromDb() -> Observable<[Geoname]> {
+    func getCityFromDb() -> Observable<[City]> {
         return dbHelper.getGeonamesFromDb()
     }
     
-    func deleteGeonameFromDb(geoname: Geoname) {
+    func deleteCityFromDb(geoname: City) {
         dbHelper.deleteGeonameFromDb(geoname: geoname)
     }
     

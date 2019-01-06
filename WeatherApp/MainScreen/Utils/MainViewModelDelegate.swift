@@ -9,7 +9,6 @@
 import Foundation
 
 protocol MainViewModelDelegate {
-    func receaveData(weather: Response, city: Geoname)
-    func trigerGetFromDbData()
+    func receaveData(weather: WeatherResponse, city: City)
     var units: UnitsType{get}
 }

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol SearchViewModelProtocol {
-    var data: [Geoname]{get}
+    var data: [City]{get}
 //    var dynamicSearchString: PublishSubject<String>{get}
     var viewRefreshTableViewData: PublishSubject<Bool>{get}
     func initGetingDataFromRepository() -> Disposable

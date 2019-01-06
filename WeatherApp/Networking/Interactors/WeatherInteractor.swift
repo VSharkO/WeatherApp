@@ -11,11 +11,11 @@ import Alamofire
 import RxSwift
 
 protocol WeatherInteractor{
-    func getWeatherFromEndpoint(endpoint: Endpoint) -> Observable<Response>
+    func getWeatherFromEndpoint(endpoint: Endpoint) -> Observable<WeatherResponse>
 }
 
 extension WeatherInteractor{
-    func getWeatherFromEndpoint(endpoint: Endpoint) -> Observable<Response>{
+    func getWeatherFromEndpoint(endpoint: Endpoint) -> Observable<WeatherResponse>{
         return NetworkHelper.getDataFromApi(with: endpoint)
     }
 }

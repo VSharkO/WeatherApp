@@ -361,8 +361,8 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     init(viewModel: MainViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        viewModel.initGetCities().disposed(by: disposeBag)
-        viewModel.initGetingDataFromRepository().disposed(by: self.disposeBag)
+        viewModel.initGetCitiesFromDb().disposed(by: disposeBag)
+        viewModel.initGetingDataFromApi().disposed(by: self.disposeBag)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -384,7 +384,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        viewModel.trigerGetFromDbData()
+        viewModel.trigerGetCitiesFromDb()
     }
     
     private func initSubscripts(){

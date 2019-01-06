@@ -20,7 +20,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let viewReloadUnitsTableData = PublishSubject<Bool>()
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
-    private var sendRequestForCity = PublishSubject<Geoname>()
+    private var sendRequestForCity = PublishSubject<City>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), settingsDataDelegate: SettingsDataDelegate, repository: RepositoryProtocol) {
         self.scheduler = scheduler
@@ -33,7 +33,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     }
     
     func initRequestForCity() -> Disposable{
-        return sendRequestForCity.flatMap({[unowned self] city -> Observable<Response> in
+        return sendRequestForCity.flatMap({[unowned self] city -> Observable<WeatherResponse> in
             self.data.cityToShow = city
             self.viewShowLoader.onNext(true)
             return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: city.getCoordinates(), units: self.data.units.rawValue))
