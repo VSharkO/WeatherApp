@@ -12,16 +12,17 @@ import RxSwift
 protocol SettingsViewModelProtocol {
     var data: SettingsDataModel{get}
     var viewCloseScreen: PublishSubject<Bool>{get}
-    var setupCheckViews: PublishSubject<Bool>{get}
     var viewRefreshCitiesTableData: PublishSubject<Bool>{get}
     var viewShowLoader: PublishSubject<Bool>{get}
     var viewReloadUnitsTableData: PublishSubject<Bool>{get}
+    var viewSetupCheckViews: PublishSubject<Bool>{get}
     func initRequestForCity() -> Disposable
     func cityClicked(onIndex: Int)
     func clickedHumidityButtonCheck()
     func clickedPressureButtonCheck()
     func clickedWindButtonCheck()
-    func applyChangesAndClose()
-    func deleteCity(index: Int)
     func unitsClicked(withIndex: Int)
+    func deleteCity(index: Int)
+    func applyChangesAndClose()
+    
 }

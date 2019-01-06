@@ -320,7 +320,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }).disposed(by: disposeBag)
         
-        viewModel.setupCheckViews.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
+        viewModel.viewSetupCheckViews.observeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] _ in
             self.setupConditionsChecked()
         }).disposed(by: disposeBag)
         

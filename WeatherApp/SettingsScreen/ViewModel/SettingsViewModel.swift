@@ -16,7 +16,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let scheduler: SchedulerType
     let repository: RepositoryProtocol
     let viewRefreshCitiesTableData = PublishSubject<Bool>()
-    let setupCheckViews = PublishSubject<Bool>()
+    let viewSetupCheckViews = PublishSubject<Bool>()
     let viewReloadUnitsTableData = PublishSubject<Bool>()
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
@@ -52,24 +52,25 @@ class SettingsViewModel: SettingsViewModelProtocol{
         sendRequestForCity.onNext(self.data.cityToShow)
     }
     
-    func applyChangesAndClose(){
-        settingsDelegate.setNewSettings(settingsDataModel: self.data)
-        self.sendRequestForCity.onNext(self.data.cityToShow)
-    }
-    
     func clickedHumidityButtonCheck(){
         self.data.weatherParameters.humidity = !self.data.weatherParameters.humidity
-        self.setupCheckViews.onNext(true)
+        self.viewSetupCheckViews.onNext(true)
     }
     
     func clickedPressureButtonCheck(){
         self.data.weatherParameters.pressure = !self.data.weatherParameters.pressure
-        self.setupCheckViews.onNext(true)
+        self.viewSetupCheckViews.onNext(true)
     }
     
     func clickedWindButtonCheck(){
         self.data.weatherParameters.windSpeed = !self.data.weatherParameters.windSpeed
-        self.setupCheckViews.onNext(true)
+        self.viewSetupCheckViews.onNext(true)
+    }
+    
+    func unitsClicked(withIndex: Int) {
+        let units = UnitsHelper.getUnitsFromIndex(index: withIndex)
+        self.data.units = units
+        self.viewReloadUnitsTableData.onNext(true)
     }
     
     func deleteCity(index: Int){
@@ -77,10 +78,9 @@ class SettingsViewModel: SettingsViewModelProtocol{
         settingsDelegate.deleteCityFromDb(index: index)
     }
     
-    func unitsClicked(withIndex: Int) {
-        let units = UnitsHelper.getUnitsFromIndex(index: withIndex)
-        self.data.units = units
-        self.viewReloadUnitsTableData.onNext(true)
+    func applyChangesAndClose(){
+        settingsDelegate.setNewSettings(settingsDataModel: self.data)
+        self.sendRequestForCity.onNext(self.data.cityToShow)
     }
     
 }
