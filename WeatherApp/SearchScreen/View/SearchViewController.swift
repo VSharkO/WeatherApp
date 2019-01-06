@@ -220,8 +220,8 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
     
     private func setupObservingSearchText(){
-//        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).bind(to: viewModel.dynamicSearchString).disposed(by: disposeBag)
-        searchBarText.rx.text.orEmpty.debounce(0.3, scheduler: MainScheduler.instance).distinctUntilChanged().subscribe(onNext: {[unowned self] text in
+//        searchBarText.rx.text.orEmpty.debounce(0.5, scheduler: MainScheduler.instance).bind(to: viewModel.dynamicSearchString).disposed(by: disposeBag)
+        searchBarText.rx.text.orEmpty.debounce(0.5, scheduler: MainScheduler.instance).distinctUntilChanged().subscribe(onNext: {[unowned self] text in
             self.viewModel.searchForText(text: text)
             }).disposed(by: disposeBag)
     }

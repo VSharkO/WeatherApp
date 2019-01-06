@@ -41,6 +41,8 @@ class MainViewModelTests: QuickSpec {
                     let mockRepository = MockRepositoryProtocol()
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
+                        when(mock.getCities(endpoint: any()).thenReturn(Observable.just(Cities.init(geonames:
+                            [City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")]))))
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
@@ -52,6 +54,10 @@ class MainViewModelTests: QuickSpec {
                 }
                 it("data is nil"){
                     expect(mainViewModel.data).to(beNil())
+                }
+                it("got cities from db"){
+                    mainViewModel.trigerGetCitiesFromDb()
+                    expect(mainViewModel.citiesFromDb.count).to(be(2))
                 }
             }
             context("Called data from api"){
@@ -70,6 +76,7 @@ class MainViewModelTests: QuickSpec {
                     mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
                     testScheduler.start()
                 }
+                
                 it("requst is sent"){
                     mainViewModel.initialDataRequest()
                     verify(mockRepository).getWeather(endpoint: any())
@@ -90,6 +97,7 @@ class MainViewModelTests: QuickSpec {
                     expect(subscriber.events.first!.value.element!.icon).to(equal(supplyListResponse?.currently.icon))
                     expect(subscriber.events.first!.value.element!.gradientInfo).to(equal(conditions))
                 }
+                
                 
             }
             
