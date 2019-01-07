@@ -376,7 +376,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     }
     
     override func viewWillAppear(_ animated: Bool) {
-            viewModel.initialDataRequest()
+        viewModel.initialDataRequest()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -662,7 +662,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     }
     
     private func displayLoader() {
-        loader = displayLoader(onView: self.view, backgroundColor: .clear)
+        loader = displayLoader(onView: self.view, backgroundColor: UIColor.init(hex: "#184D93"))
     }
     
     private func hideLoader() {
