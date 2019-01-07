@@ -20,7 +20,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     
     private let repository: RepositoryProtocol
     private let scheduler : SchedulerType
-    private var dataRequestTriger = PublishSubject<Bool>()
+    private var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
     private let getCitiesFromDb = PublishSubject<Bool>()
     internal var viewShowLoader = PublishSubject<Bool>()
     internal var viewSetBackgroundImages = PublishSubject<(icon: String, gradientInfo: Condition?)>()
