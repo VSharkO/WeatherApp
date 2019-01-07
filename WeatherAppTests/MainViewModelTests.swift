@@ -125,7 +125,6 @@ class MainViewModelTests: QuickSpec {
                 }
                 
                 it("data is changed correctly and array of cities from db is refreshed"){
-                    let city = City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12")
                     mainViewModel.receaveData(weather: supplyListResponse!, city: city)
                     expect(mainViewModel.city.name).to(equal(city.name))
                     expect(mainViewModel.data.currently.summary).to(equal(supplyListResponse!.currently.summary))
@@ -156,7 +155,6 @@ class MainViewModelTests: QuickSpec {
                     }
                     
                     it("data is changed correctly and array of cities from db is refreshed"){
-                        let city = City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12")
                         mainViewModel.receaveData(weather: supplyListResponse!, city: city)
                         expect(mainViewModel.city.name).to(equal(city.name))
                         expect(mainViewModel.data.currently.summary).to(equal(supplyListResponse!.currently.summary))
