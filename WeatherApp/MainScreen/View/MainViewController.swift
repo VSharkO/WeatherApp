@@ -352,7 +352,6 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
         return imageView
     }()
     
-    var firstTimeLaunched = true
     var loader : UIView?
     private var viewModel: MainViewModelProtocol!
     private let disposeBag = DisposeBag()
@@ -361,8 +360,6 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     init(viewModel: MainViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        viewModel.initGetCitiesFromDb().disposed(by: disposeBag)
-        viewModel.initGetingDataFromApi().disposed(by: self.disposeBag)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -372,15 +369,14 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     override func viewDidLoad() {
         setupViews()
         initSubscripts()
+        viewModel.initGetCitiesFromDb().disposed(by: disposeBag)
+        viewModel.initGetingDataFromApi().disposed(by: self.disposeBag)
         self.registerTouchListeners()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if firstTimeLaunched{
             viewModel.initialDataRequest()
-            firstTimeLaunched = false
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
