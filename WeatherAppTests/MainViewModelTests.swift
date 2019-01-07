@@ -16,6 +16,9 @@ import Nimble
 class MainViewModelTests: QuickSpec {
     
     override func spec() {
+        let city = City(lng: "10", countryCode: nil, name: "Pleternica", lat: "20")
+        let city2 = City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")
+        let cities = [city,city2]
         let testBundle = Bundle.init(for: MainViewModelTests.self)
         let supplyListUrl = testBundle.url(forResource: "main_screen_response", withExtension: "json")!
         let supplyListData = try! Data(contentsOf: supplyListUrl)
@@ -32,6 +35,7 @@ class MainViewModelTests: QuickSpec {
 
         var mainViewModel: MainViewModel!
         let disposeBag = DisposeBag()
+        let weatherParameters = WeatherParametersToShow(humidity: true, windSpeed: false, pressure: true)
         afterSuite {
             mainViewModel = nil
         }
@@ -41,7 +45,7 @@ class MainViewModelTests: QuickSpec {
                     let mockRepository = MockRepositoryProtocol()
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                        when(mock.getCitiesFromDb().thenReturn(Observable.just([City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")])))
+                        when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
@@ -69,7 +73,7 @@ class MainViewModelTests: QuickSpec {
                     mockRepository = MockRepositoryProtocol()
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                        when(mock.getCitiesFromDb().thenReturn(Observable.just([City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")])))
+                        when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
@@ -109,7 +113,7 @@ class MainViewModelTests: QuickSpec {
                     mockRepository = MockRepositoryProtocol()
                     stub(mockRepository) { mock in
                         when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                        when(mock.getCitiesFromDb().thenReturn(Observable.just([City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")])))
+                        when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
@@ -139,7 +143,7 @@ class MainViewModelTests: QuickSpec {
                         mockRepository = MockRepositoryProtocol()
                         stub(mockRepository) { mock in
                             when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                            when(mock.getCitiesFromDb().thenReturn(Observable.just([City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")])))
+                            when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
                             when(mock.deleteCityFromDb(geoname: any()).thenDoNothing())
                         }
                         testScheduler = TestScheduler(initialClock: 0)
@@ -160,9 +164,8 @@ class MainViewModelTests: QuickSpec {
                     }
                     
                     it("On settings change changes weather parameters and units correctly"){
-                        let city = City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12")
                         mainViewModel.receaveData(weather: supplyListResponse!, city: city)
-                        let settingsPassedData = SettingsDataModel(cities: [City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")], units: .si, weatherParameters: WeatherParametersToShow.init(humidity: true, windSpeed: false, pressure: false), cityToShow: City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"))
+                        let settingsPassedData = SettingsDataModel(cities: cities, units: .si, weatherParameters: weatherParameters, cityToShow: city)
                         mainViewModel.setNewSettings(settingsDataModel: settingsPassedData)
                         expect(mainViewModel.settings.humidity).to(equal(settingsPassedData.weatherParameters.humidity))
                         expect(mainViewModel.settings.windSpeed).to(equal(settingsPassedData.weatherParameters.windSpeed))
@@ -186,7 +189,7 @@ class MainViewModelTests: QuickSpec {
                         let mockRepository = MockRepositoryProtocol()
                         stub(mockRepository) { mock in
                             when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                            when(mock.getCitiesFromDb().thenReturn(Observable.just([City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12"),City(lng: "11", countryCode: "HR", name: "Pleternica", lat: "14")])))
+                            when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
                         }
                         testScheduler = TestScheduler(initialClock: 0)
                         subscriber = testScheduler.createObserver(Bool.self)

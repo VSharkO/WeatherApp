@@ -20,7 +20,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let viewReloadUnitsTableData = PublishSubject<Bool>()
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
-    private var sendRequestForCity = PublishSubject<City>()
+    var sendRequestForCity = PublishSubject<City>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), settingsDataDelegate: SettingsDataDelegate, repository: RepositoryProtocol) {
         self.scheduler = scheduler
