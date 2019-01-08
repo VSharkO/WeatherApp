@@ -17,6 +17,9 @@ import RealmSwift
 class SettingsViewModelTests: QuickSpec {
     
     override func spec() {
+        let city = City(lng: "10", countryCode: nil, name: "Pleternica", lat: "20")
+        let weatherParameters = WeatherParametersToShow(humidity: true, windSpeed: false, pressure: true)
+        
         let testBundle = Bundle.init(for: MainViewModelTests.self)
         let supplyListUrl = testBundle.url(forResource: "main_screen_response", withExtension: "json")!
         let supplyListData = try! Data(contentsOf: supplyListUrl)
@@ -42,8 +45,6 @@ class SettingsViewModelTests: QuickSpec {
                 var mockMainViewModelDelegate = MockMainViewModelDelegate()
                 var mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
                 var mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
-                let city = City(lng: "10", countryCode: nil, name: "Pleternica", lat: "20")
-                let weatherParameters = WeatherParametersToShow(humidity: true, windSpeed: false, pressure: true)
                 beforeEach {
                     mockSettingsDataDelegate = MockSettingsDataDelegate()
                     mockMainViewModelDelegate = MockMainViewModelDelegate()
@@ -91,12 +92,13 @@ class SettingsViewModelTests: QuickSpec {
                 var testScheduler = TestScheduler(initialClock: 0)
                 var subsriber = testScheduler.createObserver(City.self)
                 var subsriber2 = testScheduler.createObserver(Bool.self)
-                let mockSettingsDataDelegate = MockSettingsDataDelegate()
-                let mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
-                let mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
-                let city = City(lng: "10", countryCode: nil, name: "Pleternica", lat: "20")
-                let weatherParameters = WeatherParametersToShow(humidity: true, windSpeed: false, pressure: true)
+                var mockSettingsDataDelegate = MockSettingsDataDelegate()
+                var mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                var mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
                 beforeEach {
+                    mockSettingsDataDelegate = MockSettingsDataDelegate()
+                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
                     stub(mockSettingsDataDelegate) { mock in
                         when(mock.setNewSettings(settingsDataModel: any())).thenDoNothing()
                         when(mock.city.get.thenReturn(city))
@@ -136,6 +138,52 @@ class SettingsViewModelTests: QuickSpec {
                     //                    verify(mockSettingsDataDelegate, times(2)).setNewSettings(settingsDataModel: any()) //first time when city clicked and second when applyChanges is called.
                     //                }
                     
+                }
+            }
+        }
+        
+        describe("Loader logic"){
+            context("when sending request"){
+                var testScheduler = TestScheduler(initialClock: 0)
+                var subscriber = testScheduler.createObserver(Bool.self)
+                var mockSettingsDataDelegate = MockSettingsDataDelegate()
+                var mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                var mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                beforeEach {
+                    mockSettingsDataDelegate = MockSettingsDataDelegate()
+                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                    
+                    stub(mockSettingsDataDelegate) { mock in
+                        when(mock.setNewSettings(settingsDataModel: any())).thenDoNothing()
+                        when(mock.city.get.thenReturn(city))
+                        when(mock.units.get.thenReturn(.si))
+                        when(mock.settings.get.thenReturn(weatherParameters))
+                        when(mock.receaveData(weather: any(), city: any())).thenDoNothing()
+                    }
+                    stub(mockCitiesRepositoryProtocol) { mock in
+                        when(mock.getCitiesFromDb().thenReturn(Observable.just([city,city])))
+                        when(mock.deleteCityFromDb(geoname: any())).thenDoNothing()
+                    }
+                    stub(mockWeatherRepositoryProtocol) { mock in
+                        when(mock.getWeather(coordinates: any(), units: any()).thenReturn(Observable.just(supplyListResponse!)))
+                    }
+                    
+                    testScheduler = TestScheduler(initialClock: 0)
+                    subscriber = testScheduler.createObserver(Bool.self)
+                    settingsViewModel = SettingsViewModel(scheduler: testScheduler, settingsDataDelegate: mockSettingsDataDelegate, weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol)
+                    settingsViewModel.initRequestForCity().disposed(by: disposeBag)
+                    settingsViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
+                    settingsViewModel.initGetCitiesFromDb().disposed(by: disposeBag)
+                    testScheduler.start()
+                    settingsViewModel.trigerGetCitiesFromDb()
+                    settingsViewModel.cityClicked(onIndex: 0)
+                }
+                it("loader is shown on start of request"){
+                    expect(subscriber.events.first!.value.element).to(equal(true))
+                }
+                it("loader is hiden after receiving data"){
+                    expect(subscriber.events.last!.value.element).to(be(false))
                 }
             }
         }

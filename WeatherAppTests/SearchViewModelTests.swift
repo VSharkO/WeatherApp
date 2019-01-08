@@ -60,7 +60,7 @@ class SearchViewModelTests: QuickSpec {
                     mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
                     mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
                     stub(mockMainViewModelDelegate) { mock in
-                        when(mock).units.get.thenReturn(.si)
+                        when(mock.units.get.thenReturn(.si, .si))
                     }
                     stub(mockCitiesRepositoryProtocol) { mock in
                         when(mock).getCities(startingWith: any()).thenReturn(Observable.just(supplyCitiesResponse))
@@ -93,6 +93,9 @@ class SearchViewModelTests: QuickSpec {
                 var mockMainViewModelDelegate = MockMainViewModelDelegate()
                 var testScheduler = TestScheduler(initialClock: 0)
                 beforeEach {
+                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                    mockMainViewModelDelegate = MockMainViewModelDelegate()
                     stub(mockCitiesRepositoryProtocol) { mock in
                         when(mock.getCities(startingWith: any()).thenReturn(Observable.just(supplyCitiesResponse)))
                     }
@@ -100,9 +103,6 @@ class SearchViewModelTests: QuickSpec {
                         when(mock.units.get).thenReturn(.si)
                     }
                     testScheduler = TestScheduler(initialClock: 0)
-                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
-                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
-                    mockMainViewModelDelegate = MockMainViewModelDelegate()
                     searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
@@ -184,10 +184,13 @@ class SearchViewModelTests: QuickSpec {
             context("when sending request"){
                 var testScheduler = TestScheduler(initialClock: 0)
                 var subscriber = testScheduler.createObserver(Bool.self)
-                let mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
-                let mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
-                let mockMainViewModelDelegate = MockMainViewModelDelegate()
+                var mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                var mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                var mockMainViewModelDelegate = MockMainViewModelDelegate()
                 beforeEach {
+                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                    mockMainViewModelDelegate = MockMainViewModelDelegate()
                     stub(mockCitiesRepositoryProtocol) { mock in
                         when(mock.getCities(startingWith: any()).thenReturn(Observable.just(supplyCitiesResponse)))
                         when(mock.saveCityToDb(geoname: any()).thenDoNothing())
