@@ -21,7 +21,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let viewReloadUnitsTableData = PublishSubject<Bool>()
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
-    private var sendRequestForCity = PublishSubject<City>()
+    var sendRequestForCity = PublishSubject<City>()
     private let getCitiesFromDb = PublishSubject<Bool>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), settingsDataDelegate: SettingsDataDelegate, weatherRepository: WeatherRepositoryProtocol, citiesRepository: CitiesRepositoryProtocol) {

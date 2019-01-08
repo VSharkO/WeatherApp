@@ -42,15 +42,13 @@ class MainViewModelTests: QuickSpec {
         describe("MainViewModel initialization"){
             context("Initionalized correctly"){
                 beforeEach {
-                    let mockRepository = MockRepositoryProtocol()
+                    let mockRepository = MockWeatherRepositoryProtocol()
                     stub(mockRepository) { mock in
-                        when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                        when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
+                        when(mock.getWeather(coordinates: any(), units: any()).thenReturn(Observable.just(supplyListResponse!)))
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
-                    mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
+                    mainViewModel = MainViewModel.init(repository: mockRepository, scheduler: testScheduler)
                     mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
-                    mainViewModel.initGetCitiesFromDb()
                     testScheduler.start()
                 }
                 it("is not nil"){
@@ -59,21 +57,17 @@ class MainViewModelTests: QuickSpec {
                 it("data is nil"){
                     expect(mainViewModel.data).to(beNil())
                 }
-                it("got cities from db"){
-                    mainViewModel.trigerGetCitiesFromDb()
-                    expect(mainViewModel.citiesFromDb.count).to(equal(2))
-                }
+               
             }
             
             context("Called data from api"){
                 var testScheduler = TestScheduler(initialClock: 0)
                 var subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
-                var mockRepository = MockRepositoryProtocol()
+                var mockRepository = MockWeatherRepositoryProtocol()
                 beforeEach {
-                    mockRepository = MockRepositoryProtocol()
+                    mockRepository = MockWeatherRepositoryProtocol()
                     stub(mockRepository) { mock in
-                        when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                        when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
+                        when(mock.getWeather(coordinates: any(), units: any()) .thenReturn(Observable.just(supplyListResponse!)))
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
@@ -85,7 +79,7 @@ class MainViewModelTests: QuickSpec {
                 
                 it("requst is sent"){
                     mainViewModel.initialDataRequest()
-                    verify(mockRepository).getWeather(endpoint: any())
+                    verify(mockRepository).getWeather(coordinates: any(), units: any())
                 }
                 it("response is received with correct parameters"){
                     mainViewModel.initialDataRequest()
@@ -105,60 +99,28 @@ class MainViewModelTests: QuickSpec {
                 }
             }
             
-            context("Data is received from another screen"){
-                var testScheduler = TestScheduler(initialClock: 0)
-                var subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
-                var mockRepository = MockRepositoryProtocol()
-                beforeEach {
-                    mockRepository = MockRepositoryProtocol()
-                    stub(mockRepository) { mock in
-                        when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                        when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
-                    }
-                    testScheduler = TestScheduler(initialClock: 0)
-                    subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
-                    mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
-                    mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
-                    mainViewModel.initGetCitiesFromDb()
-                    mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
-                    testScheduler.start()
-                }
-                
-                it("data is changed correctly and array of cities from db is refreshed"){
-                    mainViewModel.receaveData(weather: supplyListResponse!, city: city)
-                    expect(mainViewModel.city.name).to(equal(city.name))
-                    expect(mainViewModel.data.currently.summary).to(equal(supplyListResponse!.currently.summary))
-                    verify(mockRepository).getCitiesFromDb()
-                }
-                
-            }
-            
-            describe("MainViewModel initialization"){
+            describe("MainViewModel comunication with other screens"){
                 context("Data is received from another screen"){
                     var testScheduler = TestScheduler(initialClock: 0)
                     var subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
-                    var mockRepository = MockRepositoryProtocol()
+                    var mockRepository = MockWeatherRepositoryProtocol()
                     beforeEach {
-                        mockRepository = MockRepositoryProtocol()
+                        mockRepository = MockWeatherRepositoryProtocol()
                         stub(mockRepository) { mock in
-                            when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                            when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
-                            when(mock.deleteCityFromDb(geoname: any()).thenDoNothing())
+                            when(mock.getWeather(coordinates: any(), units: any()).thenReturn(Observable.just(supplyListResponse!)))
                         }
                         testScheduler = TestScheduler(initialClock: 0)
                         subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
                         mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
                         mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
-                        mainViewModel.initGetCitiesFromDb()
                         mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
                         testScheduler.start()
                     }
                     
-                    it("data is changed correctly and array of cities from db is refreshed"){
+                    it("data is changed correctly"){
                         mainViewModel.receaveData(weather: supplyListResponse!, city: city)
                         expect(mainViewModel.city.name).to(equal(city.name))
                         expect(mainViewModel.data.currently.summary).to(equal(supplyListResponse!.currently.summary))
-                        verify(mockRepository).getCitiesFromDb()
                     }
                     
                     it("On settings change changes weather parameters and units correctly"){
@@ -170,12 +132,6 @@ class MainViewModelTests: QuickSpec {
                         expect(mainViewModel.city.name).to(equal(settingsPassedData.cityToShow.name))
                         expect(mainViewModel.units.hashValue).to(equal(settingsPassedData.units.hashValue))
                     }
-                    
-                    it("Call repository method to delete city from db when needed"){
-                        mainViewModel.citiesFromDb = [City(lng: "10", countryCode: "HR", name: "Osijek", lat: "12")]
-                        mainViewModel.deleteCityFromDb(index: 0)
-                        verify(mockRepository).deleteCityFromDb(geoname: any())
-                    }
                 }
             }
             
@@ -184,10 +140,9 @@ class MainViewModelTests: QuickSpec {
                     var testScheduler = TestScheduler(initialClock: 0)
                     var subscriber = testScheduler.createObserver(Bool.self)
                     beforeEach {
-                        let mockRepository = MockRepositoryProtocol()
+                        var mockRepository = MockWeatherRepositoryProtocol()
                         stub(mockRepository) { mock in
-                            when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyListResponse!)))
-                            when(mock.getCitiesFromDb().thenReturn(Observable.just(cities)))
+                            when(mock.getWeather(coordinates: any(), units: any()).thenReturn(Observable.just(supplyListResponse!)))
                         }
                         testScheduler = TestScheduler(initialClock: 0)
                         subscriber = testScheduler.createObserver(Bool.self)

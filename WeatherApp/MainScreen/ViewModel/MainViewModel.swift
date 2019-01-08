@@ -17,7 +17,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     internal var settings = WeatherParametersToShow(humidity: true, windSpeed: true, pressure: true)
     internal var city: City!
     
-    private let weatherRepository: WeatherRepository
+    private let weatherRepository: WeatherRepositoryProtocol
     private let scheduler : SchedulerType
     private var dataRequestTriger = ReplaySubject<Bool>.create(bufferSize: 1)
     internal var viewShowLoader = PublishSubject<Bool>()
@@ -25,7 +25,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     internal var viewLoadWithData = PublishSubject<MainDataModel>()
     internal var viewSetupSettings = PublishSubject<WeatherParametersToShow>()
     
-    init(repository: WeatherRepository, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+    init(repository: WeatherRepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.weatherRepository = repository
         self.scheduler = scheduler
         units = .si

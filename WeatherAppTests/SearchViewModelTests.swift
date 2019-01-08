@@ -51,16 +51,30 @@ class SearchViewModelTests: QuickSpec {
         }
         describe("SearchViewModel initialization"){
             context("Initionalized correctly"){
+                var mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                var mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                var mockMainViewModelDelegate = MockMainViewModelDelegate()
+                var testScheduler = TestScheduler(initialClock: 0)
                 beforeEach {
-                    let mockRepository = MockRepositoryProtocol()
-                    let mockMainViewModelDelegate = MockMainViewModelDelegate()
-                    let testScheduler = TestScheduler(initialClock: 0)
+                    mockMainViewModelDelegate = MockMainViewModelDelegate()
+                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
                     stub(mockMainViewModelDelegate) { mock in
-                        when(mock.units).get.thenReturn(.si)
-                        when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
-                        
+                        when(mock).units.get.thenReturn(.si)
                     }
-                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
+                    stub(mockCitiesRepositoryProtocol) { mock in
+                        when(mock).getCities(startingWith: any()).thenReturn(Observable.just(supplyCitiesResponse))
+                        when(mock).getCitiesFromDb().thenReturn(Observable.just(supplyCitiesResponse.geonames))
+                        when(mock).saveCityToDb(geoname: any()).thenDoNothing()
+                        when(mock).deleteCityFromDb(geoname: any()).thenDoNothing()
+                    }
+                    stub(mockWeatherRepositoryProtocol) { mock in
+                        when(mock.getWeather(coordinates: any(), units: any()).thenReturn(Observable.just(supplyWeatherResponse)))
+                    }
+                    testScheduler = TestScheduler(initialClock: 0)
+                    searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
+                    searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    searchViewModel.initCitySelected().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("is not nil"){
@@ -70,45 +84,55 @@ class SearchViewModelTests: QuickSpec {
                     expect(searchViewModel.data).to(be([]))
                 }
             }
+            
+        }
+        describe("Search logic"){
             context("text in textfield is changed"){
+                var mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                var mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                var mockMainViewModelDelegate = MockMainViewModelDelegate()
                 var testScheduler = TestScheduler(initialClock: 0)
-                var subscriber = testScheduler.createObserver(Bool.self)
-                var mockRepository = MockRepositoryProtocol()
-                let mockMainViewModelDelegate = MockMainViewModelDelegate()
                 beforeEach {
-                    mockRepository = MockRepositoryProtocol()
-                    stub(mockRepository) { mock in
-                        when(mock.getCities(endpoint: any()).thenReturn(Observable.just(supplyCitiesResponse)))
+                    stub(mockCitiesRepositoryProtocol) { mock in
+                        when(mock.getCities(startingWith: any()).thenReturn(Observable.just(supplyCitiesResponse)))
                     }
                     stub(mockMainViewModelDelegate) { mock in
-                        when(mock.units).get.thenReturn(.si)
+                        when(mock.units.get).thenReturn(.si)
                     }
                     testScheduler = TestScheduler(initialClock: 0)
-                    searchViewModel = SearchViewModel.init(repository: mockRepository, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
+                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                    mockMainViewModelDelegate = MockMainViewModelDelegate()
+                    searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("requst is not sent for empty string"){
                     searchViewModel.dynamicTextPublisher.onNext("")
-                    verify(mockRepository, times(0)).getCities(endpoint: any())
+                    verify(mockCitiesRepositoryProtocol, times(0)).getCities(startingWith: "")
                 }
                 it("requst is sent for nonempty string"){
                     searchViewModel.dynamicTextPublisher.onNext("ple")
-                    verify(mockRepository).getCities(endpoint: any())
+                    verify(mockCitiesRepositoryProtocol).getCities(startingWith: "ple")
                 }
             }
             context("user clikced on city in tableview"){
                 var testScheduler = TestScheduler(initialClock: 0)
                 var subscriber = testScheduler.createObserver(Bool.self)
-                var mockRepository = MockRepositoryProtocol()
-                let mockMainViewModelDelegate = MockMainViewModelDelegate()
+                var mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                var mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                var mockMainViewModelDelegate = MockMainViewModelDelegate()
                 beforeEach {
-                    mockRepository = MockRepositoryProtocol()
-                    stub(mockRepository) { mock in
-                        when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyWeatherResponse)))
-                        when(mock.getCities(endpoint: any()).thenReturn(Observable.just(supplyCitiesResponse)))
+                    mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                    mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
+                    mockMainViewModelDelegate = MockMainViewModelDelegate()
+                    stub(mockCitiesRepositoryProtocol) { mock in
+                        when(mock.getCities(startingWith: any()).thenReturn(Observable.just(supplyCitiesResponse)))
                         when(mock.saveCityToDb(geoname: any()).thenDoNothing())
+                    }
+                    stub(mockWeatherRepositoryProtocol) { mock in
+                        when(mock.getWeather(coordinates: any(), units: any()).thenReturn(Observable.just(supplyWeatherResponse)))
                     }
                     stub(mockMainViewModelDelegate) { mock in
                         when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
@@ -116,30 +140,42 @@ class SearchViewModelTests: QuickSpec {
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver(Bool.self)
-                    searchViewModel = SearchViewModel.init(repository: mockRepository, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
+                    searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.viewCloseScreen.subscribe(subscriber).disposed(by: disposeBag)
-                    searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
+                    searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("sends weather request for tapped city "){
-                    searchViewModel.dynamicTextPublisher.onNext("ple")
-                    searchViewModel.cityClicked(onIndex: 1)
-                    verify(mockRepository).getWeather(endpoint: any())
+                    searchViewModel.searchForText(text: "ple")
+                    waitUntil { done in
+                        searchViewModel.cityClicked(onIndex: 1)
+                        verify(mockWeatherRepositoryProtocol).getWeather(coordinates: any(), units: any())
+                        done()
+                    }
+                    
                 }
                 it("when response is received, save city to db"){
-                    searchViewModel.dynamicTextPublisher.onNext("ple")
-                    searchViewModel.cityClicked(onIndex: 1)
-                    verify(mockRepository).saveCityToDb(geoname: any())
+                    searchViewModel.searchForText(text: "ple")
+                    waitUntil { done in
+                        searchViewModel.cityClicked(onIndex: 1)
+                        verify(mockCitiesRepositoryProtocol, times(1)).saveCityToDb(geoname: any())
+                        done()
+                    }
                 }
                 it("sends city and weather data to mainViewModel"){
-                    verify(mockMainViewModelDelegate, times(2)).receaveData(weather: any(), city: any())
+                    searchViewModel.searchForText(text: "ple")
+                    waitUntil { done in
+                        searchViewModel.cityClicked(onIndex: 1)
+                        verify(mockMainViewModelDelegate, times(1)).receaveData(weather: any(), city: any())
+                        done()
+                    }
                 }
                 
                 it("close screen in the end"){
-                    searchViewModel.dynamicTextPublisher.onNext("ple")
+                    searchViewModel.searchForText(text: "ple")
                     searchViewModel.cityClicked(onIndex: 1)
-                    expect(subscriber.events.last?.value.element).to(equal(true))
+                    expect(subscriber.events.last?.value.element).toEventually(equal(true))
                 }
             }
         }
@@ -148,14 +184,16 @@ class SearchViewModelTests: QuickSpec {
             context("when sending request"){
                 var testScheduler = TestScheduler(initialClock: 0)
                 var subscriber = testScheduler.createObserver(Bool.self)
-                var mockRepository = MockRepositoryProtocol()
+                let mockCitiesRepositoryProtocol = MockCitiesRepositoryProtocol()
+                let mockWeatherRepositoryProtocol = MockWeatherRepositoryProtocol()
                 let mockMainViewModelDelegate = MockMainViewModelDelegate()
                 beforeEach {
-                    mockRepository = MockRepositoryProtocol()
-                    stub(mockRepository) { mock in
-                        when(mock.getWeather(endpoint: any()).thenReturn(Observable.just(supplyWeatherResponse)))
-                        when(mock.getCities(endpoint: any()).thenReturn(Observable.just(supplyCitiesResponse)))
+                    stub(mockCitiesRepositoryProtocol) { mock in
+                        when(mock.getCities(startingWith: any()).thenReturn(Observable.just(supplyCitiesResponse)))
                         when(mock.saveCityToDb(geoname: any()).thenDoNothing())
+                    }
+                    stub(mockWeatherRepositoryProtocol) { mock in
+                        when(mock.getWeather(coordinates: any(), units: any()).thenReturn(Observable.just(supplyWeatherResponse)))
                     }
                     stub(mockMainViewModelDelegate) { mock in
                         when(mock.receaveData(weather: any(), city: any()).thenDoNothing())
@@ -163,7 +201,7 @@ class SearchViewModelTests: QuickSpec {
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver(Bool.self)
-                    searchViewModel = SearchViewModel(repository: mockRepository, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
+                    searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
@@ -171,14 +209,14 @@ class SearchViewModelTests: QuickSpec {
                 }
                 
                 it("loader is shown on start of request"){
-                    searchViewModel.dynamicTextPublisher.onNext("pl")
-                    searchViewModel.cityClicked(onIndex: 1)
+                    searchViewModel.searchForText(text: "pl")
+                    searchViewModel.cityClicked(onIndex: 0)
                     expect(subscriber.events.first!.value.element).to(equal(true))
                 }
                 
                 it("loader is hiden after receiving data"){
-                    searchViewModel.dynamicTextPublisher.onNext("p")
-                    searchViewModel.cityClicked(onIndex: 1)
+                    searchViewModel.searchForText(text: "p")
+                    searchViewModel.cityClicked(onIndex: 0)
                     expect(subscriber.events.last!.value.element).to(equal(false))
                 }
             }

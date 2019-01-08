@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-07 02:04:48 +0000
+// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-08 18:57:35 +0000
 
 //
 //  MainViewModelDelegate.swift
@@ -125,7 +125,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/Repository/RepositoryProtocol.swift at 2019-01-07 02:04:48 +0000
+// MARK: - Mocks generated from file: WeatherApp/Repository/CitiesRepository/CitiesRepositoryProtocol.swift at 2019-01-08 18:57:35 +0000
 
 //
 //  RepositoryProtocol.swift
@@ -139,16 +139,16 @@ import Cuckoo
 import Foundation
 import RxSwift
 
-class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
-    typealias MocksType = RepositoryProtocol
-    typealias Stubbing = __StubbingProxy_RepositoryProtocol
-    typealias Verification = __VerificationProxy_RepositoryProtocol
+class MockCitiesRepositoryProtocol: CitiesRepositoryProtocol, Cuckoo.ProtocolMock {
+    typealias MocksType = CitiesRepositoryProtocol
+    typealias Stubbing = __StubbingProxy_CitiesRepositoryProtocol
+    typealias Verification = __VerificationProxy_CitiesRepositoryProtocol
 
-    private var __defaultImplStub: RepositoryProtocol?
+    private var __defaultImplStub: CitiesRepositoryProtocol?
 
     let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: false)
 
-    func enableDefaultImplementation(_ stub: RepositoryProtocol) {
+    func enableDefaultImplementation(_ stub: CitiesRepositoryProtocol) {
         __defaultImplStub = stub
         cuckoo_manager.enableDefaultStubImplementation()
     }
@@ -158,35 +158,21 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
     
 
     
-    // ["name": "getWeather", "returnSignature": " -> Observable<WeatherResponse>", "fullyQualifiedName": "getWeather(endpoint: Endpoint) -> Observable<WeatherResponse>", "parameterSignature": "endpoint: Endpoint", "parameterSignatureWithoutNames": "endpoint: Endpoint", "inputTypes": "Endpoint", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "endpoint", "call": "endpoint: endpoint", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("endpoint"), name: "endpoint", type: "Endpoint", range: CountableRange(241..<259), nameRange: CountableRange(241..<249))], "returnType": "Observable<WeatherResponse>", "isOptional": false, "escapingParameterNames": "endpoint", "stubFunction": "Cuckoo.ProtocolStubFunction"]
-     func getWeather(endpoint: Endpoint)  -> Observable<WeatherResponse> {
+    // ["name": "getCities", "returnSignature": " -> Observable<Cities>", "fullyQualifiedName": "getCities(startingWith: String) -> Observable<Cities>", "parameterSignature": "startingWith: String", "parameterSignatureWithoutNames": "startingWith: String", "inputTypes": "String", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "startingWith", "call": "startingWith: startingWith", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("startingWith"), name: "startingWith", type: "String", range: CountableRange(246..<266), nameRange: CountableRange(246..<258))], "returnType": "Observable<Cities>", "isOptional": false, "escapingParameterNames": "startingWith", "stubFunction": "Cuckoo.ProtocolStubFunction"]
+     func getCities(startingWith: String)  -> Observable<Cities> {
         
-            return cuckoo_manager.call("getWeather(endpoint: Endpoint) -> Observable<WeatherResponse>",
-                parameters: (endpoint),
-                escapingParameters: (endpoint),
+            return cuckoo_manager.call("getCities(startingWith: String) -> Observable<Cities>",
+                parameters: (startingWith),
+                escapingParameters: (startingWith),
                 superclassCall:
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
-                defaultCall: __defaultImplStub!.getWeather(endpoint: endpoint))
+                defaultCall: __defaultImplStub!.getCities(startingWith: startingWith))
         
     }
     
-    // ["name": "getCities", "returnSignature": " -> Observable<Cities>", "fullyQualifiedName": "getCities(endpoint: Endpoint) -> Observable<Cities>", "parameterSignature": "endpoint: Endpoint", "parameterSignatureWithoutNames": "endpoint: Endpoint", "inputTypes": "Endpoint", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "endpoint", "call": "endpoint: endpoint", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("endpoint"), name: "endpoint", type: "Endpoint", range: CountableRange(311..<329), nameRange: CountableRange(311..<319))], "returnType": "Observable<Cities>", "isOptional": false, "escapingParameterNames": "endpoint", "stubFunction": "Cuckoo.ProtocolStubFunction"]
-     func getCities(endpoint: Endpoint)  -> Observable<Cities> {
-        
-            return cuckoo_manager.call("getCities(endpoint: Endpoint) -> Observable<Cities>",
-                parameters: (endpoint),
-                escapingParameters: (endpoint),
-                superclassCall:
-                    
-                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                    ,
-                defaultCall: __defaultImplStub!.getCities(endpoint: endpoint))
-        
-    }
-    
-    // ["name": "saveCityToDb", "returnSignature": "", "fullyQualifiedName": "saveCityToDb(geoname: City)", "parameterSignature": "geoname: City", "parameterSignatureWithoutNames": "geoname: City", "inputTypes": "City", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "geoname", "call": "geoname: geoname", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("geoname"), name: "geoname", type: "City", range: CountableRange(375..<388), nameRange: CountableRange(375..<382))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "geoname", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "saveCityToDb", "returnSignature": "", "fullyQualifiedName": "saveCityToDb(geoname: City)", "parameterSignature": "geoname: City", "parameterSignatureWithoutNames": "geoname: City", "inputTypes": "City", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "geoname", "call": "geoname: geoname", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("geoname"), name: "geoname", type: "City", range: CountableRange(312..<325), nameRange: CountableRange(312..<319))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "geoname", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func saveCityToDb(geoname: City)  {
         
             return cuckoo_manager.call("saveCityToDb(geoname: City)",
@@ -214,7 +200,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
         
     }
     
-    // ["name": "deleteCityFromDb", "returnSignature": "", "fullyQualifiedName": "deleteCityFromDb(geoname: City)", "parameterSignature": "geoname: City", "parameterSignatureWithoutNames": "geoname: City", "inputTypes": "City", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "geoname", "call": "geoname: geoname", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("geoname"), name: "geoname", type: "City", range: CountableRange(465..<478), nameRange: CountableRange(465..<472))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "geoname", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "deleteCityFromDb", "returnSignature": "", "fullyQualifiedName": "deleteCityFromDb(geoname: City)", "parameterSignature": "geoname: City", "parameterSignatureWithoutNames": "geoname: City", "inputTypes": "City", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "geoname", "call": "geoname: geoname", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("geoname"), name: "geoname", type: "City", range: CountableRange(402..<415), nameRange: CountableRange(402..<409))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "geoname", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func deleteCityFromDb(geoname: City)  {
         
             return cuckoo_manager.call("deleteCityFromDb(geoname: City)",
@@ -229,7 +215,7 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
     }
     
 
-	struct __StubbingProxy_RepositoryProtocol: Cuckoo.StubbingProxy {
+	struct __StubbingProxy_CitiesRepositoryProtocol: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
 	
 	    init(manager: Cuckoo.MockManager) {
@@ -237,34 +223,29 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
 	    }
 	    
 	    
-	    func getWeather<M1: Cuckoo.Matchable>(endpoint: M1) -> Cuckoo.ProtocolStubFunction<(Endpoint), Observable<WeatherResponse>> where M1.MatchedType == Endpoint {
-	        let matchers: [Cuckoo.ParameterMatcher<(Endpoint)>] = [wrap(matchable: endpoint) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockRepositoryProtocol.self, method: "getWeather(endpoint: Endpoint) -> Observable<WeatherResponse>", parameterMatchers: matchers))
-	    }
-	    
-	    func getCities<M1: Cuckoo.Matchable>(endpoint: M1) -> Cuckoo.ProtocolStubFunction<(Endpoint), Observable<Cities>> where M1.MatchedType == Endpoint {
-	        let matchers: [Cuckoo.ParameterMatcher<(Endpoint)>] = [wrap(matchable: endpoint) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockRepositoryProtocol.self, method: "getCities(endpoint: Endpoint) -> Observable<Cities>", parameterMatchers: matchers))
+	    func getCities<M1: Cuckoo.Matchable>(startingWith: M1) -> Cuckoo.ProtocolStubFunction<(String), Observable<Cities>> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: startingWith) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockCitiesRepositoryProtocol.self, method: "getCities(startingWith: String) -> Observable<Cities>", parameterMatchers: matchers))
 	    }
 	    
 	    func saveCityToDb<M1: Cuckoo.Matchable>(geoname: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(City)> where M1.MatchedType == City {
 	        let matchers: [Cuckoo.ParameterMatcher<(City)>] = [wrap(matchable: geoname) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockRepositoryProtocol.self, method: "saveCityToDb(geoname: City)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockCitiesRepositoryProtocol.self, method: "saveCityToDb(geoname: City)", parameterMatchers: matchers))
 	    }
 	    
 	    func getCitiesFromDb() -> Cuckoo.ProtocolStubFunction<(), Observable<[City]>> {
 	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-	        return .init(stub: cuckoo_manager.createStub(for: MockRepositoryProtocol.self, method: "getCitiesFromDb() -> Observable<[City]>", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockCitiesRepositoryProtocol.self, method: "getCitiesFromDb() -> Observable<[City]>", parameterMatchers: matchers))
 	    }
 	    
 	    func deleteCityFromDb<M1: Cuckoo.Matchable>(geoname: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(City)> where M1.MatchedType == City {
 	        let matchers: [Cuckoo.ParameterMatcher<(City)>] = [wrap(matchable: geoname) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockRepositoryProtocol.self, method: "deleteCityFromDb(geoname: City)", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockCitiesRepositoryProtocol.self, method: "deleteCityFromDb(geoname: City)", parameterMatchers: matchers))
 	    }
 	    
 	}
 
-	struct __VerificationProxy_RepositoryProtocol: Cuckoo.VerificationProxy {
+	struct __VerificationProxy_CitiesRepositoryProtocol: Cuckoo.VerificationProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
 	    private let callMatcher: Cuckoo.CallMatcher
 	    private let sourceLocation: Cuckoo.SourceLocation
@@ -279,15 +260,9 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
 	
 	    
 	    @discardableResult
-	    func getWeather<M1: Cuckoo.Matchable>(endpoint: M1) -> Cuckoo.__DoNotUse<Observable<WeatherResponse>> where M1.MatchedType == Endpoint {
-	        let matchers: [Cuckoo.ParameterMatcher<(Endpoint)>] = [wrap(matchable: endpoint) { $0 }]
-	        return cuckoo_manager.verify("getWeather(endpoint: Endpoint) -> Observable<WeatherResponse>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-	    }
-	    
-	    @discardableResult
-	    func getCities<M1: Cuckoo.Matchable>(endpoint: M1) -> Cuckoo.__DoNotUse<Observable<Cities>> where M1.MatchedType == Endpoint {
-	        let matchers: [Cuckoo.ParameterMatcher<(Endpoint)>] = [wrap(matchable: endpoint) { $0 }]
-	        return cuckoo_manager.verify("getCities(endpoint: Endpoint) -> Observable<Cities>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func getCities<M1: Cuckoo.Matchable>(startingWith: M1) -> Cuckoo.__DoNotUse<Observable<Cities>> where M1.MatchedType == String {
+	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: startingWith) { $0 }]
+	        return cuckoo_manager.verify("getCities(startingWith: String) -> Observable<Cities>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -312,17 +287,13 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
 
 }
 
- class RepositoryProtocolStub: RepositoryProtocol {
+ class CitiesRepositoryProtocolStub: CitiesRepositoryProtocol {
     
 
     
 
     
-     func getWeather(endpoint: Endpoint)  -> Observable<WeatherResponse> {
-        return DefaultValueRegistry.defaultValue(for: Observable<WeatherResponse>.self)
-    }
-    
-     func getCities(endpoint: Endpoint)  -> Observable<Cities> {
+     func getCities(startingWith: String)  -> Observable<Cities> {
         return DefaultValueRegistry.defaultValue(for: Observable<Cities>.self)
     }
     
@@ -341,7 +312,107 @@ class MockRepositoryProtocol: RepositoryProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-07 02:04:48 +0000
+// MARK: - Mocks generated from file: WeatherApp/Repository/WeatherRepository/WeatherRepositoryProtocol.swift at 2019-01-08 18:57:35 +0000
+
+//
+//  WeatherRepositoryProtocol.swift
+//  WeatherApp
+//
+//  Created by Valentin Šarić on 08/01/2019.
+//  Copyright © 2019 Valentin Šarić. All rights reserved.
+import Cuckoo
+@testable import WeatherApp
+
+import Foundation
+import RxSwift
+
+class MockWeatherRepositoryProtocol: WeatherRepositoryProtocol, Cuckoo.ProtocolMock {
+    typealias MocksType = WeatherRepositoryProtocol
+    typealias Stubbing = __StubbingProxy_WeatherRepositoryProtocol
+    typealias Verification = __VerificationProxy_WeatherRepositoryProtocol
+
+    private var __defaultImplStub: WeatherRepositoryProtocol?
+
+    let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: false)
+
+    func enableDefaultImplementation(_ stub: WeatherRepositoryProtocol) {
+        __defaultImplStub = stub
+        cuckoo_manager.enableDefaultStubImplementation()
+    }
+
+    
+
+    
+
+    
+    // ["name": "getWeather", "returnSignature": " -> Observable<WeatherResponse>", "fullyQualifiedName": "getWeather(coordinates: String, units: UnitsType) -> Observable<WeatherResponse>", "parameterSignature": "coordinates: String, units: UnitsType", "parameterSignatureWithoutNames": "coordinates: String, units: UnitsType", "inputTypes": "String, UnitsType", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "coordinates, units", "call": "coordinates: coordinates, units: units", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("coordinates"), name: "coordinates", type: "String", range: CountableRange(260..<279), nameRange: CountableRange(260..<271)), CuckooGeneratorFramework.MethodParameter(label: Optional("units"), name: "units", type: "UnitsType", range: CountableRange(281..<297), nameRange: CountableRange(281..<286))], "returnType": "Observable<WeatherResponse>", "isOptional": false, "escapingParameterNames": "coordinates, units", "stubFunction": "Cuckoo.ProtocolStubFunction"]
+     func getWeather(coordinates: String, units: UnitsType)  -> Observable<WeatherResponse> {
+        
+            return cuckoo_manager.call("getWeather(coordinates: String, units: UnitsType) -> Observable<WeatherResponse>",
+                parameters: (coordinates, units),
+                escapingParameters: (coordinates, units),
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.getWeather(coordinates: coordinates, units: units))
+        
+    }
+    
+
+	struct __StubbingProxy_WeatherRepositoryProtocol: Cuckoo.StubbingProxy {
+	    private let cuckoo_manager: Cuckoo.MockManager
+	
+	    init(manager: Cuckoo.MockManager) {
+	        self.cuckoo_manager = manager
+	    }
+	    
+	    
+	    func getWeather<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(coordinates: M1, units: M2) -> Cuckoo.ProtocolStubFunction<(String, UnitsType), Observable<WeatherResponse>> where M1.MatchedType == String, M2.MatchedType == UnitsType {
+	        let matchers: [Cuckoo.ParameterMatcher<(String, UnitsType)>] = [wrap(matchable: coordinates) { $0.0 }, wrap(matchable: units) { $0.1 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockWeatherRepositoryProtocol.self, method: "getWeather(coordinates: String, units: UnitsType) -> Observable<WeatherResponse>", parameterMatchers: matchers))
+	    }
+	    
+	}
+
+	struct __VerificationProxy_WeatherRepositoryProtocol: Cuckoo.VerificationProxy {
+	    private let cuckoo_manager: Cuckoo.MockManager
+	    private let callMatcher: Cuckoo.CallMatcher
+	    private let sourceLocation: Cuckoo.SourceLocation
+	
+	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+	        self.cuckoo_manager = manager
+	        self.callMatcher = callMatcher
+	        self.sourceLocation = sourceLocation
+	    }
+	
+	    
+	
+	    
+	    @discardableResult
+	    func getWeather<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(coordinates: M1, units: M2) -> Cuckoo.__DoNotUse<Observable<WeatherResponse>> where M1.MatchedType == String, M2.MatchedType == UnitsType {
+	        let matchers: [Cuckoo.ParameterMatcher<(String, UnitsType)>] = [wrap(matchable: coordinates) { $0.0 }, wrap(matchable: units) { $0.1 }]
+	        return cuckoo_manager.verify("getWeather(coordinates: String, units: UnitsType) -> Observable<WeatherResponse>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	}
+
+}
+
+ class WeatherRepositoryProtocolStub: WeatherRepositoryProtocol {
+    
+
+    
+
+    
+     func getWeather(coordinates: String, units: UnitsType)  -> Observable<WeatherResponse> {
+        return DefaultValueRegistry.defaultValue(for: Observable<WeatherResponse>.self)
+    }
+    
+}
+
+
+// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-08 18:57:35 +0000
 
 //
 //  SettingsDataDelegate.swift
@@ -416,19 +487,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
     }
     
     
-     var citiesFromDb: [City]! {
-        get {
-            return cuckoo_manager.getter("citiesFromDb",
-                superclassCall:
-                    
-                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                    ,
-                defaultCall: __defaultImplStub!.citiesFromDb)
-        }
-        
-    }
-    
-    
      var units: UnitsType {
         get {
             return cuckoo_manager.getter("units",
@@ -445,7 +503,7 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
     
 
     
-    // ["name": "setNewSettings", "returnSignature": "", "fullyQualifiedName": "setNewSettings(settingsDataModel: SettingsDataModel)", "parameterSignature": "settingsDataModel: SettingsDataModel", "parameterSignatureWithoutNames": "settingsDataModel: SettingsDataModel", "inputTypes": "SettingsDataModel", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "settingsDataModel", "call": "settingsDataModel: settingsDataModel", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("settingsDataModel"), name: "settingsDataModel", type: "SettingsDataModel", range: CountableRange(376..<412), nameRange: CountableRange(376..<393))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "settingsDataModel", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "setNewSettings", "returnSignature": "", "fullyQualifiedName": "setNewSettings(settingsDataModel: SettingsDataModel)", "parameterSignature": "settingsDataModel: SettingsDataModel", "parameterSignatureWithoutNames": "settingsDataModel: SettingsDataModel", "inputTypes": "SettingsDataModel", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "settingsDataModel", "call": "settingsDataModel: settingsDataModel", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("settingsDataModel"), name: "settingsDataModel", type: "SettingsDataModel", range: CountableRange(341..<377), nameRange: CountableRange(341..<358))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "settingsDataModel", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func setNewSettings(settingsDataModel: SettingsDataModel)  {
         
             return cuckoo_manager.call("setNewSettings(settingsDataModel: SettingsDataModel)",
@@ -456,20 +514,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
                 defaultCall: __defaultImplStub!.setNewSettings(settingsDataModel: settingsDataModel))
-        
-    }
-    
-    // ["name": "deleteCityFromDb", "returnSignature": "", "fullyQualifiedName": "deleteCityFromDb(index: Int)", "parameterSignature": "index: Int", "parameterSignatureWithoutNames": "index: Int", "inputTypes": "Int", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "index", "call": "index: index", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("index"), name: "index", type: "Int", range: CountableRange(440..<450), nameRange: CountableRange(440..<445))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "index", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
-     func deleteCityFromDb(index: Int)  {
-        
-            return cuckoo_manager.call("deleteCityFromDb(index: Int)",
-                parameters: (index),
-                escapingParameters: (index),
-                superclassCall:
-                    
-                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                    ,
-                defaultCall: __defaultImplStub!.deleteCityFromDb(index: index))
         
     }
     
@@ -503,10 +547,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 	        return .init(manager: cuckoo_manager, name: "city")
 	    }
 	    
-	    var citiesFromDb: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockSettingsDataDelegate, [City]?> {
-	        return .init(manager: cuckoo_manager, name: "citiesFromDb")
-	    }
-	    
 	    var units: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockSettingsDataDelegate, UnitsType> {
 	        return .init(manager: cuckoo_manager, name: "units")
 	    }
@@ -515,11 +555,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 	    func setNewSettings<M1: Cuckoo.Matchable>(settingsDataModel: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(SettingsDataModel)> where M1.MatchedType == SettingsDataModel {
 	        let matchers: [Cuckoo.ParameterMatcher<(SettingsDataModel)>] = [wrap(matchable: settingsDataModel) { $0 }]
 	        return .init(stub: cuckoo_manager.createStub(for: MockSettingsDataDelegate.self, method: "setNewSettings(settingsDataModel: SettingsDataModel)", parameterMatchers: matchers))
-	    }
-	    
-	    func deleteCityFromDb<M1: Cuckoo.Matchable>(index: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Int)> where M1.MatchedType == Int {
-	        let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: index) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockSettingsDataDelegate.self, method: "deleteCityFromDb(index: Int)", parameterMatchers: matchers))
 	    }
 	    
 	    func receaveData<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(weather: M1, city: M2) -> Cuckoo.ProtocolStubNoReturnFunction<(WeatherResponse, City)> where M1.MatchedType == WeatherResponse, M2.MatchedType == City {
@@ -549,10 +584,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 	        return .init(manager: cuckoo_manager, name: "city", callMatcher: callMatcher, sourceLocation: sourceLocation)
 	    }
 	    
-	    var citiesFromDb: Cuckoo.VerifyReadOnlyProperty<[City]?> {
-	        return .init(manager: cuckoo_manager, name: "citiesFromDb", callMatcher: callMatcher, sourceLocation: sourceLocation)
-	    }
-	    
 	    var units: Cuckoo.VerifyReadOnlyProperty<UnitsType> {
 	        return .init(manager: cuckoo_manager, name: "units", callMatcher: callMatcher, sourceLocation: sourceLocation)
 	    }
@@ -563,12 +594,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 	    func setNewSettings<M1: Cuckoo.Matchable>(settingsDataModel: M1) -> Cuckoo.__DoNotUse<Void> where M1.MatchedType == SettingsDataModel {
 	        let matchers: [Cuckoo.ParameterMatcher<(SettingsDataModel)>] = [wrap(matchable: settingsDataModel) { $0 }]
 	        return cuckoo_manager.verify("setNewSettings(settingsDataModel: SettingsDataModel)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-	    }
-	    
-	    @discardableResult
-	    func deleteCityFromDb<M1: Cuckoo.Matchable>(index: M1) -> Cuckoo.__DoNotUse<Void> where M1.MatchedType == Int {
-	        let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: index) { $0 }]
-	        return cuckoo_manager.verify("deleteCityFromDb(index: Int)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	    @discardableResult
@@ -601,13 +626,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
         
     }
     
-     var citiesFromDb: [City]! {
-        get {
-            return DefaultValueRegistry.defaultValue(for: ([City]!).self)
-        }
-        
-    }
-    
      var units: UnitsType {
         get {
             return DefaultValueRegistry.defaultValue(for: (UnitsType).self)
@@ -620,10 +638,6 @@ class MockSettingsDataDelegate: SettingsDataDelegate, Cuckoo.ProtocolMock {
 
     
      func setNewSettings(settingsDataModel: SettingsDataModel)  {
-        return DefaultValueRegistry.defaultValue(for: Void.self)
-    }
-    
-     func deleteCityFromDb(index: Int)  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     

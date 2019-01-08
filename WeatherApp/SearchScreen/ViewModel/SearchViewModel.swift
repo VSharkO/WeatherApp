@@ -56,7 +56,6 @@ class SearchViewModel: SearchViewModelProtocol{
                     self.mainViewModelDelegate.receaveData(weather: response, city: self.data[self.clickedItem])
                     self.viewShowLoader.onNext(false)
                     self.viewCloseScreen.onNext(true)
-                    
                 })
     }
     

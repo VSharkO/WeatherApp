@@ -733,9 +733,10 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PROJECT_DIR}/${PROJECT_NAME}/Repository/RepositoryProtocol.swift",
+				"${PROJECT_DIR}/${PROJECT_NAME}/Repository/WeatherRepository/WeatherRepositoryProtocol.swift",
 				"${PROJECT_DIR}/${PROJECT_NAME}/Db/DbHelperProtocol.swift",
 				"${PROJECT_DIR}/${PROJECT_NAME}/SettingsScreen/Utils/SettingsDataDelegate.swift",
+				"${PROJECT_DIR}/${PROJECT_NAME}/Repository/CitiesRepository/CitiesRepositoryProtocol.swift",
 				"${PROJECT_DIR}/${PROJECT_NAME}/MainScreen/Utils/MainViewModelDelegate.swift",
 			);
 			outputFileListPaths = (
