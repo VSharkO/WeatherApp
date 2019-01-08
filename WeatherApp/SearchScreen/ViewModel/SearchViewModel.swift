@@ -35,7 +35,7 @@ class SearchViewModel: SearchViewModelProtocol{
     func initGetingDataFromRepository() -> Disposable {
         return dynamicTextPublisher.flatMap({[unowned self] dynamicString -> Observable<Cities> in
             guard !dynamicString.isEmpty else{return Observable.just(Cities(geonames: []))}
-            return self.citiesRepository.getCities(endpoint: Endpoint.getCitiesEndpoint(startingWith: dynamicString))
+            return self.citiesRepository.getCities(startingWith: dynamicString)
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] cities in
@@ -48,7 +48,7 @@ class SearchViewModel: SearchViewModelProtocol{
             return citySelected.flatMapLatest({[unowned self] index -> Observable<WeatherResponse> in
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
-                return self.weatherRepository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.data[index].getCoordinates(), units: self.units.rawValue))
+                return self.weatherRepository.getWeather(coordinates: self.data[index].getCoordinates(), units: self.units)
             }).subscribeOn(scheduler)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[unowned self] response in

@@ -36,7 +36,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
         return sendRequestForCity.flatMap({[unowned self] city -> Observable<WeatherResponse> in
             self.data.cityToShow = city
             self.viewShowLoader.onNext(true)
-            return self.weatherRepository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: city.getCoordinates(), units: self.data.units.rawValue))
+            return self.weatherRepository.getWeather(coordinates: city.getCoordinates(), units: self.data.units)
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] response in

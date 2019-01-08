@@ -13,8 +13,8 @@ class CitiesRepository : CitiesRepositoryProtocol{
     
     let dbHelper = DbHelper()
     
-    func getCities(endpoint: Endpoint) -> Observable<Cities> {
-        return NetworkHelper.getDataFromApi(with: endpoint)
+    func getCities(startingWith: String) -> Observable<Cities> {
+        return NetworkHelper.getDataFromApi(with: Endpoint.getCitiesEndpoint(startingWith: startingWith))
     }
     
     func saveCityToDb(geoname: City) {

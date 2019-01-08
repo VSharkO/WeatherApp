@@ -35,7 +35,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
     func initGetingDataFromApi() -> Disposable {
         return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<WeatherResponse> in
             self.viewShowLoader.onNext(true)
-            return self.weatherRepository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.city.getCoordinates(), units: self.units.rawValue))
+            return self.weatherRepository.getWeather(coordinates: self.city.getCoordinates(), units: self.units)
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] weatherResponse in

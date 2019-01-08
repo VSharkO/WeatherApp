@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol WeatherRepositoryProtocol {
-    func getWeather(endpoint: Endpoint) -> Observable<WeatherResponse>
+    func getWeather(coordinates: String, units: UnitsType) -> Observable<WeatherResponse>
 }

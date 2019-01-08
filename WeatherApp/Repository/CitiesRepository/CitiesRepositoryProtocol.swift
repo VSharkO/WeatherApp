@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol CitiesRepositoryProtocol{
-    func getCities(endpoint: Endpoint) -> Observable<Cities>
+    func getCities(startingWith: String) -> Observable<Cities>
     func saveCityToDb(geoname: City)
     func getCitiesFromDb() -> Observable<[City]>
     func deleteCityFromDb(geoname: City)

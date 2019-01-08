@@ -10,8 +10,8 @@ import Foundation
 import RxSwift
 
 class WeatherRepository: WeatherRepositoryProtocol{
-    func getWeather(endpoint: Endpoint) -> Observable<WeatherResponse> {
-        return NetworkHelper.getDataFromApi(with: endpoint)
+    func getWeather(coordinates: String, units: UnitsType) -> Observable<WeatherResponse> {
+        return NetworkHelper.getDataFromApi(with: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: units.rawValue))
     }
     
 }
