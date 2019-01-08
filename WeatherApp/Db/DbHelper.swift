@@ -11,9 +11,11 @@ import RealmSwift
 import RxSwift
 
 class DbHelper{
-    let realm = try! Realm()
+    
+    let realm = try? Realm()
     
     func saveGeonameToDb(geoname: City){
+        guard let realm = realm else{return}
         var isContained = false
         let geonameForDb = DbGeoname(name: geoname.name, lng: geoname.lng, ltd: geoname.lat, countryCode: geoname.countryCode ?? "")
         let dbGeonames = realm.objects(DbGeoname.self)
@@ -22,13 +24,14 @@ class DbHelper{
             isContained = true
         }
         if !isContained{
-            try! realm.write {
+            try? realm.write {
                 realm.add(geonameForDb)
             }
         }
     }
     
     func getGeonamesFromDb() -> Observable<[City]>{
+        guard let realm = realm else{return Observable.just([])}
         let dbGeonames = realm.objects(DbGeoname.self)
         var geonames: [City] = []
         dbGeonames.forEach{geonames.append(City(lng: $0.lng, countryCode: $0.countryCode, name: $0.name, lat: $0.ltd))}
@@ -36,8 +39,9 @@ class DbHelper{
         }
     
     func deleteGeonameFromDb(geoname: City){
+        guard let realm = realm else{return}
         if let name = realm.objects(DbGeoname.self).filter({$0.name == geoname.name}).first{
-            try! realm.write {
+            try? realm.write {
                 realm.delete(name)
             }
         }

@@ -12,28 +12,30 @@ import RxSwift
 class SearchViewModel: SearchViewModelProtocol{
     
     var mainViewModelDelegate: MainViewModelDelegate
-    let repository: RepositoryProtocol
+    let weatherRepository: WeatherRepositoryProtocol
+    let citiesRepository: CitiesRepositoryProtocol
     let scheduler : SchedulerType
     var viewShowLoader = PublishSubject<Bool>()
     var viewRefreshTableViewData = PublishSubject<Bool>()
     var viewCloseScreen = PublishSubject<Bool>()
-    var dynamicSearchString = PublishSubject<String>()
+    var dynamicTextPublisher = PublishSubject<String>()
     private var units: UnitsType
     private var citySelected = PublishSubject<Int>()
     internal var data: [City] = []
     private var clickedItem = -1
     
-    init(repository: RepositoryProtocol, scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), mainViewModelDelegate: MainViewModelDelegate) {
-        self.repository = repository
+    init(weatherRepository: WeatherRepositoryProtocol, citiesRepository: CitiesRepositoryProtocol , scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), mainViewModelDelegate: MainViewModelDelegate) {
+        self.weatherRepository = weatherRepository
+        self.citiesRepository = citiesRepository
         self.scheduler = scheduler
         self.units = mainViewModelDelegate.units
         self.mainViewModelDelegate = mainViewModelDelegate
     }
     
     func initGetingDataFromRepository() -> Disposable {
-        return dynamicSearchString.flatMap({[unowned self] dynamicString -> Observable<Cities> in
+        return dynamicTextPublisher.flatMap({[unowned self] dynamicString -> Observable<Cities> in
             guard !dynamicString.isEmpty else{return Observable.just(Cities(geonames: []))}
-            return self.repository.getCities(endpoint: Endpoint.getCitiesEndpoint(startingWith: dynamicString))
+            return self.citiesRepository.getCities(endpoint: Endpoint.getCitiesEndpoint(startingWith: dynamicString))
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] cities in
@@ -46,11 +48,11 @@ class SearchViewModel: SearchViewModelProtocol{
             return citySelected.flatMapLatest({[unowned self] index -> Observable<WeatherResponse> in
                 self.clickedItem = index
                 self.viewShowLoader.onNext(true)
-                return self.repository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.data[index].getCoordinates(), units: self.units.rawValue))
+                return self.weatherRepository.getWeather(endpoint: Endpoint.getWeatherEndpoint(coordinates: self.data[index].getCoordinates(), units: self.units.rawValue))
             }).subscribeOn(scheduler)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[unowned self] response in
-                    self.repository.saveCityToDb(geoname: self.data[self.clickedItem])
+                    self.citiesRepository.saveCityToDb(geoname: self.data[self.clickedItem])
                     self.mainViewModelDelegate.receaveData(weather: response, city: self.data[self.clickedItem])
                     self.viewShowLoader.onNext(false)
                     self.viewCloseScreen.onNext(true)
@@ -59,7 +61,7 @@ class SearchViewModel: SearchViewModelProtocol{
     }
     
     func searchForText(text: String) {
-         dynamicSearchString.onNext(text)
+         dynamicTextPublisher.onNext(text)
     }
     
     func cityClicked(onIndex: Int){

@@ -260,7 +260,7 @@ class SearchViewController: UIViewController,UITableViewDelegate,LoaderManager,U
     }
         
     @objc func keyboardWillChange(notification: Notification){
-        let info = notification.userInfo!
+        guard let info = notification.userInfo else{return}
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
         let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification

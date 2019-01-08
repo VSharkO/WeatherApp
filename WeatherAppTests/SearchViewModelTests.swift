@@ -90,11 +90,11 @@ class SearchViewModelTests: QuickSpec {
                     testScheduler.start()
                 }
                 it("requst is not sent for empty string"){
-                    searchViewModel.dynamicSearchString.onNext("")
+                    searchViewModel.dynamicTextPublisher.onNext("")
                     verify(mockRepository, times(0)).getCities(endpoint: any())
                 }
                 it("requst is sent for nonempty string"){
-                    searchViewModel.dynamicSearchString.onNext("ple")
+                    searchViewModel.dynamicTextPublisher.onNext("ple")
                     verify(mockRepository).getCities(endpoint: any())
                 }
             }
@@ -123,12 +123,12 @@ class SearchViewModelTests: QuickSpec {
                     testScheduler.start()
                 }
                 it("sends weather request for tapped city "){
-                    searchViewModel.dynamicSearchString.onNext("ple")
+                    searchViewModel.dynamicTextPublisher.onNext("ple")
                     searchViewModel.cityClicked(onIndex: 1)
                     verify(mockRepository).getWeather(endpoint: any())
                 }
                 it("when response is received, save city to db"){
-                    searchViewModel.dynamicSearchString.onNext("ple")
+                    searchViewModel.dynamicTextPublisher.onNext("ple")
                     searchViewModel.cityClicked(onIndex: 1)
                     verify(mockRepository).saveCityToDb(geoname: any())
                 }
@@ -137,7 +137,7 @@ class SearchViewModelTests: QuickSpec {
                 }
                 
                 it("close screen in the end"){
-                    searchViewModel.dynamicSearchString.onNext("ple")
+                    searchViewModel.dynamicTextPublisher.onNext("ple")
                     searchViewModel.cityClicked(onIndex: 1)
                     expect(subscriber.events.last?.value.element).to(equal(true))
                 }
@@ -171,13 +171,13 @@ class SearchViewModelTests: QuickSpec {
                 }
                 
                 it("loader is shown on start of request"){
-                    searchViewModel.dynamicSearchString.onNext("pl")
+                    searchViewModel.dynamicTextPublisher.onNext("pl")
                     searchViewModel.cityClicked(onIndex: 1)
                     expect(subscriber.events.first!.value.element).to(equal(true))
                 }
                 
                 it("loader is hiden after receiving data"){
-                    searchViewModel.dynamicSearchString.onNext("p")
+                    searchViewModel.dynamicTextPublisher.onNext("p")
                     searchViewModel.cityClicked(onIndex: 1)
                     expect(subscriber.events.last!.value.element).to(equal(false))
                 }

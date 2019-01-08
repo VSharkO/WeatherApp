@@ -24,7 +24,7 @@ class SearchScreenCoordinator: Coordinator, CoordinatorDelegate{
         self.presenter = presenter
         childCoordinators = []
         self.mainViewModelDelegate = mainViewModelDelegate
-        viewModel = SearchViewModel(repository: Repository(), mainViewModelDelegate: mainViewModelDelegate)
+        viewModel = SearchViewModel(weatherRepository: WeatherRepository(), citiesRepository: CitiesRepository(), mainViewModelDelegate: mainViewModelDelegate)
         controller = SearchViewController(viewModel: viewModel)
         self.transitionDelegate = transitionDelegate
     }

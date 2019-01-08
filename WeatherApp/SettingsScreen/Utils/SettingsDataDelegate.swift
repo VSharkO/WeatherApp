@@ -11,7 +11,5 @@ import Foundation
 protocol SettingsDataDelegate: MainViewModelDelegate{
     var settings: WeatherParametersToShow{get set}
     var city: City!{get set}
-    var citiesFromDb: [City]!{get}
     func setNewSettings(settingsDataModel: SettingsDataModel)
-    func deleteCityFromDb(index: Int)
 }

@@ -19,7 +19,7 @@ class SettingsCoordinator: Coordinator,CoordinatorDelegate{
     init(presenter: UINavigationController, settingsDataDelegate: SettingsDataDelegate) {
         self.presenter = presenter
         childCoordinators = []
-        self.viewModel = SettingsViewModel(settingsDataDelegate: settingsDataDelegate, repository: Repository())
+        self.viewModel = SettingsViewModel(settingsDataDelegate: settingsDataDelegate, weatherRepository: WeatherRepository(), citiesRepository: CitiesRepository())
         self.controller = SettingsViewController(viewModel: viewModel)
     }
     

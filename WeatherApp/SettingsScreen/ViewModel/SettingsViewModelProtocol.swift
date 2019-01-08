@@ -17,12 +17,14 @@ protocol SettingsViewModelProtocol {
     var viewReloadUnitsTableData: PublishSubject<Bool>{get}
     var viewSetupCheckViews: PublishSubject<Bool>{get}
     func initRequestForCity() -> Disposable
+    func initGetCitiesFromDb() -> Disposable
     func cityClicked(onIndex: Int)
     func clickedHumidityButtonCheck()
     func clickedPressureButtonCheck()
     func clickedWindButtonCheck()
     func unitsClicked(withIndex: Int)
-    func deleteCity(index: Int)
     func applyChangesAndClose()
+    func deleteCityFromDb(index: Int)
+    func trigerGetCitiesFromDb()
     
 }

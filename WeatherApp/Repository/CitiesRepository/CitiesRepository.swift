@@ -9,16 +9,12 @@
 import Foundation
 import RxSwift
 
-class Repository : RepositoryProtocol,WeatherInteractor,CitiesInteractor{
+class CitiesRepository : CitiesRepositoryProtocol{
     
     let dbHelper = DbHelper()
     
     func getCities(endpoint: Endpoint) -> Observable<Cities> {
-        return getCitiesFromEndpoint(endpoint: endpoint)
-    }
-    
-    func getWeather(endpoint: Endpoint) -> Observable<WeatherResponse> {
-        return getWeatherFromEndpoint(endpoint: endpoint)
+        return NetworkHelper.getDataFromApi(with: endpoint)
     }
     
     func saveCityToDb(geoname: City) {

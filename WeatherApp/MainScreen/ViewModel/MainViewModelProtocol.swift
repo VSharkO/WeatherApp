@@ -17,7 +17,5 @@ protocol MainViewModelProtocol{
     var viewSetBackgroundImages: PublishSubject<(icon: String, gradientInfo: Condition?)>{get}
     var viewSetupSettings: PublishSubject<WeatherParametersToShow>{get}
     func initGetingDataFromApi() -> Disposable
-    func initGetCitiesFromDb() -> Disposable
     func initialDataRequest()
-    func trigerGetCitiesFromDb()
 }

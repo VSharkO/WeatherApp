@@ -369,7 +369,6 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     override func viewDidLoad() {
         setupViews()
         initSubscripts()
-        viewModel.initGetCitiesFromDb().disposed(by: disposeBag)
         viewModel.initGetingDataFromApi().disposed(by: self.disposeBag)
         self.registerTouchListeners()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
@@ -377,10 +376,6 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.initialDataRequest()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        viewModel.trigerGetCitiesFromDb()
     }
     
     private func initSubscripts(){

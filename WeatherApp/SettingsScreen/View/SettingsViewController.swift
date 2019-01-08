@@ -173,8 +173,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         registerCells()
         registerButtonTouchListeners()
         viewModel.initRequestForCity().disposed(by: disposeBag)
+        viewModel.initGetCitiesFromDb().disposed(by: disposeBag)
         }
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.trigerGetCitiesFromDb()
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == citiesTableView{
@@ -364,7 +368,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func deleteCell(button: UIButton){
-        viewModel.deleteCity(index: button.tag)
+        viewModel.deleteCityFromDb(index: button.tag)
         self.citiesTableView.performBatchUpdates({
             citiesTableView.deleteRows(at: [IndexPath(row: button.tag, section: 0)], with: .right)
         }, completion: {[unowned self] isFinished in
