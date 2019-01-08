@@ -48,10 +48,12 @@ class SettingsViewModel: SettingsViewModelProtocol{
     
     func initGetCitiesFromDb() -> Disposable{
         return getCitiesFromDb.flatMap({[unowned self] _ -> Observable<[City]> in
+            self.viewShowLoader.onNext(true)
             return self.citiesRepository.getCitiesFromDb()
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.init())
             .subscribe(onNext: {[unowned self] geonames in
+                self.viewShowLoader.onNext(false)
                 self.data.cities = geonames
             })
     }

@@ -178,15 +178,27 @@ class SettingsViewModelTests: QuickSpec {
                     settingsViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
                     settingsViewModel.initGetCitiesFromDb().disposed(by: disposeBag)
                     testScheduler.start()
+                }
+                it("loader is when data is loading from db"){
+                    settingsViewModel.trigerGetCitiesFromDb()
+                    expect(subscriber.events.first!.value.element).to(equal(true))
+                }
+                it("loader is hiden after receiving data from db"){
+                    settingsViewModel.trigerGetCitiesFromDb()
+                    expect(subscriber.events.last!.value.element).to(be(false))
+                }
+                
+                it("loader is shown on start of request"){
                     settingsViewModel.trigerGetCitiesFromDb()
                     settingsViewModel.cityClicked(onIndex: 0)
-                }
-                it("loader is shown on start of request"){
                     expect(subscriber.events.first!.value.element).to(equal(true))
                 }
                 it("loader is hiden after receiving data"){
+                    settingsViewModel.trigerGetCitiesFromDb()
+                    settingsViewModel.cityClicked(onIndex: 0)
                     expect(subscriber.events.last!.value.element).to(be(false))
                 }
+             
             }
         }
     }
