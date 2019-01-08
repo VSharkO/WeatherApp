@@ -118,26 +118,28 @@ class SettingsViewModelTests: QuickSpec {
                     subsriber2 = testScheduler.createObserver(Bool.self)
                     settingsViewModel = SettingsViewModel(scheduler: testScheduler, settingsDataDelegate: mockSettingsDataDelegate, weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol)
                     settingsViewModel.initRequestForCity().disposed(by: disposeBag)
+                    settingsViewModel.initGetCitiesFromDb().disposed(by: disposeBag)
                     settingsViewModel.sendRequestForCity.subscribe(subsriber).disposed(by: disposeBag)
                     settingsViewModel.viewCloseScreen.subscribe(subsriber2).disposed(by: disposeBag)
-                    settingsViewModel.trigerGetCitiesFromDb()
                     testScheduler.start()
+                    
                 }
                 it("sends weatherRequest when city is selected and close screen"){
-                    //                    settingsViewModel.cityClicked(onIndex: 1)
-                    //                    expect(subsriber.events.first?.value.element?.name).to(equal("Pleternica"))
-                    //                    expect(subsriber2.events.first?.value.element).to(equal(true))
-                    //                }
-                    //                it("delete city from data and called method in delegate to delete city when user click to do that"){
-                    //                    expect(settingsViewModel.data.cities.count).to(equal(1))
-                    //                    settingsViewModel.deleteCityFromDb(index: 0)
-                    //                    expect(settingsViewModel.data.cities.count).to(equal(0))
-                    //                }
-                    //                it("call metod to set new settings in mainViewModel and close screen when done button is clicked"){
-                    //                    settingsViewModel.applyChangesAndClose()
-                    //                    verify(mockSettingsDataDelegate, times(2)).setNewSettings(settingsDataModel: any()) //first time when city clicked and second when applyChanges is called.
-                    //                }
-                    
+                    settingsViewModel.trigerGetCitiesFromDb()
+                    settingsViewModel.cityClicked(onIndex: 1)
+                    expect(subsriber.events.first?.value.element?.name).toEventually(equal("Pleternica"))
+                    expect(subsriber2.events.first?.value.element).toEventually(equal(true))
+                }
+                it("delete city from database when user click to delete city"){
+                    settingsViewModel.trigerGetCitiesFromDb()
+                    expect(settingsViewModel.data.cities.count).to(equal(2))
+                    settingsViewModel.deleteCityFromDb(index: 0)
+                    verify(mockCitiesRepositoryProtocol).deleteCityFromDb(geoname: any())
+                }
+                it("call metod to set new settings in mainViewModel and close screen when done button is clicked"){
+                    settingsViewModel.trigerGetCitiesFromDb()
+                    settingsViewModel.applyChangesAndClose()
+                    verify(mockSettingsDataDelegate, times(1)).setNewSettings(settingsDataModel: any())
                 }
             }
         }
