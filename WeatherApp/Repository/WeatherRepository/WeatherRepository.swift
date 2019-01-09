@@ -13,5 +13,4 @@ class WeatherRepository: WeatherRepositoryProtocol{
     func getWeather(coordinates: String, units: UnitsType) -> Observable<WeatherResponse> {
         return NetworkHelper.getDataFromApi(with: Endpoint.getWeatherEndpoint(coordinates: coordinates, units: units.rawValue))
     }
-    
 }

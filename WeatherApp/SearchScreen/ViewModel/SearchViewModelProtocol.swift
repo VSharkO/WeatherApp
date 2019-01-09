@@ -11,12 +11,11 @@ import RxSwift
 
 protocol SearchViewModelProtocol {
     var data: [City]{get}
-//    var dynamicSearchString: PublishSubject<String>{get}
+    var dynamicTextPublisher: PublishSubject<String>{get}
     var viewRefreshTableViewData: PublishSubject<Bool>{get}
-    func initGetingDataFromRepository() -> Disposable
     var viewCloseScreen: PublishSubject<Bool>{get}
     var viewShowLoader: PublishSubject<Bool>{get}
+    func initGetingCities() -> Disposable
     func initCitySelected() -> Disposable
     func cityClicked(onIndex: Int)
-    func searchForText(text: String)
 }

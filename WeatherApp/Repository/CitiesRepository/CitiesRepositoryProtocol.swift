@@ -11,7 +11,7 @@ import RxSwift
 
 protocol CitiesRepositoryProtocol{
     func getCities(startingWith: String) -> Observable<Cities>
-    func saveCityToDb(geoname: City)
-    func getCitiesFromDb() -> Observable<[City]>
-    func deleteCityFromDb(geoname: City)
+    func saveCity(geoname: City)
+    func getCities() -> Observable<[City]>
+    func deleteCity(geoname: City)
 }

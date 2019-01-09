@@ -17,15 +17,15 @@ class CitiesRepository : CitiesRepositoryProtocol{
         return NetworkHelper.getDataFromApi(with: Endpoint.getCitiesEndpoint(startingWith: startingWith))
     }
     
-    func saveCityToDb(geoname: City) {
+    func saveCity(geoname: City) {
         dbHelper.saveGeonameToDb(geoname: geoname)
     }
     
-    func getCitiesFromDb() -> Observable<[City]> {
+    func getCities() -> Observable<[City]> {
         return dbHelper.getGeonamesFromDb()
     }
     
-    func deleteCityFromDb(geoname: City) {
+    func deleteCity(geoname: City) {
         dbHelper.deleteGeonameFromDb(geoname: geoname)
     }
     

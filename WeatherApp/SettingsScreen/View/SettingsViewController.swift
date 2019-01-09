@@ -173,7 +173,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         registerCells()
         registerButtonTouchListeners()
         viewModel.initRequestForCity().disposed(by: disposeBag)
-        viewModel.initGetCitiesFromDb().disposed(by: disposeBag)
+        viewModel.initGetCities().disposed(by: disposeBag)
         }
     
     override func viewWillAppear(_ animated: Bool) {

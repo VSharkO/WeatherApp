@@ -48,7 +48,7 @@ class MainViewModelTests: QuickSpec {
                     }
                     let testScheduler = TestScheduler(initialClock: 0)
                     mainViewModel = MainViewModel.init(repository: mockRepository, scheduler: testScheduler)
-                    mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
+                    mainViewModel.initGetingWeather().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("is not nil"){
@@ -72,7 +72,7 @@ class MainViewModelTests: QuickSpec {
                     testScheduler = TestScheduler(initialClock: 0)
                     subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
                     mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
-                    mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
+                    mainViewModel.initGetingWeather().disposed(by: disposeBag)
                     mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
                     testScheduler.start()
                 }
@@ -112,7 +112,7 @@ class MainViewModelTests: QuickSpec {
                         testScheduler = TestScheduler(initialClock: 0)
                         subscriber = testScheduler.createObserver((icon: String, gradientInfo: Condition?).self)
                         mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
-                        mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
+                        mainViewModel.initGetingWeather().disposed(by: disposeBag)
                         mainViewModel.viewSetBackgroundImages.subscribe(subscriber).disposed(by: disposeBag)
                         testScheduler.start()
                     }
@@ -147,7 +147,7 @@ class MainViewModelTests: QuickSpec {
                         testScheduler = TestScheduler(initialClock: 0)
                         subscriber = testScheduler.createObserver(Bool.self)
                         mainViewModel = MainViewModel(repository: mockRepository, scheduler: testScheduler)
-                        mainViewModel.initGetingDataFromApi().disposed(by: disposeBag)
+                        mainViewModel.initGetingWeather().disposed(by: disposeBag)
                         mainViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
                         testScheduler.start()
                         mainViewModel.initialDataRequest()

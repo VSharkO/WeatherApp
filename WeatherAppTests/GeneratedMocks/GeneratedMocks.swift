@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-08 22:17:35 +0000
+// MARK: - Mocks generated from file: WeatherApp/MainScreen/Utils/MainViewModelDelegate.swift at 2019-01-08 22:19:10 +0000
 
 //
 //  MainViewModelDelegate.swift
@@ -125,7 +125,7 @@ class MockMainViewModelDelegate: MainViewModelDelegate, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/Repository/CitiesRepository/CitiesRepositoryProtocol.swift at 2019-01-08 22:17:35 +0000
+// MARK: - Mocks generated from file: WeatherApp/Repository/CitiesRepository/CitiesRepositoryProtocol.swift at 2019-01-08 22:19:10 +0000
 
 //
 //  RepositoryProtocol.swift
@@ -173,7 +173,7 @@ class MockCitiesRepositoryProtocol: CitiesRepositoryProtocol, Cuckoo.ProtocolMoc
     }
     
     // ["name": "saveCityToDb", "returnSignature": "", "fullyQualifiedName": "saveCityToDb(geoname: City)", "parameterSignature": "geoname: City", "parameterSignatureWithoutNames": "geoname: City", "inputTypes": "City", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "geoname", "call": "geoname: geoname", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("geoname"), name: "geoname", type: "City", range: CountableRange(312..<325), nameRange: CountableRange(312..<319))], "returnType": "Void", "isOptional": false, "escapingParameterNames": "geoname", "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
-     func saveCityToDb(geoname: City)  {
+     func saveCity(geoname: City)  {
         
             return cuckoo_manager.call("saveCityToDb(geoname: City)",
                 parameters: (geoname),
@@ -182,7 +182,7 @@ class MockCitiesRepositoryProtocol: CitiesRepositoryProtocol, Cuckoo.ProtocolMoc
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
-                defaultCall: __defaultImplStub!.saveCityToDb(geoname: geoname))
+                defaultCall: __defaultImplStub!.saveCity(geoname: geoname))
         
     }
     
@@ -196,7 +196,7 @@ class MockCitiesRepositoryProtocol: CitiesRepositoryProtocol, Cuckoo.ProtocolMoc
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
-                defaultCall: __defaultImplStub!.getCitiesFromDb())
+                defaultCall: __defaultImplStub!.getCities())
         
     }
     
@@ -210,7 +210,7 @@ class MockCitiesRepositoryProtocol: CitiesRepositoryProtocol, Cuckoo.ProtocolMoc
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                     ,
-                defaultCall: __defaultImplStub!.deleteCityFromDb(geoname: geoname))
+                defaultCall: __defaultImplStub!.deleteCity(geoname: geoname))
         
     }
     
@@ -297,7 +297,7 @@ class MockCitiesRepositoryProtocol: CitiesRepositoryProtocol, Cuckoo.ProtocolMoc
         return DefaultValueRegistry.defaultValue(for: Observable<Cities>.self)
     }
     
-     func saveCityToDb(geoname: City)  {
+     func saveCity(geoname: City)  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
@@ -312,7 +312,7 @@ class MockCitiesRepositoryProtocol: CitiesRepositoryProtocol, Cuckoo.ProtocolMoc
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/Repository/WeatherRepository/WeatherRepositoryProtocol.swift at 2019-01-08 22:17:35 +0000
+// MARK: - Mocks generated from file: WeatherApp/Repository/WeatherRepository/WeatherRepositoryProtocol.swift at 2019-01-08 22:19:10 +0000
 
 //
 //  WeatherRepositoryProtocol.swift
@@ -412,7 +412,7 @@ class MockWeatherRepositoryProtocol: WeatherRepositoryProtocol, Cuckoo.ProtocolM
 }
 
 
-// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-08 22:17:35 +0000
+// MARK: - Mocks generated from file: WeatherApp/SettingsScreen/Utils/SettingsDataDelegate.swift at 2019-01-08 22:19:10 +0000
 
 //
 //  SettingsDataDelegate.swift

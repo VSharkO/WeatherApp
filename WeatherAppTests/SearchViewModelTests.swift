@@ -73,7 +73,7 @@ class SearchViewModelTests: QuickSpec {
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
-                    searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    searchViewModel.initGetingCities().disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     testScheduler.start()
                 }
@@ -104,7 +104,7 @@ class SearchViewModelTests: QuickSpec {
                     }
                     testScheduler = TestScheduler(initialClock: 0)
                     searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
-                    searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    searchViewModel.initGetingCities().disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
                     testScheduler.start()
                 }
@@ -143,7 +143,7 @@ class SearchViewModelTests: QuickSpec {
                     searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.viewCloseScreen.subscribe(subscriber).disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
-                    searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    searchViewModel.initGetingCities().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("sends weather request for tapped city "){
@@ -207,7 +207,7 @@ class SearchViewModelTests: QuickSpec {
                     searchViewModel = SearchViewModel.init(weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol, scheduler: testScheduler, mainViewModelDelegate: mockMainViewModelDelegate)
                     searchViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
                     searchViewModel.initCitySelected().disposed(by: disposeBag)
-                    searchViewModel.initGetingDataFromRepository().disposed(by: disposeBag)
+                    searchViewModel.initGetingCities().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 

@@ -32,7 +32,7 @@ class MainViewModel : MainViewModelProtocol,MainViewModelDelegate,SettingsDataDe
         self.city = City(lng: Constants.defaultCityLng, countryCode: Constants.defaultCountryCode, name: Constants.defaultCityName, lat: Constants.defaultCityLat)
     }
     
-    func initGetingDataFromApi() -> Disposable {
+    func initGetingWeather() -> Disposable {
         return dataRequestTriger.flatMap({ [unowned self] _ -> Observable<WeatherResponse> in
             self.viewShowLoader.onNext(true)
             return self.weatherRepository.getWeather(coordinates: self.city.getCoordinates(), units: self.units)

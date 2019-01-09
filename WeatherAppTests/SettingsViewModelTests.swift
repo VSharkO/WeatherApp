@@ -67,7 +67,7 @@ class SettingsViewModelTests: QuickSpec {
                     let testScheduler = TestScheduler(initialClock: 0)
                     settingsViewModel = SettingsViewModel(scheduler: testScheduler, settingsDataDelegate: mockSettingsDataDelegate, weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol)
                     settingsViewModel.initRequestForCity().disposed(by: disposeBag)
-                    settingsViewModel.initGetCitiesFromDb().disposed(by: disposeBag)
+                    settingsViewModel.initGetCities().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("is not nil"){
@@ -118,7 +118,7 @@ class SettingsViewModelTests: QuickSpec {
                     subsriber2 = testScheduler.createObserver(Bool.self)
                     settingsViewModel = SettingsViewModel(scheduler: testScheduler, settingsDataDelegate: mockSettingsDataDelegate, weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol)
                     settingsViewModel.initRequestForCity().disposed(by: disposeBag)
-                    settingsViewModel.initGetCitiesFromDb().disposed(by: disposeBag)
+                    settingsViewModel.initGetCities().disposed(by: disposeBag)
                     settingsViewModel.sendRequestForCity.subscribe(subsriber).disposed(by: disposeBag)
                     settingsViewModel.viewCloseScreen.subscribe(subsriber2).disposed(by: disposeBag)
                     testScheduler.start()
@@ -176,7 +176,7 @@ class SettingsViewModelTests: QuickSpec {
                     settingsViewModel = SettingsViewModel(scheduler: testScheduler, settingsDataDelegate: mockSettingsDataDelegate, weatherRepository: mockWeatherRepositoryProtocol, citiesRepository: mockCitiesRepositoryProtocol)
                     settingsViewModel.initRequestForCity().disposed(by: disposeBag)
                     settingsViewModel.viewShowLoader.subscribe(subscriber).disposed(by: disposeBag)
-                    settingsViewModel.initGetCitiesFromDb().disposed(by: disposeBag)
+                    settingsViewModel.initGetCities().disposed(by: disposeBag)
                     testScheduler.start()
                 }
                 it("loader is when data is loading from db"){

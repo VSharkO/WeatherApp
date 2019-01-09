@@ -22,7 +22,7 @@ class SettingsViewModel: SettingsViewModelProtocol{
     let viewCloseScreen = PublishSubject<Bool>()
     var viewShowLoader = PublishSubject<Bool>()
     var sendRequestForCity = PublishSubject<City>()
-    private let getCitiesFromDb = PublishSubject<Bool>()
+    private let getCities = PublishSubject<Bool>()
     
     init(scheduler: SchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), settingsDataDelegate: SettingsDataDelegate, weatherRepository: WeatherRepositoryProtocol, citiesRepository: CitiesRepositoryProtocol) {
         self.scheduler = scheduler
@@ -46,10 +46,10 @@ class SettingsViewModel: SettingsViewModelProtocol{
             })
     }
     
-    func initGetCitiesFromDb() -> Disposable{
-        return getCitiesFromDb.flatMap({[unowned self] _ -> Observable<[City]> in
+    func initGetCities() -> Disposable{
+        return getCities.flatMap({[unowned self] _ -> Observable<[City]> in
             self.viewShowLoader.onNext(true)
-            return self.citiesRepository.getCitiesFromDb()
+            return self.citiesRepository.getCities()
         }).subscribeOn(scheduler)
             .observeOn(MainScheduler.init())
             .subscribe(onNext: {[unowned self] geonames in
@@ -80,11 +80,11 @@ class SettingsViewModel: SettingsViewModelProtocol{
     }
     
     func trigerGetCitiesFromDb() {
-        self.getCitiesFromDb.onNext(true)
+        self.getCities.onNext(true)
     }
     
     func deleteCityFromDb(index: Int) {
-        self.citiesRepository.deleteCityFromDb(geoname: data.cities[index])
+        self.citiesRepository.deleteCity(geoname: data.cities[index])
         trigerGetCitiesFromDb()
     }
     
