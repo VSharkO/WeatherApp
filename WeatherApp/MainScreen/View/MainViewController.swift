@@ -487,7 +487,7 @@ class MainViewController: UIViewController, LoaderManager, UIViewControllerTrans
             ])
         
         NSLayoutConstraint.activate([
-            bodyImageView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            bodyImageView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.view.frame.height*0.2),
             bodyImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             bodyImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             bodyImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
